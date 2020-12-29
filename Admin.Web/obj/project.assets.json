@@ -8502,11 +8502,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Web\\Admin.Web.csproj",
+      "projectUniqueName": "G:\\silverproject\\Admin.Web\\Admin.Web.csproj",
       "projectName": "Admin.Web",
-      "projectPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Web\\Admin.Web.csproj",
+      "projectPath": "G:\\silverproject\\Admin.Web\\Admin.Web.csproj",
       "packagesPath": "C:\\Users\\SHREEJI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Web\\obj\\",
+      "outputPath": "G:\\silverproject\\Admin.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.BusinessServices\\Admin.BusinessServices.csproj",
+      "projectUniqueName": "G:\\silverproject\\Admin.BusinessServices\\Admin.BusinessServices.csproj",
       "projectName": "Admin.BusinessServices",
-      "projectPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.BusinessServices\\Admin.BusinessServices.csproj",
+      "projectPath": "G:\\silverproject\\Admin.BusinessServices\\Admin.BusinessServices.csproj",
       "packagesPath": "C:\\Users\\SHREEJI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.BusinessServices\\obj\\",
+      "outputPath": "G:\\silverproject\\Admin.BusinessServices\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

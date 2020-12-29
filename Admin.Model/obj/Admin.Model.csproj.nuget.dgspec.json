@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Model\\Admin.Model.csproj": {}
+    "G:\\silverproject\\Admin.Model\\Admin.Model.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Model\\Admin.Model.csproj": {
+    "G:\\silverproject\\Admin.Model\\Admin.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Model\\Admin.Model.csproj",
+        "projectUniqueName": "G:\\silverproject\\Admin.Model\\Admin.Model.csproj",
         "projectName": "Admin.Model",
-        "projectPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Model\\Admin.Model.csproj",
+        "projectPath": "G:\\silverproject\\Admin.Model\\Admin.Model.csproj",
         "packagesPath": "C:\\Users\\SHREEJI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SHREEJI\\source\\repos\\silverproject\\Admin.Model\\obj\\",
+        "outputPath": "G:\\silverproject\\Admin.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
