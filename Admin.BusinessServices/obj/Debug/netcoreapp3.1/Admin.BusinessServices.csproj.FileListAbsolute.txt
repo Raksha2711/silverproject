@@ -1,0 +1,9 @@
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\bin\Debug\netcoreapp3.1\Admin.BusinessServices.deps.json
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\bin\Debug\netcoreapp3.1\Admin.BusinessServices.dll
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\bin\Debug\netcoreapp3.1\Admin.BusinessServices.pdb
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.csprojAssemblyReference.cache
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.AssemblyInfoInputs.cache
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.AssemblyInfo.cs
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.csproj.CoreCompileInputs.cache
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.dll
+C:\Users\SHREEJI\source\repos\silverproject\Admin.BusinessServices\obj\Debug\netcoreapp3.1\Admin.BusinessServices.pdb
