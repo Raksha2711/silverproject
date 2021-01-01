@@ -4,85 +4,22 @@ using Command.Entity1;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Command.Db1.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210101234643_BillMaster_BillDetail")]
+    partial class BillMaster_BillDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Command.Entity1.BillDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("AddCost")
-                        .HasColumnType("float");
-
-                    b.Property<double>("BasicRate")
-                        .HasColumnType("float");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("CDC")
-                        .HasColumnType("float");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<double>("Discount1")
-                        .HasColumnType("float");
-
-                    b.Property<int>("GSTRate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<double>("NLC")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Remarks")
-                        .HasColumnType("int")
-                        .HasMaxLength(150);
-
-                    b.Property<double>("Scheme1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Scheme2")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Unit")
-                        .HasColumnType("int")
-                        .HasMaxLength(3);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BillDetails","po");
-                });
 
             modelBuilder.Entity("Command.Entity1.BillMaster", b =>
                 {
