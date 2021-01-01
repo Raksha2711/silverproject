@@ -35,17 +35,33 @@ else
                         </p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a asp-controller="Vendor" asp-action="Index" class="nav-link @Url.MakeActiveClass("Vendor","index")">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Vendor
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="PurchaseOrder" asp-action="Index" class="nav-link @Url.MakeActiveClass("PurchaseOrder","index")">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Purchase Order
+                        </p>
+                    </a>
+                </li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item ">
-                        <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
-                            <i class="nav-icon fas fa-lock"></i>
-                            <p>
-                                Privacy
-                            </p>
-                        </a>
-                    </li>
-                }
+            <li class="nav-item ">
+                <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
+                    <i class="nav-icon fas fa-lock"></i>
+                    <p>
+                        Privacy
+                    </p>
+                </a>
+            </li>
+}
             </ul>
         </nav>
     </div>

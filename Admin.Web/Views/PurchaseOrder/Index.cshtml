@@ -1,0 +1,88 @@
+﻿@{ ViewData["Title"] = "Purchase Order";
+    Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml"; }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Purchase Invoice</h3>
+            </div>
+            <form role="form">
+                <div class="card-body">
+                    @*<div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>*@
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>PO No</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Date</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 input-group date">
+
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Sales Person Name</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option></select>
+                        </div>
+
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Vendor Name</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option></select>
+                        </div>
+
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Pick Up/Delivery</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                        </div>
+
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Place of Delivery</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                        </div>
+
+                    </div>
+                    <div class="row col-lg-offset-3 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label><h5><b>Payment Term</b></h5></label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!--END PAGE-CONTENT-->
+    </div>
+    </div>

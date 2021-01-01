@@ -1,9 +1,0 @@
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\bin\Debug\netcoreapp3.1\Admin.Model.deps.json
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\bin\Debug\netcoreapp3.1\Admin.Model.dll
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\bin\Debug\netcoreapp3.1\Admin.Model.pdb
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.csprojAssemblyReference.cache
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.AssemblyInfoInputs.cache
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.AssemblyInfo.cs
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.csproj.CoreCompileInputs.cache
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.dll
-C:\Users\SHREEJI\source\repos\silverproject\Admin.Model\obj\Debug\netcoreapp3.1\Admin.Model.pdb
