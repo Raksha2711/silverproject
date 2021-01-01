@@ -1256,7 +1256,7 @@
           "lib/netstandard1.3/System.ComponentModel.dll": {}
         }
       },
-      "System.ComponentModel.Annotations/4.7.0": {
+      "System.ComponentModel.Annotations/5.0.0": {
         "type": "package",
         "compile": {
           "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {}
@@ -2631,28 +2631,31 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Command.Db/1.0.0": {
+      "Command.Db1/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Command.Entity": "1.0.0",
+          "Command.Entity1": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.4"
         },
         "compile": {
-          "bin/placeholder/Command.Db.dll": {}
+          "bin/placeholder/Command.Db1.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Command.Db.dll": {}
+          "bin/placeholder/Command.Db1.dll": {}
         }
       },
-      "Command.Entity/1.0.0": {
+      "Command.Entity1/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
         "compile": {
-          "bin/placeholder/Command.Entity.dll": {}
+          "bin/placeholder/Command.Entity1.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Command.Entity.dll": {}
+          "bin/placeholder/Command.Entity1.dll": {}
         }
       }
     }
@@ -4822,13 +4825,14 @@
         "system.componentmodel.nuspec"
       ]
     },
-    "System.ComponentModel.Annotations/4.7.0": {
-      "sha512": "0YFqjhp/mYkDGpU0Ye1GjE53HMp9UVfGN7seGpAMttAC0C40v5gw598jCgpbBLMmCo0E5YRLBv5Z2doypO49ZQ==",
+    "System.ComponentModel.Annotations/5.0.0": {
+      "sha512": "dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
       "type": "package",
-      "path": "system.componentmodel.annotations/4.7.0",
+      "path": "system.componentmodel.annotations/5.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/MonoAndroid10/_._",
@@ -4905,7 +4909,7 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "system.componentmodel.annotations.4.7.0.nupkg.sha512",
+        "system.componentmodel.annotations.5.0.0.nupkg.sha512",
         "system.componentmodel.annotations.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -8509,21 +8513,21 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "Command.Db/1.0.0": {
+    "Command.Db1/1.0.0": {
       "type": "project",
-      "path": "../Command.Db/Command.Db.csproj",
-      "msbuildProject": "../Command.Db/Command.Db.csproj"
+      "path": "../Command.Db1/Command.Db1.csproj",
+      "msbuildProject": "../Command.Db1/Command.Db1.csproj"
     },
-    "Command.Entity/1.0.0": {
+    "Command.Entity1/1.0.0": {
       "type": "project",
-      "path": "../Command.Entity/Command.Entity.csproj",
-      "msbuildProject": "../Command.Entity/Command.Entity.csproj"
+      "path": "../Command.Entity1/Command.Entity1.csproj",
+      "msbuildProject": "../Command.Entity1/Command.Entity1.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Command.Db >= 1.0.0",
-      "Command.Entity >= 1.0.0",
+      "Command.Db1 >= 1.0.0",
+      "Command.Entity1 >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.4",
       "Microsoft.AspNetCore.Identity.UI >= 3.1.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.4",
@@ -8562,11 +8566,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "G:\\silverproject\\Command.Db\\Command.Db.csproj": {
-              "projectPath": "G:\\silverproject\\Command.Db\\Command.Db.csproj"
+            "G:\\silverproject\\Command.Db1\\Command.Db1.csproj": {
+              "projectPath": "G:\\silverproject\\Command.Db1\\Command.Db1.csproj"
             },
-            "G:\\silverproject\\Command.Entity\\Command.Entity.csproj": {
-              "projectPath": "G:\\silverproject\\Command.Entity\\Command.Entity.csproj"
+            "G:\\silverproject\\Command.Entity1\\Command.Entity1.csproj": {
+              "projectPath": "G:\\silverproject\\Command.Entity1\\Command.Entity1.csproj"
             }
           }
         }

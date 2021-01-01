@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Command.Db\Command.Db.csproj" />
-    <ProjectReference Include="..\Command.Entity\Command.Entity.csproj" />
+    <ProjectReference Include="..\Command.Db1\Command.Db1.csproj" />
+    <ProjectReference Include="..\Command.Entity1\Command.Entity1.csproj" />
   </ItemGroup>
 
 </Project>

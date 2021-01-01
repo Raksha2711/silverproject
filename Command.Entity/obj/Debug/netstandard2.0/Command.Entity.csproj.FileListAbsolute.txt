@@ -1,4 +1,0 @@
-G:\silverproject\Command.Entity\obj\Debug\netstandard2.0\Command.Entity.csprojAssemblyReference.cache
-G:\silverproject\Command.Entity\obj\Debug\netstandard2.0\Command.Entity.AssemblyInfoInputs.cache
-G:\silverproject\Command.Entity\obj\Debug\netstandard2.0\Command.Entity.AssemblyInfo.cs
-G:\silverproject\Command.Entity\obj\Debug\netstandard2.0\Command.Entity.csproj.CoreCompileInputs.cache

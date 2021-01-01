@@ -1,0 +1,9 @@
+G:\silverproject\Admin.Model\bin\Debug\netstandard2.0\Admin.Model.deps.json
+G:\silverproject\Admin.Model\bin\Debug\netstandard2.0\Admin.Model.dll
+G:\silverproject\Admin.Model\bin\Debug\netstandard2.0\Admin.Model.pdb
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.csprojAssemblyReference.cache
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.AssemblyInfoInputs.cache
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.AssemblyInfo.cs
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.csproj.CoreCompileInputs.cache
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.dll
+G:\silverproject\Admin.Model\obj\Debug\netstandard2.0\Admin.Model.pdb

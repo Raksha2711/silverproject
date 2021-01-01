@@ -1,0 +1,9 @@
+G:\silverproject\Command.Entity1\bin\Debug\netstandard2.0\Command.Entity1.deps.json
+G:\silverproject\Command.Entity1\bin\Debug\netstandard2.0\Command.Entity1.dll
+G:\silverproject\Command.Entity1\bin\Debug\netstandard2.0\Command.Entity1.pdb
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.csprojAssemblyReference.cache
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.AssemblyInfoInputs.cache
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.AssemblyInfo.cs
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.csproj.CoreCompileInputs.cache
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.dll
+G:\silverproject\Command.Entity1\obj\Debug\netstandard2.0\Command.Entity1.pdb
