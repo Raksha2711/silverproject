@@ -1,5 +1,5 @@
-﻿@{ ViewData["Title"] = "Purchase Order";
-    Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml"; }
+﻿@{ ViewData["Title"] = "Purchase Order"; }
+ @*Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml";*@
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary">
@@ -13,7 +13,7 @@
                             <label><h5><b>PO No</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input type="text" id="POId" class="form-control" placeholder="Enter">
                         </div>
                     </div>
                     <div class="row col-lg-offset-3 form-group">
@@ -23,7 +23,7 @@
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 input-group date">
 
                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
+                                <input id="PODate" type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
                                 <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -35,7 +35,7 @@
                             <label><h5><b>Sales Person Name</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option></select>
+                            <select class="form-control" name="SalePersonName" id="SalePersonName"><option value="0">Select</option></select>
                         </div>
 
                     </div>
@@ -44,7 +44,7 @@
                             <label><h5><b>Vendor Name</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option></select>
+                            <select class="form-control" name="VendorName" id="VendorName"><option value="0">Select</option></select>
                         </div>
 
                     </div>
@@ -53,7 +53,7 @@
                             <label><h5><b>Pick Up/Delivery</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                            <select class="form-control" name="PickDelivery" id="PickDelivery"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
                         </div>
 
                     </div>
@@ -62,7 +62,7 @@
                             <label><h5><b>Place of Delivery</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                            <select class="form-control" name="DeliveryPlace" id="DeliveryPlace"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
                         </div>
 
                     </div>
@@ -71,7 +71,7 @@
                             <label><h5><b>Payment Term</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="depaptcode" id="depaptcode"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
+                            <select class="form-control" name="PaymentTerm" id="PaymentTerm"><option value="0">Select</option><option value="1">YES</option><option value="0">NO</option></select>
                         </div>
 
                     </div>
@@ -82,8 +82,16 @@
         <!--END PAGE-CONTENT-->
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-    });
-</script>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            alert("1");
+            $("#PaymentTerm").empty();
+            var Days = 0;
+            for (k = 1; k <= 50; k++) {
+                Days += '<option value="' + k + '">' + k + '</option>';
+            }
+            $('#PaymentTerm').append(Days);
+        });
+    </script>
+}
