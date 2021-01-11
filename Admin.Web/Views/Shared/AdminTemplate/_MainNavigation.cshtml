@@ -44,6 +44,14 @@ else
                     </a>
                 </li>
                 <li class="nav-item ">
+                    <a asp-controller="Item" asp-action="Index" class="nav-link @Url.MakeActiveClass("Item","index")">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Item
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
                     <a asp-controller="PurchaseOrder" asp-action="Index" class="nav-link @Url.MakeActiveClass("PurchaseOrder","index")">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
@@ -60,8 +68,7 @@ else
                         Privacy
                     </p>
                 </a>
-            </li>
-}
+            </li>}
             </ul>
         </nav>
     </div>

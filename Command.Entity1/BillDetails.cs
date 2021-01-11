@@ -10,13 +10,9 @@ namespace Command.Entity1
     {
         [Key]
         public int Id { get; set; }
-        //[Column(TypeName = "datetime")]
         public int BillId { get; set; }
-        // [StringLength(64)]
         public int ItemId { get; set; }
-        //[StringLength(20)]
         public int Qty { get; set; }
-        //[Column(TypeName = "datetime")]
         [StringLength(3)]
         public int Unit { get; set; }
         public double BasicRate { get; set; }

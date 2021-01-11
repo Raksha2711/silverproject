@@ -1,7 +1,6 @@
 G:\silverproject\Admin.BusinessServices\bin\Debug\netstandard2.0\Admin.BusinessServices.deps.json
 G:\silverproject\Admin.BusinessServices\bin\Debug\netstandard2.0\Admin.BusinessServices.dll
 G:\silverproject\Admin.BusinessServices\bin\Debug\netstandard2.0\Admin.BusinessServices.pdb
-G:\silverproject\Admin.BusinessServices\obj\Debug\netstandard2.0\Admin.BusinessServices.csprojAssemblyReference.cache
 G:\silverproject\Admin.BusinessServices\obj\Debug\netstandard2.0\Admin.BusinessServices.AssemblyInfoInputs.cache
 G:\silverproject\Admin.BusinessServices\obj\Debug\netstandard2.0\Admin.BusinessServices.AssemblyInfo.cs
 G:\silverproject\Admin.BusinessServices\obj\Debug\netstandard2.0\Admin.BusinessServices.csproj.CoreCompileInputs.cache

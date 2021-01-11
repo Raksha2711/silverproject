@@ -1,6 +1,184 @@
-﻿@{ ViewData["Title"] = "Vendor List";
+﻿@model List<Command.Entity1.Vendor>
+@{ ViewData["Title"] = "Vendor List";
     Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml"; }
-@{
-    ViewData["Title"] = "Country List";
-    var BaseUrl = Url.RouteUrl("Country");
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Vendor List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Vendor</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <div class="col-12">
+                <a href="/Vendor/Create" class="float-right btn btn-default">
+                    <i class="fas fa-plus"></i>&nbsp; Add
+                </a>
+                <input type="file" id="fileupload" name="files" class="form-control" />
+                <input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" />
+                <a href="@Url.Action("Download", "Home")">Download</a>
+
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @*<h3 class="card-title">Fixed Header Table</h3>*@
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                        <table class="table table-head-fixed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
 }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#btnupload').on('click', function () {
+
+    debugger
+           var fileExtension = ['xls', 'xlsx'];
+
+           var filename = $('#fileupload').val();
+
+           if (filename.length == 0) {
+
+               alert("Please select a file.");
+
+              return false;
+
+          }
+
+          else {
+
+              var extension = filename.replace(/^.*\./, '');
+
+              if ($.inArray(extension, fileExtension) == -1) {
+
+                  alert("Please select only excel files.");
+
+                  return false;
+
+              }
+
+          }
+
+          var fdata = new FormData();
+
+          var fileUpload = $("#fileupload").get(0);
+
+          var files = fileUpload.files;
+
+          fdata.append(files[0].name, files[0]);
+
+          $.ajax({
+
+              type: "POST",
+
+              url: "/Vendor/Import",
+
+              beforeSend: function (xhr) {
+
+                  xhr.setRequestHeader("XSRF-TOKEN",
+
+                      $('input:hidden[name="__RequestVerificationToken"]').val());
+
+              },
+
+              data: fdata,
+
+              contentType: false,
+
+              processData: false,
+
+              success: function (response) {
+
+                  if (response.length == 0)
+
+                      alert('Some error occured while uploading');
+
+                  else {
+
+                      $('#divPrint').html(response);
+
+                  }
+
+              },
+
+              error: function (e) {
+
+                  $('#divPrint').html(e.responseText);
+
+              }
+
+          });
+
+      })
+
+      $('#btnExport').on('click', function () {
+
+          var fileExtension = ['xls', 'xlsx'];
+
+          var filename = $('#fileupload').val();
+
+          if (filename.length == 0) {
+
+              alert("Please select a file then Import");
+
+              return false;
+
+          }
+
+      });
+
+    });
+
+</script>

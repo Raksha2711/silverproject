@@ -177,6 +177,7 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.pdb
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.Views.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.Views.pdb
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\EPPlus.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -224,6 +225,7 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.Co
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Composition.AttributedModel.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Composition.Convention.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Composition.Hosting.dll
@@ -233,6 +235,7 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Configuration.Configur
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.resources.dll
@@ -293,6 +296,10 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.d
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Db1.dll
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Entity1.dll
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Db1.pdb
+G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Entity1.pdb
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.csprojAssemblyReference.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.AssemblyInfoInputs.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.AssemblyInfo.cs
@@ -315,6 +322,8 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\_Vi
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\_ViewStart.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Item\Index.cshtml.g.cs
+G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Item\Update.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\PurchaseOrder\Index.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\AdminTemplate\_Footer.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\AdminTemplate\_Layout.cshtml.g.cs
@@ -327,6 +336,7 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Vendor\Index.cshtml.g.cs
+G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Vendor\Update.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.RazorTargetAssemblyInfo.cache
@@ -336,8 +346,3 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.csproj.CopyComplete
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.dll
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.pdb
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.genruntimeconfig.cache
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Db1.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Entity1.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Db1.pdb
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Command.Entity1.pdb

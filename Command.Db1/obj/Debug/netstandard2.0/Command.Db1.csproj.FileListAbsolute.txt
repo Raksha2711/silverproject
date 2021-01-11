@@ -1,11 +1,11 @@
-G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Entity1.dll
-G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.csprojAssemblyReference.cache
-G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.AssemblyInfoInputs.cache
-G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.AssemblyInfo.cs
 G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Db1.deps.json
 G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Db1.dll
 G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Db1.pdb
+G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Entity1.dll
 G:\silverproject\Command.Db1\bin\Debug\netstandard2.0\Command.Entity1.pdb
+G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.csprojAssemblyReference.cache
+G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.AssemblyInfoInputs.cache
+G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.AssemblyInfo.cs
 G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.csproj.CoreCompileInputs.cache
 G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.csproj.CopyComplete
 G:\silverproject\Command.Db1\obj\Debug\netstandard2.0\Command.Db1.dll

@@ -1,0 +1,52 @@
+﻿@model Command.Entity1.Item
+@{ Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml"; }
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Create Item</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Create Item</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <form asp-controller="Item" asp-action="Update" method="post">
+                <div class="card-header">
+                    <h3 class="card-title">Item</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.ModifiedBy)
+                    @Html.HiddenFor(m => m.ModifiedDate)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Name</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="card-tools">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Save</button>
+                        <button type="submit" class="btn btn-primary" asp-controller="Item" asp-action="Index"><i class="fas fa-times"></i>Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

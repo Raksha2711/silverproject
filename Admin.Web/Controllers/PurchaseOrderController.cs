@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Command.Entity1;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -8,36 +10,49 @@ using System.Threading.Tasks;
 
 namespace Admin.Web.Controllers
 {
-    //public class PurchaseOrderController : Controller
-    //{
-    //    public IActionResult Index()
-    //    {
-    //        return View();
-    //    }
-    //}
     public class PurchaseOrderController : Controller
     {
-        private readonly ILogger<PurchaseOrderController> _logger;
-
-        public PurchaseOrderController(ILogger<PurchaseOrderController> logger)
+        public CommandDbContext _dbContext;
+        public PurchaseOrderController(CommandDbContext dbContext)
         {
-            _logger = logger;
+            _dbContext = dbContext;
         }
-
         public IActionResult Index()
         {
+            List<SalesPerson> SalesPersonList = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.SalesPerson = new SelectList(SalesPersonList, "Id", "Name");
+            List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
+            var PaymentTermlist = new List<SelectListItem>();
+            for (var i = 1; i < 50; i++)
+            PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            ViewBag.PaymentTerm = PaymentTermlist;
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        [HttpGet]
+        public IActionResult Create()
         {
-            return View();
+            return View("~/Views/PurchaseOrder/Create.cshtml");
         }
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
+        [HttpPost]
+        public IActionResult Create(BillMaster model)
+        {
+            if (model != null)
+            {
+                //model.Status = 1;
+                if (model.Id == 0)
+                {
+                    model.CreatedDate = DateTime.Now;
+                    _dbContext.BillMaster.Add(model);
+                }
+                else
+                {
+                    _dbContext.BillMaster.Update(model);
+                }
+                _dbContext.SaveChanges();
+            }
+            return View("~/Views/PurchaseOrder/Index.cshtml");
+        }
     }
 }
