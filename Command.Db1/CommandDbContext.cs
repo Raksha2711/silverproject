@@ -17,7 +17,8 @@ namespace Command.Entity1
         public virtual DbSet<BillMaster> BillMaster { get; set; }
         public virtual DbSet<SalesPerson> SalesPerson { get; set; }
         public virtual DbSet<BillDetails> BillDetails { get; set; }
-       // public virtual DbSet<Item> Item { get; set; }
+        //public virtual DbSet<UserData> UserData { get; set; }
+        // public virtual DbSet<Item> Item { get; set; }
 
     }
 }

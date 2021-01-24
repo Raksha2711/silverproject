@@ -17,7 +17,7 @@ namespace Admin.Web.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index()
+        internal void FillDropDown()
         {
             List<SalesPerson> SalesPersonList = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.SalesPerson = new SelectList(SalesPersonList, "Id", "Name");
@@ -25,8 +25,12 @@ namespace Admin.Web.Controllers
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
             var PaymentTermlist = new List<SelectListItem>();
             for (var i = 1; i < 50; i++)
-            PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             ViewBag.PaymentTerm = PaymentTermlist;
+        }
+        public IActionResult Index()
+        {
+            FillDropDown();
             return View();
         }
         
@@ -36,7 +40,7 @@ namespace Admin.Web.Controllers
             return View("~/Views/PurchaseOrder/Create.cshtml");
         }
         [HttpPost]
-        public IActionResult Create(BillMaster model)
+        public ActionResult Create(BillViewModel model)
         {
             if (model != null)
             {
@@ -52,6 +56,7 @@ namespace Admin.Web.Controllers
                 }
                 _dbContext.SaveChanges();
             }
+            FillDropDown();
             return View("~/Views/PurchaseOrder/Index.cshtml");
         }
     }

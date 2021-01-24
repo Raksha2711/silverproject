@@ -1,4 +1,5 @@
-﻿@model Command.Entity1.BillMaster
+﻿@model Command.Entity1.BillViewModel
+
 @{ ViewData["Title"] = "Purchase Order";
     Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml";
 }
@@ -52,7 +53,6 @@
                             <label><h5><b>Sales Person Name</b></h5></label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-
                             @Html.DropDownListFor(model => model.SalesPersonName, ViewBag.SalesPerson as SelectList, "Select Sales Person", new { @class = "form-control" })
                         </div>
                     </div>
@@ -91,15 +91,147 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap classpo" id="tblpo">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No</th>
+                                        <th>Item Name</th>
+                                        <th>Qty</th>
+                                        <th>Unit</th>
+                                        <th>Basic Rate</th>
+                                        <th>Freight / addl cost</th>
+                                        <th>CDC</th>
+                                        <th>Discount 1</th>
+                                        <th>Scheme</th>
+                                        <th>Scheme(%)</th>
+                                        <th>Scheme(Amt)</th>
+                                        <th>GST Rate</th>
+                                        <th>NLC</th>
+                                        <th>Remark</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <tr>
+                                        <td> <input type="text" id="SrNo" class="form-control" placeholder="SrNo"></td>
+                                        <td> <input type="text" id="ItemName" class="form-control" placeholder="ItemName"></td>
+                                        <td> <input type="text" id="Qty" class="form-control" placeholder="Qty"></td>
+                                        <td> <input type="text" id="Unit" class="form-control" placeholder="Unit"></td>
+                                        <td> <input type="text" id="BasicRate" class="form-control" placeholder="BasicRate"></td>
+                                        <td> <input type="text" id="Freight" class="form-control" placeholder="Freight"></td>
+                                        <td> <input type="text" id="CDC" class="form-control" placeholder="CDC"></td>
+                                        <td> <input type="text" id="Discount" class="form-control" placeholder="Discount"></td>
+                                        <td> <input type="text" id="Scheme" class="form-control" placeholder="Scheme"></td>
+                                        <td> <input type="text" id="Scheme1" class="form-control" placeholder="Scheme"></td>
+                                        <td> <input type="text" id="GSTRate" class="form-control" placeholder="GSTRate"></td>
+                                        <td> <input type="text" id="NLC" class="form-control" placeholder="NLC"></td>
+                                        <td> <input type="text" id="Remarks" class="form-control" placeholder="Remark"></td>
+                                        <td id="Action1">
+                                            @*<a id="add"><span class="btn btn-sm btn-success btn_row_below_new">Add New</span></a> |*@
+                                            @*<span class="btn btn-sm btn-success btn_row_below_clone">Clone</span> |*@
+                                            <span class="btn btn-sm btn-success btn_row_below_new">Add New</span> |
+                                            <span class="btn btn-sm btn-danger btn_row_delete">Delete</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Save</button>
                     </div>
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-    
-    </script>
+    var rowIdx = 2;
+
+    // jQuery button click event to add a row.
+
+    $(document).ready(function ($) {
+
+        $("#Remarks1").blur(function () {
+
+            alert("1234");
+            var tableBody = $(document).find('.classpo').find("tbody");
+            var trLast = tableBody.find("tr:last");
+            //var trNew = trLast.clone();
+            // trLast.after(trNew);
+            //$('#tblpo tbody>tr:last')
+            trLast.after(
+                '<td> <input type="text" id="SrNo" class="form-control" placeholder="SrNo"></td>' +
+                '<td> <input type="text" id="ItemName1" class="form-control" placeholder="ItemName"></td>' +
+                '<td> <input type="text" id="Qty1" class="form-control" placeholder="Qty"></td>' +
+                '<td> <input type="text" id="Unit1" class="form-control" placeholder="Unit"></td>' +
+                '<td> <input type="text" id="BasicRate1" class="form-control" placeholder="BasicRate"></td>' +
+                '<td> <input type="text" id="Freight1" class="form-control" placeholder="Freight"></td>' +
+                '<td> <input type="text" id="CDC1" class="form-control" placeholder="CDC"></td>' +
+                '<td> <input type="text" id="Discount1" class="form-control" placeholder="Discount"></td>' +
+                '<td> <input type="text" id="Scheme1" class="form-control" placeholder="Scheme"></td>' +
+                '<td> <input type="text" id="Scheme11" class="form-control" placeholder="Scheme"></td>' +
+                '<td> <input type="text" id="GSTRate1" class="form-control" placeholder="GSTRate"></td>' +
+                '<td> <input type="text" id="NLC1" class="form-control" placeholder="NLC"></td>' +
+                '<td> <input type="text" id="Remarks1" class="form-control" placeholder="Remark" ></td>' +
+                '<td> <span class="btn btn-sm btn-danger btn_row_delete">Delete</span></td>'
+            );
+            i++;
+        });
+        $(document).on('click', ".btn_row_below_new", function (e) {
+            alert("add 1");
+            $('#tblpo tbody>tr:last').after(
+                '<td> <input type="text" id="SrNo1" class="form-control" placeholder="SrNo"></td>' +
+                '<td> <input type="text" id="ItemName1" class="form-control" placeholder="ItemName"></td>' +
+                '<td> <input type="text" id="Qty1" class="form-control" placeholder="Qty"></td>' +
+                '<td> <input type="text" id="Unit1" class="form-control" placeholder="Unit"></td>' +
+                '<td> <input type="text" id="BasicRate1" class="form-control" placeholder="BasicRate"></td>' +
+                '<td> <input type="text" id="Freight1" class="form-control" placeholder="Freight"></td>' +
+                '<td> <input type="text" id="CDC1" class="form-control" placeholder="CDC"></td>' +
+                '<td> <input type="text" id="Discount1" class="form-control" placeholder="Discount"></td>' +
+                '<td> <input type="text" id="Scheme1" class="form-control" placeholder="Scheme"></td>' +
+                '<td> <input type="text" id="Scheme11" class="form-control" placeholder="Scheme"></td>' +
+                '<td> <input type="text" id="GSTRate1" class="form-control" placeholder="GSTRate"></td>' +
+                '<td> <input type="text" id="NLC1" class="form-control" placeholder="NLC"></td>' +
+                '<td> <input type="text" id="Remarks1" class="form-control" placeholder="Remark" onblur="AddRow(2);"></td>' +
+                '<td><a id="add"><span class="btn btn-sm btn-success btn-add-row">Add New</span></a> | <span class="btn btn-sm btn-danger btn_row_delete">Delete</span></td>'
+            );
+            return false;
+        });
+
+
+        ////--->current row > new > start
+        //$(document).on('click',".btn_row_below_new", function(e)
+        //{
+        //  var r = $(this).closest('tr').clone();
+
+        //  $.each(r.find('td'), function(i1,v1)
+        //  {
+        //        //clear all data/value in td/cell
+        //        $(this).html('');
+        //  });
+
+        //  $(this).closest('tr').after(r);
+        //});
+        ////--->current row > new > end
+
+
+        //--->current row > clone > start
+        $(document).on('click', ".btn_row_below_clone", function (e) {
+            var r = $(this).closest('tr').clone();
+            $(this).closest('tr').after(r);
+        });
+        //--->current row > clone > end
+
+        //--->current row > delete > start
+        $(document).on('click', ".btn_row_delete", function (e) {
+            var r = $(this).closest('tr').remove();
+        });
+        //--->current row > delete > end
+
+    });
+</script>

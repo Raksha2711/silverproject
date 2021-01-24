@@ -6,7 +6,7 @@ namespace Command.Entity1
 {
    
     [Table("BillDetails", Schema = "po")]
-    public partial class BillDetails
+    public partial class BillDetails 
     {
         [Key]
         public int Id { get; set; }

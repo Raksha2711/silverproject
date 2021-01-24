@@ -40,7 +40,6 @@ namespace Command.Entity1
 
         private DateTime? dateCreated = null;
         public int ModifiedBy { get; set; }
-       // public int Status { get; set; }
     }
     
 }

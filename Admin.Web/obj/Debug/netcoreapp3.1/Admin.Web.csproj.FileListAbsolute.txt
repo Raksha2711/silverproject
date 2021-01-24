@@ -168,7 +168,6 @@ C:\Users\SHREEJI\source\repos\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Ra
 C:\Users\SHREEJI\source\repos\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\appsettings.Development.json
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\appsettings.json
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.StaticWebAssets.xml
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.exe
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.deps.json
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Admin.Web.runtimeconfig.json
@@ -181,9 +180,6 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\EPPlus.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.UI.Views.V3.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.UI.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
@@ -205,8 +201,6 @@ G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configur
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
-G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Embedded.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 G:\silverproject\Admin.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
@@ -304,7 +298,6 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.csprojAssemblyRefer
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.AssemblyInfoInputs.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.AssemblyInfo.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.csproj.CoreCompileInputs.cache
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.MvcApplicationPartsAssemblyInfo.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.MvcApplicationPartsAssemblyInfo.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.RazorAssemblyInfo.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.RazorAssemblyInfo.cs
@@ -314,12 +307,6 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\scopedcss\bundle\Admin.Web.st
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.TagHelpers.input.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.TagHelpers.output.cache
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.RazorCoreGenerate.cache
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\Account\Login.cshtml.g.cs
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\Account\Register.cshtml.g.cs
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\Account\_ViewImports.cshtml.g.cs
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\_ViewImports.cshtml.g.cs
-G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Area\Identity\Pages\_ViewStart.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Item\Index.cshtml.g.cs
@@ -346,3 +333,4 @@ G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.csproj.CopyComplete
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.dll
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.pdb
 G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Admin.Web.genruntimeconfig.cache
+G:\silverproject\Admin.Web\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
