@@ -5,23 +5,39 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Command.Entity1
 {
-   
-        [Table("BillMaster", Schema = "po")]
-        public partial class BillMaster
-        {
+
+    [Table("BillMaster", Schema = "po")]
+    public partial class BillMaster
+    {
         [Key]
         public int Id { get; set; }
+        public string POId { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-       // [StringLength(64)]
         public int SalesPersonName { get; set; }
-        //[StringLength(20)]
         public int VendorName { get; set; }
-        //[Column(TypeName = "datetime")]
-        public int PickUpDel { get; set; }
+        public string PickUpDel { get; set; }
         [StringLength(100)]
         public string DelieveryPlace { get; set; }
-        public int PaymentTerm { get; set; }
+        public int DelieveryPlaceId { get; set; }
+        public string PaymentTerm { get; set; }
+        public int PaymentValue { get; set; }
+
+        public int ItemId { get; set; }
+        public int Qty { get; set; }
+        [StringLength(3)]
+        public string Unit { get; set; }
+        public double BasicRate { get; set; }
+        public double AddCost { get; set; }
+        public double CDC { get; set; }
+        public double Discount1 { get; set; }
+        public double Scheme1 { get; set; }
+        public double Scheme2 { get; set; }
+        public double SchemeAmt { get; set; }
+        public int GSTRate { get; set; }
+        public double NLC { get; set; }
+        [StringLength(150)]
+        public string Remarks { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
@@ -37,9 +53,8 @@ namespace Command.Entity1
 
             set { this.dateCreated = value; }
         }
-
         private DateTime? dateCreated = null;
         public int ModifiedBy { get; set; }
+        public char  Status {get;set;}
     }
-    
 }

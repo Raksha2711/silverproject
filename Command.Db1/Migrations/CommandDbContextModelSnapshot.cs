@@ -19,7 +19,7 @@ namespace Command.Db1.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Command.Entity1.BillDetails", b =>
+            modelBuilder.Entity("Command.Entity1.BillMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,9 +32,6 @@ namespace Command.Db1.Migrations
                     b.Property<double>("BasicRate")
                         .HasColumnType("float");
 
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
                     b.Property<double>("CDC")
                         .HasColumnType("float");
 
@@ -43,6 +40,16 @@ namespace Command.Db1.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("DelieveryPlace")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("DelieveryPlaceId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Discount1")
                         .HasColumnType("float");
@@ -62,12 +69,27 @@ namespace Command.Db1.Migrations
                     b.Property<double>("NLC")
                         .HasColumnType("float");
 
+                    b.Property<string>("POId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentTerm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PickUpDel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.Property<int>("Remarks")
-                        .HasColumnType("int")
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
+
+                    b.Property<int>("SalesPersonName")
+                        .HasColumnType("int");
 
                     b.Property<double>("Scheme1")
                         .HasColumnType("float");
@@ -75,49 +97,16 @@ namespace Command.Db1.Migrations
                     b.Property<double>("Scheme2")
                         .HasColumnType("float");
 
-                    b.Property<int>("Unit")
-                        .HasColumnType("int")
+                    b.Property<double>("SchemeAmt")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(3)")
                         .HasMaxLength(3);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BillDetails","po");
-                });
-
-            modelBuilder.Entity("Command.Entity1.BillMaster", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("DelieveryPlace")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("PaymentTerm")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PickUpDel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SalesPersonName")
-                        .HasColumnType("int");
 
                     b.Property<int>("VendorName")
                         .HasColumnType("int");
@@ -227,6 +216,42 @@ namespace Command.Db1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vendor","po");
+                });
+
+            modelBuilder.Entity("Command.Entity1.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(1)")
+                        .HasMaxLength(1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouse","po");
                 });
 #pragma warning restore 612, 618
         }

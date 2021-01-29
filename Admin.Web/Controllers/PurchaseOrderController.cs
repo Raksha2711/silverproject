@@ -21,12 +21,18 @@ namespace Admin.Web.Controllers
         {
             List<SalesPerson> SalesPersonList = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.SalesPerson = new SelectList(SalesPersonList, "Id", "Name");
+            List<Warehouse> WarehouseList = _dbContext.Warehouse.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.WareHouse = new SelectList(WarehouseList, "Id", "Name");
             List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
-            var PaymentTermlist = new List<SelectListItem>();
-            for (var i = 1; i < 50; i++)
-                PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-            ViewBag.PaymentTerm = PaymentTermlist;
+            List<Item> ItemList = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.Item = new SelectList(ItemList, "Id", "Name");
+           var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
+            ViewBag.LatestId = LatestId;
+            //var PaymentTermlist = new List<SelectListItem>();
+            //for (var i = 1; i < 50; i++)
+            //    PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            //ViewBag.PaymentTerm = PaymentTermlist;
         }
         public IActionResult Index()
         {
@@ -40,7 +46,7 @@ namespace Admin.Web.Controllers
             return View("~/Views/PurchaseOrder/Create.cshtml");
         }
         [HttpPost]
-        public ActionResult Create(BillViewModel model)
+        public ActionResult Create(BillMaster model)
         {
             if (model != null)
             {
@@ -48,6 +54,7 @@ namespace Admin.Web.Controllers
                 if (model.Id == 0)
                 {
                     model.CreatedDate = DateTime.Now;
+                    model.Status = 'A';
                     _dbContext.BillMaster.Add(model);
                 }
                 else
@@ -56,6 +63,7 @@ namespace Admin.Web.Controllers
                 }
                 _dbContext.SaveChanges();
             }
+            
             FillDropDown();
             return View("~/Views/PurchaseOrder/Index.cshtml");
         }

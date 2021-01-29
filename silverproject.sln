@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Command.Entity1", "Command.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Mail", ".Mail", "{053AF5B1-0C1D-4EAD-86B5-BAE7CF30DD6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email", "Email\Email.csproj", "{898F110C-26D8-4EFD-8E88-29DAA8A5552F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email", "Email\Email.csproj", "{898F110C-26D8-4EFD-8E88-29DAA8A5552F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsApp", "WhatsApp\WhatsApp.csproj", "{7631DAB7-1C7A-4D89-9377-23642B0EFD2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsApp", "WhatsApp\WhatsApp.csproj", "{7631DAB7-1C7A-4D89-9377-23642B0EFD2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
