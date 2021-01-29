@@ -1,9 +1,0 @@
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.csprojAssemblyReference.cache
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.AssemblyInfoInputs.cache
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.AssemblyInfo.cs
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.csproj.CoreCompileInputs.cache
-G:\silverproject\Email\bin\Debug\netstandard2.0\Email.deps.json
-G:\silverproject\Email\bin\Debug\netstandard2.0\Email.dll
-G:\silverproject\Email\bin\Debug\netstandard2.0\Email.pdb
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.dll
-G:\silverproject\Email\obj\Debug\netstandard2.0\Email.pdb

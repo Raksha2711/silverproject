@@ -1,9 +1,0 @@
-G:\silverproject\WhatsApp\bin\Debug\netstandard2.0\WhatsApp.deps.json
-G:\silverproject\WhatsApp\bin\Debug\netstandard2.0\WhatsApp.dll
-G:\silverproject\WhatsApp\bin\Debug\netstandard2.0\WhatsApp.pdb
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.AssemblyInfoInputs.cache
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.AssemblyInfo.cs
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.csproj.CoreCompileInputs.cache
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.dll
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.pdb
-G:\silverproject\WhatsApp\obj\Debug\netstandard2.0\WhatsApp.csprojAssemblyReference.cache
