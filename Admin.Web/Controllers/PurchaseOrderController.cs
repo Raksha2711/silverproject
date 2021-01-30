@@ -67,5 +67,10 @@ namespace Admin.Web.Controllers
             FillDropDown();
             return View("~/Views/PurchaseOrder/Index.cshtml");
         }
+        
+        public IActionResult Detail()
+        {
+            return View();
+        }
     }
 }
