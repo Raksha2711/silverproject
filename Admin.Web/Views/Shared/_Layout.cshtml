@@ -5,6 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
     <title>Silverline | @ViewData["Title"]</title>
+    <base href="/"/>
     <partial name="_Styles" />
 </head>
 <body class="hold-transition sidebar-mini">
@@ -23,6 +24,7 @@
         <partial name="_Footer" />
     </div>
     <partial name="_Scripts" />
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 

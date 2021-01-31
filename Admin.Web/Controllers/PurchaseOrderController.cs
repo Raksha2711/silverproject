@@ -1,6 +1,8 @@
 ﻿using Command.Entity1;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Admin.Web.Controllers
 {
+    [Route("purchaseorder")]
     public class PurchaseOrderController : Controller
     {
         public CommandDbContext _dbContext;
@@ -27,50 +30,89 @@ namespace Admin.Web.Controllers
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
             List<Item> ItemList = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.Item = new SelectList(ItemList, "Id", "Name");
-           var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
+            var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
             ViewBag.LatestId = LatestId;
             //var PaymentTermlist = new List<SelectListItem>();
             //for (var i = 1; i < 50; i++)
             //    PaymentTermlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             //ViewBag.PaymentTerm = PaymentTermlist;
         }
+        [Route("", Name = "purchaseorder")]
         public IActionResult Index()
         {
-            FillDropDown();
-            return View();
+
+            return View(_dbContext.Bills.ToList());
         }
-        
-        [HttpGet]
+
+        [HttpGet("create")]
         public IActionResult Create()
         {
-            return View("~/Views/PurchaseOrder/Create.cshtml");
-        }
-        [HttpPost]
-        public ActionResult Create(BillMaster model)
-        {
-            if (model != null)
-            {
-                //model.Status = 1;
-                if (model.Id == 0)
-                {
-                    model.CreatedDate = DateTime.Now;
-                    model.Status = 'A';
-                    _dbContext.BillMaster.Add(model);
-                }
-                else
-                {
-                    _dbContext.BillMaster.Update(model);
-                }
-                _dbContext.SaveChanges();
-            }
-            
+            var m = new Bill();
+            int.TryParse(GetPoNo()?.Replace("SIL", ""), out int poNo);
+            m.No = string.Format("SIL{0}", poNo + 1);
+            m.BillItems = new List<BillItem>();
+            m.BillItems.Add(new BillItem());
             FillDropDown();
-            return View("~/Views/PurchaseOrder/Index.cshtml");
+            return View("~/Views/PurchaseOrder/Create.cshtml", m);
         }
-        
-        public IActionResult Detail()
+        [HttpGet("edit/{id:int}")]
+        public IActionResult Edit(int id)
+        {
+            var result = _dbContext.Bills.Include(i => i.BillItems).Where(w => w.Id.Equals(id)).FirstOrDefault();
+            FillDropDown();
+            return View("~/Views/PurchaseOrder/Create.cshtml", result);
+        }
+        #region Api
+        [HttpPost("create.json")]
+        [AllowAnonymous]
+        public IActionResult add([FromBody] Bill model)
+        {
+
+            if (ModelState.IsValid && model != null)
+            {
+                model.CreatedDate = DateTime.Now;
+                model.Recstatus = 'A';
+                _dbContext.Bills.Add(model);
+                _dbContext.SaveChanges();
+                return Json(model.Id);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        [Route("update/{id:int}.json")]
+        public IActionResult Update(int id, [FromBody] Bill model)
+        {
+            if (id > 0 && model != null)
+            {
+                _dbContext.Update(model);
+                _dbContext.SaveChanges();
+                return Json(model.Id);
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpGet("detail/{id:int}")]
+        public IActionResult Detail([FromRoute] int id)
         {
             return View();
         }
+        [HttpGet("additem")]
+        public IActionResult AddItem()
+        {
+            try
+            {
+                List<Item> ItemList = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
+                ViewBag.Item = new SelectList(ItemList, "Id", "Name");
+                return PartialView("~/Views/PurchaseOrder/_billitem.cshtml", new BillItem());
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        internal string GetPoNo() { return _dbContext.Bills.OrderBy(o => o.Id).Select(s => s.No).FirstOrDefault(); }
     }
 }

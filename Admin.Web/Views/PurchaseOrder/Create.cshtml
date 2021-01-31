@@ -1,0 +1,140 @@
+﻿@model Command.Entity1.Bill
+
+@{ ViewData["Title"] = "Purchase Order";
+}
+<style>
+    .hidden {
+        display: none;
+    }
+
+    .w-70p {
+        width: 70px;
+    }
+
+    .w-120p {
+        width: 70px;
+    }
+</style>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Purchase Order</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-primary">
+
+            <div class="card-header">
+                <h3 class="card-title">Purchase Order</h3>
+            </div>
+            <div class="card-body">
+                <form name="frmAddBill" asp-antiforgery="false" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label asp-for="No">#No</label>
+                            <input type="text" class="form-control" asp-for="No" readonly>
+                        </div>
+                        <div class="form-group col-6">
+                            @*<label asp-for="Date">Date</label>
+                                <input type="text" class="form-control datetimepicker-input" asp-for="Date" data-target="#reservationdate">
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>*@
+                            <label asp-for="Date">Date</label>
+                            <div class='input-group date' id='datepicker'>
+                                <input asp-for="Date" type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="SalesPerson">SalesPerson Name</label>
+                            <input type="text" class="form-control" asp-for="SalesPerson">
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="Vendor">Vendor Name</label>
+                            <select type="select" asp-for="Vendor" asp-items="ViewBag.Vendor" class="form-control">
+                                <option value="0">Select Vendor</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="DeliveryType">Pick Up/Delivery</label>
+                            <select class="form-control" asp-for="DeliveryType">
+                                <option value="0">Select</option>
+                                <option value="PickUp">PickUp</option>
+                                <option value="Delivery">Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6 hidden" id="divaddress">
+                            <label asp-for="DelieveryPlaceId">Place of Delivery</label>
+                            <select type="select" asp-for="DelieveryPlaceId" asp-items="ViewBag.WareHouse" class="form-control">
+                                <option value="">Select Address</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="PaymentTerm">Payment Term</label>
+                            <select class="form-control" asp-for="PaymentTerm">
+                                <option value="">Select</option>
+                                <option value="CDC">CDC</option>
+                                <option value="PDC">PDC</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="PaymentValue">Payment Value</label>
+                            <input type="text" asp-for="PaymentValue" class="form-control hidden" placeholder="Enter" value="0">
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap tblpo">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+                                    <th>Unit</th>
+                                    <th>Basic Rate</th>
+                                    <th>Freight / addl cost</th>
+                                    <th>CDC</th>
+                                    <th>Discount 1</th>
+                                    <th>Scheme</th>
+                                    <th>Scheme(%)</th>
+                                    <th>Scheme(Amt)</th>
+                                    <th>GST Rate</th>
+                                    <th>NLC</th>
+                                    <th>Remark</th>
+                                    <th><span class="btn btn-sm btn-success btn-add-item">Add New</span> |</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.BillItems)
+                                {
+                                    <partial name="_billitem" for="@item" />
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-footer">
+                <a href="@Url.Action("Index","purchaseorder")" class="btn btn-default"><i class="fas fa-save"></i>Cancel</a>
+                <button type="button" data-isUpdate="@(Model.Id==0)" class="btn btn-primary btn-submit"><i class="fas fa-save"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/cdn/app/JS/PurchaseOrderUpdate.js"></script>
+}

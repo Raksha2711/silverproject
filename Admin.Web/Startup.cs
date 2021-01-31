@@ -31,12 +31,12 @@ namespace Admin.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
             services.AddDbContext<CommandDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 );
             //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddRazorPages();
+            //services.AddRazorPages();
             services.AddDefaultIdentity<IdentityUser>(options =>
              options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<CommandDbContext>();

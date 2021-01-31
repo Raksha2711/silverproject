@@ -18,13 +18,12 @@ namespace Command.Entity1
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<BillMaster> BillMaster { get; set; }
         public virtual DbSet<SalesPerson> SalesPerson { get; set; }
-        //public virtual DbSet<BillDetails> BillDetails { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }
-        //public virtual DbSet<UserData> UserData { get; set; }
-        // public virtual DbSet<Item> Item { get; set; }
-
+        public virtual DbSet<Bill> Bills { get; set; }
+        public virtual DbSet<BillItem> BillItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<IdentityUser>(i => { i.ToTable("Users", "auth"); });
             modelBuilder.Entity<IdentityRole>(i => { i.ToTable("Roles", "auth"); });
             modelBuilder.Entity<IdentityUserRole<string>>(i => { i.ToTable("UserRoles", "auth"); });

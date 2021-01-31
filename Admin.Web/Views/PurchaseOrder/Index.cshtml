@@ -1,260 +1,82 @@
-﻿@model Command.Entity1.BillMaster
-
-@{ ViewData["Title"] = "Purchase Order";
-    Layout = "~/Views/Shared/AdminTemplate/_Layout.cshtml";
+﻿@model List<Command.Entity1.Bill>
+@{
+    ViewData["Title"] = "Item List";
 }
-<style>
-    .hidden
-    {
-        display:none;
-    }
-</style>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            @*<div class="col-sm-6">
-                    <h1>Purchase Order</h1>
-                </div>*@
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <h1>PO List</h1>
+            </div>
+            <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Purchase Order</li>
+                    <li class="breadcrumb-item active">Purchase Order List</li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
 <div class="content">
     <div class="container-fluid">
-        <div class="card card-primary">
-            <form asp-controller="PurchaseOrder" asp-action="Create" method="post">
-                <div class="card-header">
-                    <h3 class="card-title">Purchase Order</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        @*<div class="col-12 ">*@
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>PO No</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            @Html.TextBox("POId", (object)ViewBag.LatestId)
-                            <input type="text" id="POId" class="form-control" placeholder="Enter" readonly>
-                        </div>
-                        @*</div>*@
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>Date</b></h5></label>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <input id="Date" name="Date" type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
-                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                                <div class="input-group-append">
+                                    <a href="@Url.Action("Create","purchaseorder")" class="btn btn-default">
+                                        <i class="fas fa-plus"></i>&nbsp; Add
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>SalesPerson Name</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            @Html.DropDownListFor(model => model.SalesPersonName, ViewBag.SalesPerson as SelectList, "Select Sales Person", new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>Vendor Name</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            @Html.DropDownListFor(model => model.VendorName, ViewBag.Vendor as SelectList, "Select Vendor", new { @class = "form-control" })
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>Pick Up/Delivery</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="DelieveryPlace" id="DelieveryPlace"><option value="0">Select</option><option value="PickUp">PickUp</option><option value="Delivery">Delivery</option></select>
-                        </div>
-                    </div>
-                    <div class="row hidden" id="divaddress" >
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>Place of Delivery</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            @*<select class="form-control" name="DeliveryPlace" id="DeliveryPlace"><option value="0">Select</option><option value="YES">YES</option><option value="NO">NO</option></select>*@
-                            @Html.DropDownListFor(model => model.DelieveryPlaceId, ViewBag.WareHouse as SelectList, "Select Address", new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                            <label><h5><b>Payment Term</b></h5></label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            <select class="form-control" name="PaymentTerm" id="PaymentTerm"><option value="0">Select</option><option value="CDC">CDC</option><option value="PDC">PDC</option></select>
-                            <input type="text" id="PaymentValue" name="PaymentValue" class="form-control hidden" placeholder="Enter" value="0">
-                            @*@Html.DropDownListFor(model => model.PaymentTerm, ViewBag.PaymentTerm as SelectList, "Select", new { @class = "form-control" })*@
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap classpo" id="tblpo">
-                                <thead>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                        <table class="table table-head-fixed">
+                            <thead>
+                                <tr>
+                                    <th>#No</th>
+                                    <th>Date</th>
+                                    <th>Sales Person</th>
+                                    <th>Delivery Type</th>
+                                    <th>Payment Term</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
                                     <tr>
-                                        <th>Sr No</th>
-                                        <th>Item Name</th>
-                                        <th>Qty</th>
-                                        <th>Unit</th>
-                                        <th>Basic Rate</th>
-                                        <th>Freight / addl cost</th>
-                                        <th>CDC</th>
-                                        <th>Discount 1</th>
-                                        <th>Scheme</th>
-                                        <th>Scheme(%)</th>
-                                        <th>Scheme(Amt)</th>
-                                        <th>GST Rate</th>
-                                        <th>NLC</th>
-                                        <th>Remark</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    <tr>
-                                        <td> <input type="text" id="SrNo" class="form-control" placeholder="SrNo"></td>
+                                        <td>@item.No</td>
+                                        <td>@item.Date</td>
+                                        <td>@item.SalesPerson</td>
+                                        <td>@item.DeliveryType</td>
+                                        <td>@item.PaymentTerm</td>
                                         <td>
-                                            @*<input type="text" id="ItemName" class="form-control" placeholder="ItemName">*@
-                                            @Html.DropDownListFor(model => model.ItemId, ViewBag.Item as SelectList, "Select Address", new { @class = "form-control" })
-                                        </td>
-                                        <td><input type="text" id="Qty" name="Qty" class="form-control" placeholder="Qty"></td>
-                                        <td><input type="text" id="Unit" name="Unit" class="form-control" placeholder="Unit"></td>
-                                        <td><input type="text" id="BasicRate" name="BasicRate" class="form-control" placeholder="BasicRate"></td>
-                                        <td><input type="text" id="AddCost" name="AddCost" class="form-control" placeholder="Freight"></td>
-                                        <td><input type="text" id="CDC" name="CDC" class="form-control" placeholder="CDC"></td>
-                                        <td><input type="text" id="Discount1" name="Discount1" class="form-control" placeholder="Discount"></td>
-                                        <td><input type="text" id="Scheme1" name="Scheme1" class="form-control" placeholder="Scheme1"></td>
-                                        <td><input type="text" id="Scheme2" name="scheme2" class="form-control" placeholder="Scheme2"></td>
-                                        <td><input type="text" id="SchemeAmt" name="SchemeAmt" class="form-control" placeholder="SchemeAmt"></td>
-                                        <td><input type="text" id="GSTRate" name="GSTRate" class="form-control" placeholder="GSTRate"></td>
-                                        <td><input type="text" id="NLC" name="NLC" class="form-control" placeholder="NLC"></td>
-                                        <td><input type="text" id="Remarks" name="Remarks" class="form-control" placeholder="Remarks"></td>
-                                        <td id="Action1">
-                                            <span class="btn btn-sm btn-success btn_row_below_new">Add New</span> |
-                                            <span class="btn btn-sm btn-danger btn_row_delete">Delete</span>
+                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                            | <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Save</button>
-                    </div>
+                    <!-- /.card-body -->
                 </div>
-            </form>
+                <!-- /.card -->
+            </div>
         </div>
+
     </div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-    // jQuery button click event to add a row.
-    $(document).ready(function ($) {
-       // alert(@ViewBag.LatestId);
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
-       
-        $("#POId").val('SIH' + new Date().getUTCMilliseconds());
-        $("#Date").val(today);
-        $('#PaymentTerm').change(function () {
-            debugger
-            if ($('#PaymentTerm').val() == "PDC") {
-                $("#PaymentValue").show();
-                $("#PaymentValue").val(30);
-            }
-            else {
-                $("#PaymentValue").hide();
-                $("#PaymentValue").val(0);
-            }
-        });
-        $('#DelieveryPlace').change(function () {
-            debugger
-            if ($('#DelieveryPlace').val() == "Delivery") {
-                $("#divaddress").show();
-            }
-            else {
-                $("#divaddress").hide();
-            }
-        });
-        $("#Remarks1").blur(function () {
-            var tableBody = $(document).find('.classpo').find("tbody");
-            var trLast = tableBody.find("tr:last");
-            trLast.after(
-                '<td><input type="text" id="SrNo" class="form-control" placeholder="SrNo"></td>' +
-                '<td><input type="text" id="ItemName1" class="form-control" placeholder="ItemName"></td>' +
-                '<td><input type="text" id="Qty1" class="form-control" placeholder="Qty"></td>' +
-                '<td><input type="text" id="Unit1" class="form-control" placeholder="Unit"></td>' +
-                '<td><input type="text" id="BasicRate1" class="form-control" placeholder="BasicRate"></td>' +
-                '<td><input type="text" id="Freight1" class="form-control" placeholder="Freight"></td>' +
-                '<td><input type="text" id="CDC1" class="form-control" placeholder="CDC"></td>' +
-                '<td><input type="text" id="Discount1" class="form-control" placeholder="Discount"></td>' +
-                '<td><input type="text" id="Scheme1" class="form-control" placeholder="Scheme"></td>' +
-                '<td><input type="text" id="Scheme11" class="form-control" placeholder="Scheme"></td>' +
-                '<td><input type="text" id="GSTRate1" class="form-control" placeholder="GSTRate"></td>' +
-                '<td><input type="text" id="NLC1" class="form-control" placeholder="NLC"></td>' +
-                '<td><input type="text" id="Remarks1" class="form-control" placeholder="Remark" ></td>' +
-                '<td><span class="btn btn-sm btn-danger btn_row_delete">Delete</span></td>'
-            );
-            i++;
-        });
-        $(document).on('click', ".btn_row_below_new", function (e) {
-            alert("add 1");
-            $('#tblpo tbody>tr:last').after(
-                '<td><input type="text" id="SrNo1" class="form-control" placeholder="SrNo"></td>' +
-                '<td><input type="text" id="ItemName1" class="form-control" placeholder="ItemName"></td>' +
-                '<td><input type="text" id="Qty1" class="form-control" placeholder="Qty"></td>' +
-                '<td><input type="text" id="Unit1" class="form-control" placeholder="Unit"></td>' +
-                '<td><input type="text" id="BasicRate1" class="form-control" placeholder="BasicRate"></td>' +
-                '<td><input type="text" id="Freight1" class="form-control" placeholder="Freight"></td>' +
-                '<td><input type="text" id="CDC1" class="form-control" placeholder="CDC"></td>' +
-                '<td><input type="text" id="Discount1" class="form-control" placeholder="Discount"></td>' +
-                '<td><input type="text" id="Scheme1" class="form-control" placeholder="Scheme"></td>' +
-                '<td><input type="text" id="Scheme11" class="form-control" placeholder="Scheme"></td>' +
-                '<td><input type="text" id="GSTRate1" class="form-control" placeholder="GSTRate"></td>' +
-                '<td><input type="text" id="NLC1" class="form-control" placeholder="NLC"></td>' +
-                '<td><input type="text" id="Remarks1" class="form-control" placeholder="Remark" onblur="AddRow(2);"></td>' +
-                '<td><a id="add"><span class="btn btn-sm btn-success btn-add-row">Add New</span></a> | <span class="btn btn-sm btn-danger btn_row_delete">Delete</span></td>'
-            );
-            return false;
-        });
-        ////--->current row > new > start
-        //$(document).on('click',".btn_row_below_new", function(e)
-        //{
-        //  var r = $(this).closest('tr').clone();
-
-        //  $.each(r.find('td'), function(i1,v1)
-        //  {
-        //        //clear all data/value in td/cell
-        //        $(this).html('');
-        //  });
-        //  $(this).closest('tr').after(r);
-        //});
-        ////--->current row > new > end
-        //--->current row > clone > start
-        $(document).on('click', ".btn_row_below_clone", function (e) {
-            var r = $(this).closest('tr').clone();
-            $(this).closest('tr').after(r);
-        });
-        //--->current row > clone > end
-        //--->current row > delete > start
-        $(document).on('click', ".btn_row_delete", function (e) {
-            var r = $(this).closest('tr').remove();
-        });
-        //--->current row > delete > end
-    });
-</script>
