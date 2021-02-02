@@ -64,7 +64,10 @@ namespace Admin.Web.Controllers
                 _dbContext.SaveChanges();
             }
             //redirect to edit
-            return RedirectToAction("Edit", new { id = model.Id });
+              return RedirectToAction("Index");
+            // var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
+            //Index();
+           // return View(list);
         }
 
         public IActionResult Delete(int id)

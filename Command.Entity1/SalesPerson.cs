@@ -21,8 +21,19 @@ namespace Command.Entity1
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
+        private DateTime? dateCreated = null;
         [Column(TypeName = "datetime")]
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate
+        {
+            get
+            {
+                return this.dateCreated.HasValue
+                   ? this.dateCreated.Value
+                   : DateTime.Now;
+            }
+
+            set { this.dateCreated = value; }
+        }
         [StringLength(1)]
         public string Status { get; set; }
     }

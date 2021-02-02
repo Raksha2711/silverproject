@@ -53,7 +53,8 @@ namespace Admin.Web.Controllers
                 }
                 _dbContext.SaveChanges();
             }
-            return RedirectToAction("Edit", new { id = model.Id });
+            // return RedirectToAction("Edit", new { id = model.Id });
+            return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
