@@ -5,11 +5,13 @@ PurchaseOrderUpdate.documentClick = function () {
 
     $('select[name="PaymentTerm"]').change(function () {
         if ($(this).val() == "PDC") {
-            $('input[name="PaymentValue"]').show();
+            // $('input[name="PaymentValue"]').show();
+            $('#divpayment').show();
             $('input[name="PaymentValue"]').val(30);
         }
         else {
-            $('input[name="PaymentValue"]').hide();
+            $('#divpayment').hide();
+          //  $('input[name="PaymentValue"]').hide();
             $('input[name="PaymentValue"]').val(0);
         }
     });
@@ -26,7 +28,56 @@ PurchaseOrderUpdate.documentClick = function () {
             $('.tblpo>tbody').append(res);
         });
     });
-    $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
+    $(document).on('click', '.btn_row_delete', function (e) {
+        var isCreate = PurchaseOrderUpdate.btn.attr('data-isupdate') == 'True'
+        alert(isCreate);
+        //$(this).parent().parent().remove()
+    
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                    });
+                    debugger
+                    if (isCreate) {
+                        $(this).parent().parent().remove();}
+                    else {
+                        alert("else");
+                        var frmData = getFromData();
+                        frmData.billItems = [];
+                        var tr = $('.tblpo>tbody>tr');
+                        $.each(tr, function (k, v) {
+                            var trobj = {};
+                            var td = $(v).find(':input');
+                            $.each(td, function (tdk, tdv) { trobj[$(tdv).attr('name')] = $(tdv).val(); });
+                            frmData.billItems.push(trobj);
+                        })
+                        alert(frmData.Id);
+                        $.ajax({
+                            type: 'POST',
+                            url: baseurl + ('PurchaseOrder/deleterow/' + frmData.Id + '.json'),
+                            data: JSON.stringify(frmData),
+                            success: function (resut) { debugger; window.location.href = baseurl + 'purchaseorder/edit/' + resut },
+                            error: function (jqXHR) { debugger },
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8'
+                        });
+                    }
+                   
+                } else {
+                    swal("Your data is safe!");
+                }
+            });
+    
+});
+   // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
     $(document).on('click', '.btn-submit', function () {
         var frmData = getFromData();
         frmData.billItems = [];

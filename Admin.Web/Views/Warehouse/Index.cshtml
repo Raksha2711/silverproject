@@ -25,14 +25,23 @@
 
 
         <div class="row">
-            <div class="col-12 ">
-                <a href="/Warehouse/Create" class="float-right btn btn-default">
-                    <i class="fas fa-plus"></i>&nbsp; Add
+            <div class="col-12">
+                <div class="callout callout-info">
+                    @*<h5><i class="fas fa-info"></i> Action:</h5>*@
+                    <div class=" offset-6 col-6">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" id="fileupload" name="files" class="form-control" />
+                                <label class="custom-file-label" for="fileupload">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                </a>
-                <input type="file" id="fileupload" name="files" class="form-control" />
-                <input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" />
-                <input type="button" name="ExportExcel" value="ExportToExcel" id="btndownload" class="btn btn-primary " />
+
 
             </div>
             <div class="col-12">
@@ -41,11 +50,15 @@
                         @*<h3 class="card-title">Fixed Header Table</h3>*@
 
                         <div class="card-tools">
-                            <div class="input-group input-group-sm col-12" style="width: 150px;">
+                            <div class="input-group input-group-sm">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                                <div class="input-group-append">
+                                    <a href="/WareHouse/Create" class="btn btn-default">
+                                        <i class="fas fa-plus"></i>&nbsp; Add
+                                    </a>
                                 </div>
                             </div>
 

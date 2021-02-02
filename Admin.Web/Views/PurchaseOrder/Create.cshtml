@@ -39,11 +39,11 @@
                 <form name="frmAddBill" asp-antiforgery="false" method="post">
                     <input type="hidden" asp-for="Id" />
                     <div class="row">
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label asp-for="No">#No</label>
                             <input type="text" class="form-control" asp-for="No" readonly>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             @*<label asp-for="Date">Date</label>
                                 <input type="text" class="form-control datetimepicker-input" asp-for="Date" data-target="#reservationdate">
                                 <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -57,17 +57,20 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label asp-for="SalesPerson">SalesPerson Name</label>
-                            <input type="text" class="form-control" asp-for="SalesPerson">
+                            <select type="select" asp-for="SalesPerson" asp-items="ViewBag.SalesPerson" class="form-control">
+                                <option value="0">Select SalesPerson</option>
+                            </select>
+                            @*<input type="text" class="form-control" asp-for="SalesPerson">*@
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label asp-for="Vendor">Vendor Name</label>
                             <select type="select" asp-for="Vendor" asp-items="ViewBag.Vendor" class="form-control">
                                 <option value="0">Select Vendor</option>
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label asp-for="DeliveryType">Pick Up/Delivery</label>
                             <select class="form-control" asp-for="DeliveryType">
                                 <option value="0">Select</option>
@@ -75,13 +78,13 @@
                                 <option value="Delivery">Delivery</option>
                             </select>
                         </div>
-                        <div class="form-group col-6 hidden" id="divaddress">
+                        <div class="form-group col-3 hidden" id="divaddress">
                             <label asp-for="DelieveryPlaceId">Place of Delivery</label>
                             <select type="select" asp-for="DelieveryPlaceId" asp-items="ViewBag.WareHouse" class="form-control">
                                 <option value="">Select Address</option>
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label asp-for="PaymentTerm">Payment Term</label>
                             <select class="form-control" asp-for="PaymentTerm">
                                 <option value="">Select</option>
@@ -89,9 +92,9 @@
                                 <option value="PDC">PDC</option>
                             </select>
                         </div>
-                        <div class="form-group col-6">
-                            <label asp-for="PaymentValue">Payment Value</label>
-                            <input type="text" asp-for="PaymentValue" class="form-control hidden" placeholder="Enter" value="0">
+                        <div class="form-group col-3 hidden" id="divpayment">
+                            <label asp-for="PaymentValue">Days</label>
+                            <input type="text" asp-for="PaymentValue" class="form-control" placeholder="Enter" value="0">
                         </div>
                     </div>
                 </form>
@@ -105,7 +108,7 @@
                                     <th>Qty</th>
                                     <th>Unit</th>
                                     <th>Basic Rate</th>
-                                    <th>Freight / addl cost</th>
+                                    <th>Freight</th>
                                     <th>CDC</th>
                                     <th>Discount 1</th>
                                     <th>Scheme</th>
@@ -137,4 +140,7 @@
 </div>
 @section scripts{
     <script src="~/cdn/app/JS/PurchaseOrderUpdate.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 }
+
+

@@ -14,9 +14,16 @@
         </select>
     </td>
     <td><input name="Qty" asp-for="Qty" class="form-control w-70p" placeholder="Qty"></td>
-    <td><input name="Unit" asp-for="Unit" class="form-control w-70p" placeholder="Unit"></td>
+    <td><input name="Unit" asp-for="Unit" class="form-control w-70p" placeholder="Unit" value="Pcs"  readonly ></td>
     <td><input name="BasicRate" asp-for="BasicRate" class="form-control" placeholder="BasicRate"></td>
-    <td><input name="AddCost" asp-for="AddCost" class="form-control" placeholder="Freight"></td>
+    <td>
+        <select type="select" name="AddCost" asp-for="AddCost" class="form-control w-120p">
+            <option value="0">Select</option>
+            <option value="1">YES</option>
+            <option value="2">NO</option>
+        </select>
+        @*<input name="AddCost" asp-for="AddCost" class="form-control" placeholder="Freight">*@
+    </td>
     <td><input name="CDC" asp-for="CDC" class="form-control w-70p" placeholder="CDC"></td>
     <td><input name="Discount1" asp-for="Discount1" class="form-control" placeholder="Discount"></td>
     <td><input name="Scheme1" asp-for="Scheme1" class="form-control" placeholder="Scheme1"></td>
@@ -26,6 +33,10 @@
     <td><input name="NLC" asp-for="NLC" class="form-control w-70p" placeholder="NLC"></td>
     <td><input name="Remarks" asp-for="Remarks" class="form-control w-120p" placeholder="Remarks"></td>
     <td id="Action1">
-        <span class="btn btn-sm btn-danger btn_row_delete">Delete</span>
+        <span class="btn btn-sm btn-danger btn_row_delete  preview">Delete</span> @*btn_row_delete*@
     </td>
 </tr>
+@section scripts{
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+}
+   

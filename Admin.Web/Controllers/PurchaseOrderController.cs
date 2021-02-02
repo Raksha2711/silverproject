@@ -48,8 +48,8 @@ namespace Admin.Web.Controllers
         public IActionResult Create()
         {
             var m = new Bill();
-            int.TryParse(GetPoNo()?.Replace("SIL", ""), out int poNo);
-            m.No = string.Format("SIL{0}", poNo + 1);
+            int.TryParse(GetPoNo()?.Replace("SIH", ""), out int poNo);
+            m.No = string.Format("SIH{0}", poNo + 1);
             m.BillItems = new List<BillItem>();
             m.BillItems.Add(new BillItem());
             FillDropDown();
@@ -114,5 +114,26 @@ namespace Admin.Web.Controllers
         #endregion
 
         internal string GetPoNo() { return _dbContext.Bills.OrderBy(o => o.Id).Select(s => s.No).FirstOrDefault(); }
+        [HttpPost]
+        [Route("deleterow/{id:int}.json")]
+        public IActionResult DeleteRow(int id)
+        {
+            if (id > 0)
+            {
+                var result = _dbContext.BillItems.SingleOrDefault(b => b.Id == id);
+                if (result != null)
+                {
+                    result.Recstatus = 'D';
+                    _dbContext.SaveChanges();
+                }
+                //BillItem model = new BillItem();
+                //model.Recstatus = 'D';
+                //model.Id = id;
+                //_dbContext.BillItems.Add(model);
+              
+                return Json(id);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
