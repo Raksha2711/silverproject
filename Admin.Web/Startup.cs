@@ -43,7 +43,7 @@ namespace Admin.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/account/signin";
-                options.LogoutPath = $"/account/logout";
+                options.LogoutPath = $"/account/signout";
                 options.AccessDeniedPath = $"/account/accessDenied";
             });
             //services.AddControllersWithViews();

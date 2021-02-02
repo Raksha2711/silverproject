@@ -1,79 +1,87 @@
-﻿@model List<Command.Entity1.Bill>
+﻿@model List<TaskItemViewModel>
 @{
     ViewData["Title"] = "Item List";
 }
-
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>PO List</h1>
+@*List<Command.Entity1.Bill>*@
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>PO List</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Purchase Order List</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Purchase Order List</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                                <div class="input-group-append">
-                                    <a href="@Url.Action("Create","purchaseorder")" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>&nbsp; Add
-                                    </a>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <a href="@Url.Action("Create","purchaseorder")" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>&nbsp; Add
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0" style="height: 300px;">
-                        <table class="table table-head-fixed">
-                            <thead>
-                                <tr>
-                                    <th>#No</th>
-                                    <th>Date</th>
-                                    <th>Sales Person</th>
-                                    <th>Delivery Type</th>
-                                    <th>Payment Term</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0" style="height: 300px;">
+                            <table class="table table-head-fixed">
+                                <thead>
                                     <tr>
-                                        <td>@item.No</td>
-                                        <td>@item.Date</td>
-                                        <td>@item.SalesPerson</td>
-                                        <td>@item.DeliveryType</td>
-                                        <td>@item.PaymentTerm</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                            | <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
-                                        </td>
+                                        <th>PO No</th>
+                                        <th>Date</th>
+                                        <th>Vendor</th>
+                                        <th>Sales Person</th>
+                                        <th>Delivery Type</th>
+                                        <th>Payment Term</th>
+                                        <th>Approver</th>
+                                        <th>Purchase</th>
+                                        <th>Accounts</th>
+                                        @*<th>Action</th>*@
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.No</td>
+                                            <td>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", @item.Date))</td>
+                                            <td>@item.VendorName</td>
+                                            <td>@item.SalesPersoName</td>
+                                            <td>@item.DeliveryType</td>
+                                            <td>@item.PaymentTerm</td>
+                                            <th>@item.Approver</th>
+                                            <th>@item.Purchase</th>
+                                            <th>@item.Accounts</th>
+                                            @*<td>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                    | <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
+                                                </td>*@
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
             </div>
-        </div>
 
+        </div>
     </div>
-</div>

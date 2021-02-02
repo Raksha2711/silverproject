@@ -66,11 +66,10 @@ namespace Command.Entity1
         public string No { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Date { get; set; }
-        public string SalesPerson { get; set; }
+        public int SalesPerson { get; set; }
         public int Vendor { get; set; }
         [StringLength(100)]
         public string DeliveryType { get; set; }
-        //public string DelieveryPlace { get; set; }
         public int? DelieveryPlaceId { get; set; }
         public string PaymentTerm { get; set; }
         public int? PaymentValue { get; set; }
@@ -84,6 +83,12 @@ namespace Command.Entity1
         public char? Recstatus { get; set; }
         //foregin-relationship
         public ICollection<BillItem> BillItems { get; set; }
+        //Added New 
+        public int Approver { get; set; }
+        public int Purchase { get; set; }
+        public int Accounts { get; set; }
+        public string PurchaseInvoiceNo { get; set; }
+        public DateTime PurchaseDate { get; set; }
     }
     [Table("BillItem", Schema = "po")]
     public partial class BillItem : IUpdateAuditable
@@ -95,7 +100,8 @@ namespace Command.Entity1
         [StringLength(3)]
         public string Unit { get; set; }
         public double BasicRate { get; set; }
-        public double AddCost { get; set; }
+        [StringLength(3)]
+        public string AddCost { get; set; }
         public double CDC { get; set; }
         public double Discount1 { get; set; }
         public double Scheme1 { get; set; }
@@ -112,5 +118,6 @@ namespace Command.Entity1
         //foregin-relationship
         public Bill Bill { get; set; }
         public int BillId { get; set; }
+        
     }
 }

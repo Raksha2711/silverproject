@@ -64,7 +64,7 @@ PurchaseOrderUpdate.documentClick = function () {
                             type: 'POST',
                             url: baseurl + ('PurchaseOrder/deleterow/' + frmData.Id + '.json'),
                             data: JSON.stringify(frmData),
-                            success: function (resut) { debugger; window.location.href = baseurl + 'purchaseorder/edit/' + resut },
+                            success: function (resut) {  },
                             error: function (jqXHR) { debugger },
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8'
@@ -110,7 +110,7 @@ function SaveOrUpdate(obj) {
         type: 'POST',
         url: baseurl + (!!isCreate ? 'PurchaseOrder/create.json' : 'PurchaseOrder/update/' + obj.Id + '.json'),
         data: JSON.stringify(obj),
-        success: function (resut) { debugger; window.location.href = baseurl + 'purchaseorder/edit/' + resut },
+        success: function (resut) {window.location.href = baseurl + 'purchaseorder' },
         error: function (jqXHR) { debugger },
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'

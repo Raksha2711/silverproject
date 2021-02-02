@@ -4,14 +4,16 @@ using Command.Entity1;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Command.Db1.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210202164537_changeaddcostdatatype")]
+    partial class changeaddcostdatatype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,12 +27,6 @@ namespace Command.Db1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Accounts")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Approver")
-                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -63,20 +59,11 @@ namespace Command.Db1.Migrations
                     b.Property<int?>("PaymentValue")
                         .HasColumnType("int");
 
-                    b.Property<int>("Purchase")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PurchaseInvoiceNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Recstatus")
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<int>("SalesPerson")
-                        .HasColumnType("int");
+                    b.Property<string>("SalesPerson")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Vendor")
                         .HasColumnType("int");

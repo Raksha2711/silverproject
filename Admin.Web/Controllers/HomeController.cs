@@ -25,19 +25,22 @@ namespace Admin.Web.Controllers
 
         public IActionResult Index()
         {
-            var result = _dbContext.Bills.Select(s => new TaskItemViewModel
-            {
-                No = s.No,
-                Id = s.Id,
-                Date = s.Date,
-                SalesPerson = s.SalesPerson,
-                Vendor = s.Vendor,
-                DeliveryType = s.DeliveryType,
-                DelieveryPlaceId = s.DelieveryPlaceId,
-                PaymentTerm = s.PaymentTerm,
-                PaymentValue = s.PaymentValue
+            var result = (from s in _dbContext.Bills
+                          join v in _dbContext.Vendor on s.Vendor equals v.Id
+                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                          select new TaskItemViewModel
+                          {
+                              No = s.No,
+                              Id = s.Id,
+                              Date = s.Date,
+                              SalesPersoName = sp.Name,
+                              VendorName = v.Name,
+                              DeliveryType = s.DeliveryType,
+                              DelieveryPlaceId = s.DelieveryPlaceId,
+                              PaymentTerm = s.PaymentTerm,
+                              PaymentValue = s.PaymentValue
 
-            }).ToList();
+                          }).ToList();
             return View(result);
         }
     }

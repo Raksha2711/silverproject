@@ -6,9 +6,8 @@ using Command.Entity1;
 
 namespace Admin.Web.Models
 {
-    public class TaskItemViewModel : Bill
+    public class BillViewModel : Bill
     {
-        public bool CanEdit { get; set; }
         public string VendorName { get; set; }
         public string SalesPersoName { get; set; }
     }

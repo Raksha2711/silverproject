@@ -1,4 +1,5 @@
-﻿using Command.Entity1;
+﻿using Admin.Web.Models;
+using Command.Entity1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -40,8 +41,24 @@ namespace Admin.Web.Controllers
         [Route("", Name = "purchaseorder")]
         public IActionResult Index()
         {
+            var result = (from s in _dbContext.Bills
+                          join v in _dbContext.Vendor on s.Vendor equals v.Id
+                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                          select new TaskItemViewModel
+                          {
+                              No = s.No,
+                              Id = s.Id,
+                              Date = s.Date,
+                              SalesPersoName = sp.Name,
+                              VendorName = v.Name,
+                              DeliveryType = s.DeliveryType,
+                              DelieveryPlaceId = s.DelieveryPlaceId,
+                              PaymentTerm = s.PaymentTerm,
+                              PaymentValue = s.PaymentValue
 
-            return View(_dbContext.Bills.ToList());
+                          }).ToList();
+            return View(result);
+            //return View(_dbContext.Bills.ToList());
         }
 
         [HttpGet("create")]
@@ -113,7 +130,10 @@ namespace Admin.Web.Controllers
         }
         #endregion
 
-        internal string GetPoNo() { return _dbContext.Bills.OrderBy(o => o.Id).Select(s => s.No).FirstOrDefault(); }
+        internal string GetPoNo() {
+            var a =  _dbContext.Bills.OrderByDescending(o => o.Id).Select(s => s.No).FirstOrDefault();
+            return a;
+        }
         [HttpPost]
         [Route("deleterow/{id:int}.json")]
         public IActionResult DeleteRow(int id)
