@@ -6,18 +6,17 @@
     <h5 class="card-title">PO No :@Model.No  (D:@Convert.ToString(string.Format("{0:dd/MM/yyyy}", @Model.Date)))<span class="badge @(@Model.DeliveryType=="PickUp"?"bg-success": "bg-gradient-indigo")">@Model.DeliveryType</span></h5>
     @if (Model.CanEdit)
     {
-    <div class="card-tools">
-        <a href="/PurchaseOrder/detail/@Model.Id" class="btn btn-tool">
-            <i class="fas fa fa-arrow-circle-right"></i>
-        </a>
-    </div>
+        <div class="card-tools">
+            <a href="/PurchaseOrder/detail/@Model.Id" class="btn btn-tool">
+                <i class="fas fa fa-arrow-circle-right"></i>
+            </a>
+            
+        </div>
     }
 </div>
 <div class="card-body p-0">
     <ul class="list-group">
-        @*<li class="list-group-item"><b>Date : </b>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", @Model.Date)) </li>*@
         <li class="list-group-item"><b>Sales Person : </b>@Model.SalesPersoName</li>
         <li class="list-group-item"><b>Vendor : </b>@Model.VendorName</li>
-        @*<li class="list-group-item"><b>Payment Term : </b>@Model.PaymentTerm</li>*@
     </ul>
 </div>

@@ -44,6 +44,7 @@ namespace Admin.Web.Controllers
             var result = (from s in _dbContext.Bills
                           join v in _dbContext.Vendor on s.Vendor equals v.Id
                           join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+
                           select new TaskItemViewModel
                           {
                               No = s.No,
@@ -54,7 +55,11 @@ namespace Admin.Web.Controllers
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,
                               PaymentTerm = s.PaymentTerm,
-                              PaymentValue = s.PaymentValue
+                              PaymentValue = s.PaymentValue,
+                              Purchase = s.Purchase,
+                              Accounts = s.Accounts,
+                              Approver = s.Approver
+
 
                           }).ToList();
             return View(result);
@@ -111,7 +116,54 @@ namespace Admin.Web.Controllers
         [HttpGet("detail/{id:int}")]
         public IActionResult Detail([FromRoute] int id)
         {
-            return View();
+            try
+            {
+                var result = (from s in _dbContext.Bills.Include(e => e.BillItems)
+                              join v in _dbContext.Vendor on s.Vendor equals v.Id
+                              join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                              join wh in _dbContext.Warehouse on s.DelieveryPlaceId equals wh.Id into whl
+                              from wh in whl.DefaultIfEmpty()
+                              select new BillViewModel
+                              {
+                                  No = s.No,
+                                  BillItemsView =
+                                      (from a in s.BillItems
+                                       join bi in _dbContext.Item on a.ItemId equals bi.Id
+                                       select new BillItemViewModel
+                                       {
+                                           Id=a.Id,
+                                           ItemName=bi.Name,
+                                           Qty=a.Qty,
+                                           Unit=a.Unit,
+                                           BasicRate=a.BasicRate,
+                                           AddCost=a.AddCost,
+                                           CDC=a.CDC,
+                                           Discount1=a.Discount1,
+                                           Scheme1=a.Scheme1,
+                                           Scheme2=a.Scheme2,
+                                           SchemeAmt=a.SchemeAmt,
+                                           GSTRate=a.GSTRate,
+                                           NLC=a.NLC,
+                                           Remarks=a.Remarks
+                                       }).ToList(),
+                                  Id = s.Id,
+                                  Date = s.Date,
+                                  SalesPersoName = sp.Name,
+                                  VendorName = v.Name,
+                                  DeliveryType = s.DeliveryType,
+                                  DelieveryPlaceId = s.DelieveryPlaceId,
+                                  PaymentTerm = s.PaymentTerm,
+                                  PaymentValue = s.PaymentValue,
+                                  WarehouseDetail = wh,
+
+                              }).FirstOrDefault();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         [HttpGet("additem")]
         public IActionResult AddItem()
@@ -130,8 +182,9 @@ namespace Admin.Web.Controllers
         }
         #endregion
 
-        internal string GetPoNo() {
-            var a =  _dbContext.Bills.OrderByDescending(o => o.Id).Select(s => s.No).FirstOrDefault();
+        internal string GetPoNo()
+        {
+            var a = _dbContext.Bills.OrderByDescending(o => o.Id).Select(s => s.No).FirstOrDefault();
             return a;
         }
         [HttpPost]
@@ -150,10 +203,28 @@ namespace Admin.Web.Controllers
                 //model.Recstatus = 'D';
                 //model.Id = id;
                 //_dbContext.BillItems.Add(model);
-              
+
                 return Json(id);
             }
             return BadRequest(ModelState);
+        }
+        [HttpPost]
+        [Route("forwardpo")]
+        public IActionResult ForwardPo(int poid, string status)
+        {
+            var po = _dbContext.Bills.Where(w => w.Id == poid).FirstOrDefault();
+            if (status == "accept")
+            {
+                if (po.Approver == 0) po.Approver = 1;
+                else if (po.Purchase == 0) po.Purchase = 1;
+                else if (po.Accounts == 0) po.Accounts = 1;
+            }
+            else if (status == "cancel")
+            {
+                po.Recstatus = 'D';
+            }
+            _dbContext.SaveChanges();
+            return RedirectToAction("index", "home");
         }
     }
 }
