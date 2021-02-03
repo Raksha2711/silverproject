@@ -156,7 +156,7 @@ namespace Admin.Web.Controllers
                                   PaymentValue = s.PaymentValue,
                                   WarehouseDetail = wh,
 
-                              }).FirstOrDefault();
+                              }).Where(w => w.Id.Equals(id)).FirstOrDefault();
                 return View(result);
             }
             catch (Exception ex)
