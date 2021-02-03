@@ -31,10 +31,15 @@
                             <div class="custom-file">
                                 <input type="file" id="fileupload" name="files" class="form-control" />
                                 <label class="custom-file-label" for="fileupload">Choose file</label>
+                                <input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" />
                             </div>
+                            <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
                             <div class="input-group-append">
-                                <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                                <a href="@Url.Action("ExportToExcel", "Vendor")" class="btn-primary input-group-text">Download</a>
                             </div>
+                            @*<div class="input-group-append">
+            <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+        </div>*@
                         </div>
                     </div>
                 </div>
@@ -66,19 +71,25 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>ContactNo</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@item.Name</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                            | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.EmailId</td>
+                                    <td>@item.ContactNo</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                        | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

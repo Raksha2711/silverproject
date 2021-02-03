@@ -34,9 +34,13 @@
                                 <input type="file" id="fileupload" name="files" class="form-control" />
                                 <label class="custom-file-label" for="fileupload">Choose file</label>
                             </div>
+                            <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
                             <div class="input-group-append">
-                                <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                                <a href="@Url.Action("ExportToExcel", "Warehouse")" class="btn-primary input-group-text">Download</a>
                             </div>
+                            @*<div class="input-group-append">
+            <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+        </div>*@
                         </div>
                     </div>
                 </div>

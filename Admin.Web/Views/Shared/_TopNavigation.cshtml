@@ -8,7 +8,8 @@
 @if (User.Identity.IsAuthenticated)
 {
     <li class="nav-item d-none d-sm-inline-block">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        @*<form class="form-inline" asp-area="Identity" asp-page="/Account/SignOut" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">*@
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/SignOut" asp-route-returnUrl="@Url.Action("SignOut", "Account", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
@@ -16,10 +17,12 @@
 else
 {
     <li class="nav-item d-none d-sm-inline-block">
-        <a asp-area="Identity" asp-page="/Account/SignIn" class="nav-link">Login</a>
+        @*<a asp-area="Identity" asp-page="/Account/SignIn" class="nav-link">Login</a>*@
+        <a  asp-controller="Account" asp-action="SignIn" class="nav-link">Login</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-        <a asp-area="Identity" asp-page="/Account/SignOut" class="nav-link">Register</a>
+        <a asp-controller="Account" asp-action="SignOut" class="nav-link">Register </a>
+        @*<a asp-area="Identity" asp-page="/Account/SignOut" class="nav-link">Register</a>*@
     </li>
 }
 

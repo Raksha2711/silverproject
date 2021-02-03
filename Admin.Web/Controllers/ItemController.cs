@@ -125,36 +125,19 @@ namespace Admin.Web.Controllers
             return list;
         }
         public async Task<IActionResult> ExportToExcel()
-
         {
-            //Let use below test data for writing it to excel
             var item =  _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            // let's convert our object data to Datatable for a simplified logic.
-            // Datatable is the easiest way to deal with complex datatypes for easy reading and formatting. 
-            //DataTable table = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(item), (typeof(DataTable)));
-            //string path = HttpContext.Current.Server.MapPath(HttpRequest.ApplicationPath);
-            //string path = "F:/";// System.Environment.GetFolderPath(Environment.SpecialFolder);
-            //FileInfo filePath = new FileInfo(path);
             var stream = new MemoryStream();
-            
             using (var package = new ExcelPackage(stream))
             {
                 var workSheet = package.Workbook.Worksheets.Add("test");
                 workSheet.Cells.LoadFromCollection(item, true);
-
+                package.Save();
             }
-            //using (var excelPack = new ExcelPackage(filePath))
-            //{
-            //    var ws = excelPack.Workbook.Worksheets.Add("WriteTest");
-            //    ws.Cells.LoadFromDataTable(table, true, OfficeOpenXml.Table.TableStyles.Light8);
-            //    excelPack.Save();
-            //}
             stream.Position = 0;
-            string excelName = $"FlashSale-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
+            string excelName = $"ItemData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-
-            // return ;
         }
 
     }

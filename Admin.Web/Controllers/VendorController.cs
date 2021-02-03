@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace Admin.Web.Controllers
 {
@@ -109,6 +111,21 @@ namespace Admin.Web.Controllers
                 }
             }
             return list;
+        }
+        public async Task<IActionResult> ExportToExcel()
+        {
+            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("test");
+                workSheet.Cells.LoadFromCollection(item, true);
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = $"ItemData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
     }
 }

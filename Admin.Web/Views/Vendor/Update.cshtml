@@ -29,10 +29,33 @@
                     @Html.HiddenFor(m => m.ModifiedBy)
                     @Html.HiddenFor(m => m.ModifiedDate)
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Name</label>
                                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address</label>
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Enter Address" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>EmailId</label>
+                                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter EmailId" })
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ContactNo</label>
+                                @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", placeholder = "Enter ContactNo" })
                             </div>
 
                         </div>
