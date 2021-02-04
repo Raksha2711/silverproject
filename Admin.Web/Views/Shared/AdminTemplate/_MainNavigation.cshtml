@@ -1,9 +1,9 @@
 ﻿@using static Admin.Web.Helpers.NavigationIndicatorHelper;
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="~/Home" class="brand-link">
-        <img src="~/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="~/img/logo.png" alt="AdminLTE Logo" class="logo-image"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">SilverLine</span>
+        @*<span class="brand-text font-weight-light">SilverLine</span>*@
     </a>
     <div class="sidebar">
 @if (User.Identity.IsAuthenticated)
@@ -89,3 +89,9 @@ else
         </nav>
     </div>
 </aside>
+<style>
+    .logo-image {
+        width: 240px !important;
+        background: white !important;
+    }
+</style>

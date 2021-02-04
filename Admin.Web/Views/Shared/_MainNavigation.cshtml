@@ -4,9 +4,8 @@
 @inject UserManager<IdentityUser> UserManager
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="~/Home" class="brand-link">
-        <img src="~/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-light">SilverLine</span>
+        <img src="~/img/logo.png" alt="AdminLTE Logo" class="logo-image">
+        @*<span class="brand-text font-weight-light">SilverLine</span>*@
     </a>
     <div class="sidebar">
         @*@if (User.Identity.IsAuthenticated)*@
@@ -35,13 +34,13 @@
                     <a asp-controller="Home" asp-action="Index" class="nav-link @Url.MakeActiveClass("home","index")">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Home
+                           Control Panel
                         </p>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a asp-controller="Vendor" asp-action="Index" class="nav-link @Url.MakeActiveClass("Vendor","index")">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
                             Vendor
                         </p>
@@ -49,7 +48,7 @@
                 </li>
                 <li class="nav-item ">
                     <a asp-controller="Item" asp-action="Index" class="nav-link @Url.MakeActiveClass("Item","index")">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-laptop"></i>
                         <p>
                             Item
                         </p>
@@ -57,7 +56,7 @@
                 </li>
                 <li class="nav-item ">
                     <a asp-controller="SalesPerson" asp-action="Index" class="nav-link @Url.MakeActiveClass("SalesPerson","index")">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
                             Sales Person
                         </p>
@@ -65,7 +64,7 @@
                 </li>
                 <li class="nav-item ">
                     <a asp-controller="Warehouse" asp-action="Index" class="nav-link @Url.MakeActiveClass("Warehouse","index")">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-laptop-house"></i>
                         <p>
                             WareHouse
                         </p>
@@ -73,13 +72,13 @@
                 </li>
                 <li class="nav-item ">
                     <a asp-controller="PurchaseOrder" asp-action="Index" class="nav-link @Url.MakeActiveClass("PurchaseOrder","index")">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Purchase Order
                         </p>
                     </a>
                 </li>
-                @if (User.Identity.IsAuthenticated)
+                @*@if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item ">
                         <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
@@ -89,8 +88,14 @@
                             </p>
                         </a>
                     </li>
-                }
+                }*@
             </ul>
         </nav>
     </div>
 </aside>
+<style>
+    .logo-image {
+        width: 240px !important;
+        background: white !important;
+    }
+</style>
