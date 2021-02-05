@@ -3,12 +3,12 @@
     ViewData["Title"] = "Home Page";
 }
 @{
-var approver = Model.Where(w => w.Approver == 0).ToList();
-var approvercount = Model.Where(w => w.Approver == 0).Count();
-var purchasecount  = Model.Where(w => w.Approver == 1 && w.Purchase == 0).Count();
-var accountcount  = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Accounts == 0).Count();
+    var approver = Model.Where(w => w.Approver == 0).ToList();
+    var purchase = Model.Where(w => w.Approver == 1 && w.Purchase == 0);
+    var account = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Accounts == 0);
 
 }
+
 <!-- Content Wrapper. Contains page content -->
 <section class="content-header">
     <div class="container-fluid">
@@ -32,16 +32,16 @@ var accountcount  = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Acc
             <div class="p-0 col card card-row card-default">
                 <div class="card-header bg-info">
                     <h3 class="card-title">
-                        Approver (Total : @approvercount)
+                        Approver (Total : @approver.Count())
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">
                     @foreach (var item in Model.Where(w => w.Approver == 0))
                     {
                         item.CanEdit = true;
-                    <div class="card card-primary card-outline">
-                        <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
-                    </div>
+                        <div class="card card-primary card-outline">
+                            <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
+                        </div>
                     }
 
                 </div>
@@ -49,11 +49,11 @@ var accountcount  = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Acc
             <div class="p-0 ml-1 mr-1 col card card-row card-default">
                 <div class="card-header bg-orange">
                     <h3 class="card-title">
-                        Purchase (Total : @purchasecount)
+                        Purchase (Total : @purchase.Count())
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">
-                    @foreach (var item in Model.Where(w => w.Approver == 1 && w.Purchase == 0))
+                    @foreach (var item in purchase.ToList())
                     {
                         item.CanEdit = true;
                         <div class="card card-primary card-outline">
@@ -65,11 +65,11 @@ var accountcount  = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Acc
             <div class="p-0 col card card-row card-default">
                 <div class="card-header bg-info">
                     <h3 class="card-title">
-                        Account (Total : @accountcount)
+                        Account (Total : @account.Count())
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">
-                    @foreach (var item in Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Accounts == 0))
+                    @foreach (var item in account.ToList())
                     {
                         item.CanEdit = true;
                         <div class="card card-primary card-outline">

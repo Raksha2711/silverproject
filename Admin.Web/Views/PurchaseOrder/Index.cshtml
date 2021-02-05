@@ -1,63 +1,63 @@
-﻿@model List<TaskItemViewModel>
+﻿@*@model List<TaskItemViewModel>*@
 @{
     ViewData["Title"] = "Item List";
 }
 
 @*List<Command.Entity1.Bill>*@
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>PO List</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Purchase Order List</li>
-                    </ol>
-                </div>
+@section styles{
+    <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>PO List</h1>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm">
-                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                    </div>
-                                    <div class="input-group-append">
-                                        <a href="@Url.Action("Create","purchaseorder")" class="btn btn-default">
-                                            <i class="fas fa-plus"></i>&nbsp; Add
-                                        </a>
-                                    </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Purchase Order List</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                                <div class="input-group-append">
+                                    <a href="@Url.Action("Create","purchaseorder")" class="btn btn-default">
+                                        <i class="fas fa-plus"></i>&nbsp; Add
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0" style="height: 500px;">
-                            <table class="table table-head-fixed">
-                                <thead>
-                                    <tr>
-                                        <th>PO No</th>
-                                        <th>Date</th>
-                                        <th>Vendor</th>
-                                        <th>Sales Person</th>
-                                        <th>Delivery Type</th>
-                                        <th>Payment Term</th>
-                                        <th>Approver</th>
-                                        <th>Purchase</th>
-                                        <th>Accounts</th>
-                                        @*<th>Action</th>*@
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 500px;">
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","purchaseorder")">
+                            <thead>
+                                <tr>
+                                    <th>PO No</th>
+                                    <th>Vendor</th>
+                                    <th>Sales Person</th>
+                                    <th>Delivery Type</th>
+                                    <th>Payment Term</th>
+                                    <th>Status( A | P | A)</th>
+                                    @*<th>Date</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var item in Model)
                                     {
                                         <tr>
                                             <td>@item.No</td>
@@ -67,32 +67,70 @@
                                             <td>@item.DeliveryType</td>
                                             <td>@item.PaymentTerm</td>
                                             <td>
-                                                @if (@item.Approver == 1)
-{
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-}
-                                                </td>
-                                            <td>@if (@item.Purchase == 1) {<i class="fa fa-check-circle" aria-hidden="true"></i>}</td>
-                                            <td>@if (@item.Accounts == 1) {<i class="fa fa-check-circle" aria-hidden="true"></i>}</td>
-                                            @*<td>
-                                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                                    | <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
-                                                </td>*@
+                                                @if (item.Recstatus == 'D')
+                                                {<small class="badge badge-danger"><i class="far fa-check-circle"></i> Cancel</small> }
+                                                else if (item.Approver == 0)
+                                                {<a href="@Url.Action("edit","purchaseorder",new { id = item.Id })">Edit</a> }
+                                                else
+                                                {
+                                                    @if (item.Approver == 1)
+                                                    {<small class="badge badge-info"><i class="far fa-check-circle"></i> App</small>}
+                                                    @if (@item.Purchase == 1)
+                                                    {<small class="badge badge-warning"><i class="far fa-check-circle"></i> Pur</small>}
+                                                    @if (@item.Accounts == 1)
+                                                    {<small class="badge badge-success"><i class="far fa-check-circle"></i> Acc</small>
+                                                    }
+                                                }
+                                            </td>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
+                                    }*@
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
-
         </div>
-    </div>
-<style>
-    .AddImage{
 
-    }
-</style>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
+    <script src="~/cdn/app/JS/common.js"></script>
+    <script type="text/javascript">
+        var table;
+        var table;
+        $(function () {
+            var columns = [
+                { name: "no", "data": "no", "orderable": true },
+                { name: "vendorName", "data": "vendorName", "orderable": true },
+                { name: "salesPersoName", "data": "salesPersoName", "orderable": true },
+                { name: "deliveryType", "data": "deliveryType", "orderable": true },
+                { name: "paymentTerm", "data": "paymentTerm", "orderable": true },
+                {
+                    name: "Action", data: null, "orderable": false,
+                    "render": function (data, type, full, meta) {
+                        var html;
+                        if (full.recstatus == 'D')
+                        { html = '<small class="badge badge-danger"><i class="far fa-check-circle"></i> Cancel</small>';}
+                        else if (full.approver == 0)
+                        { html='<a href=@Url.Action("edit","purchaseorder")/'+full.id+'>Edit</a>' }
+                        else
+                        {
+                            if (full.approver == 1)
+                            { html='<small class="badge badge-info"><i class="far fa-check-circle"></i> App</small>'}
+                            if (full.purchase == 1)
+                            { html += '<small class="badge badge-warning"><i class="far fa-check-circle"></i> Pur</small>'}
+                            if (full.accounts == 1)
+                            {
+                                html+='<small class="badge badge-success"><i class="far fa-check-circle"></i> Acc</small>'
+                            }
+                        }
+                        return html;
+                    }
+                }
+            ];
+            table = $$.dataTable('#table', { columns: columns });
+        });
+    </script>
+}

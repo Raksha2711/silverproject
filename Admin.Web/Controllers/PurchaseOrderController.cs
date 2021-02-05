@@ -41,29 +41,28 @@ namespace Admin.Web.Controllers
         [Route("", Name = "purchaseorder")]
         public IActionResult Index()
         {
-            var result = (from s in _dbContext.Bills
-                          join v in _dbContext.Vendor on s.Vendor equals v.Id
-                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+            //var result = (from s in _dbContext.Bills
+            //              join v in _dbContext.Vendor on s.Vendor equals v.Id
+            //              join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
 
-                          select new TaskItemViewModel
-                          {
-                              No = s.No,
-                              Id = s.Id,
-                              Date = s.Date,
-                              SalesPersoName = sp.Name,
-                              VendorName = v.Name,
-                              DeliveryType = s.DeliveryType,
-                              DelieveryPlaceId = s.DelieveryPlaceId,
-                              PaymentTerm = s.PaymentTerm,
-                              PaymentValue = s.PaymentValue,
-                              Purchase = s.Purchase,
-                              Accounts = s.Accounts,
-                              Approver = s.Approver
+            //              select new TaskItemViewModel
+            //              {
+            //                  No = s.No,
+            //                  Id = s.Id,
+            //                  Date = s.Date,
+            //                  SalesPersoName = sp.Name,
+            //                  VendorName = v.Name,
+            //                  DeliveryType = s.DeliveryType,
+            //                  DelieveryPlaceId = s.DelieveryPlaceId,
+            //                  PaymentTerm = s.PaymentTerm,
+            //                  PaymentValue = s.PaymentValue,
+            //                  Purchase = s.Purchase,
+            //                  Accounts = s.Accounts,
+            //                  Approver = s.Approver
 
 
-                          }).ToList();
-            return View(result);
-            //return View(_dbContext.Bills.ToList());
+            //              }).ToList();
+            return View();
         }
 
         [HttpGet("create")]
@@ -131,20 +130,21 @@ namespace Admin.Web.Controllers
                                        join bi in _dbContext.Item on a.ItemId equals bi.Id
                                        select new BillItemViewModel
                                        {
-                                           Id=a.Id,
-                                           ItemName=bi.Name,
-                                           Qty=a.Qty,
-                                           Unit=a.Unit,
-                                           BasicRate=a.BasicRate,
-                                           AddCost=a.AddCost,
-                                           CDC=a.CDC,
-                                           Discount1=a.Discount1,
-                                           Scheme1=a.Scheme1,
-                                           Scheme2=a.Scheme2,
-                                           SchemeAmt=a.SchemeAmt,
-                                           GSTRate=a.GSTRate,
-                                           NLC=a.NLC,
-                                           Remarks=a.Remarks
+                                           Id = a.Id,
+                                           ItemName = bi.Name,
+                                           Qty = a.Qty,
+                                           Unit = a.Unit,
+                                           BasicRate = a.BasicRate,
+                                           AddCost = a.AddCost,
+                                           CDC = a.CDC,
+                                           Discount1 = a.Discount1,
+                                           Scheme1 = a.Scheme1,
+                                           Scheme2 = a.Scheme2,
+                                           SchemeAmt = a.SchemeAmt,
+                                           GSTRate = a.GSTRate,
+                                           NLC = a.NLC,
+                                           Remarks = a.Remarks,
+
                                        }).ToList(),
                                   Id = s.Id,
                                   Date = s.Date,
@@ -155,10 +155,13 @@ namespace Admin.Web.Controllers
                                   PaymentTerm = s.PaymentTerm,
                                   PaymentValue = s.PaymentValue,
                                   WarehouseDetail = wh,
+                                  Approver = s.Approver,
+                                  Purchase = s.Purchase,
+                                  Accounts = s.Accounts
 
                               }).Where(w => w.Id.Equals(id)).FirstOrDefault();
-                
-                                        
+
+
                 return View(result);
             }
             catch (Exception ex)
@@ -227,6 +230,111 @@ namespace Admin.Web.Controllers
             }
             _dbContext.SaveChanges();
             return RedirectToAction("index", "home");
+        }
+        [HttpPost]
+        [Route("purchase")]
+        public IActionResult Purchase(PurchaseRequestModel model)
+        {
+            var po = _dbContext.Bills.Where(w => w.Id == model.PoId).FirstOrDefault();
+            po.PurchaseInvoiceNo = model.InvoceNo;
+            po.PurchaseDate = model.InvoceDate ?? DateTime.Now;
+            po.GoodReceiveDate = model.GoodRecordDate ?? DateTime.Now;
+            po.Purchase = 1;
+            _dbContext.SaveChanges();
+            return RedirectToAction("index", "home");
+        }
+        [HttpPost]
+        [Route("cancel")]
+        public IActionResult Cancel(int poid, string rejectreason)
+        {
+            var po = _dbContext.Bills.Where(w => w.Id == poid).FirstOrDefault();
+            po.Recstatus = 'D';
+            po.Rejectreason = rejectreason;
+            _dbContext.SaveChanges();
+            return RedirectToAction("index", "home");
+        }
+        [HttpPost]
+        [Route("list.json")]
+        public IActionResult List(DTParameters param)
+        {
+            var result = GetList(param);
+            result.draw = param.Draw;
+            return Json(result);
+        }
+        internal DtResult<TaskItemViewModel> GetList(DTParameters param)
+        {
+            var result = new DtResult<TaskItemViewModel>();
+            //var isSuperAdmin = User.IsSuperAdmin();
+            var query = (from s in _dbContext.Bills
+                          join v in _dbContext.Vendor on s.Vendor equals v.Id
+                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+
+                          select new TaskItemViewModel
+                          {
+                              No = s.No,
+                              Id = s.Id,
+                              Date = s.Date,
+                              SalesPersoName = sp.Name,
+                              VendorName = v.Name,
+                              DeliveryType = s.DeliveryType,
+                              DelieveryPlaceId = s.DelieveryPlaceId,
+                              PaymentTerm = s.PaymentTerm,
+                              PaymentValue = s.PaymentValue,
+                              Purchase = s.Purchase,
+                              Accounts = s.Accounts,
+                              Approver = s.Approver
+
+
+                          });
+
+            result.data = new List<TaskItemViewModel>();
+            result.recordsTotal = query.Count();
+
+            if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
+            {
+                var keyword = param.Search.Value;
+                query = query.Where(w => w.SalesPersoName.Contains(keyword));// ||
+                //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
+            }
+
+            //if (param.Columns.Any(w => !string.IsNullOrEmpty(w.Search.Value)))
+            //{
+            //    foreach (var item in param.Columns.Where(w => !string.IsNullOrEmpty(w.Search.Value)).ToList())
+            //    {
+            //        if (item.Data != null && !string.IsNullOrEmpty(item.Search.Value) && item.Name.Equals(nameof(TaskItemViewModel.VendorName)))
+            //        {
+            //            var promoterId = Convert.ToInt32(item.Search.Value.ToLower().Trim());
+            //            query = query.Where(w => w.Entity.PromoterId == promoterId);
+            //        }
+            //    }
+            //}
+
+            //if (param.Order != null && param.Order.Length > 0)
+            //{
+            //    foreach (var item in param.Order)
+            //    {
+            //        if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Key), StringComparison.OrdinalIgnoreCase))
+            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Key) : query.OrderBy(o => o.Entity.Key);
+            //        else if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Value), StringComparison.OrdinalIgnoreCase))
+            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Value) : query.OrderBy(o => o.Entity.Value);
+            //        else if (param.Columns[item.Column].Data.Equals("PromoterName", StringComparison.OrdinalIgnoreCase))
+            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PromoterName) : query.OrderBy(o => o.PromoterName);
+            //    }
+            //}
+
+            result.recordsFiltered = query.Count();
+            if (param.Length > 0)
+            {
+                query = query.Skip(param.Start).Take(param.Length);
+            }
+
+            var entries = query.ToList();
+
+            foreach (var e in entries)
+            {
+                result.data.Add(e);
+            }
+            return result;
         }
     }
 }

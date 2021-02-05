@@ -81,6 +81,7 @@ namespace Command.Entity1
         public DateTime? ModifiedDate { get; set; }
 
         public char? Recstatus { get; set; }
+        public string Rejectreason { get; set; }
         //foregin-relationship
         public ICollection<BillItem> BillItems { get; set; }
         //Added New 
@@ -89,6 +90,7 @@ namespace Command.Entity1
         public int Accounts { get; set; }
         public string PurchaseInvoiceNo { get; set; }
         public DateTime PurchaseDate { get; set; }
+        public DateTime GoodReceiveDate { get; set; }
     }
     [Table("BillItem", Schema = "po")]
     public partial class BillItem : IUpdateAuditable
