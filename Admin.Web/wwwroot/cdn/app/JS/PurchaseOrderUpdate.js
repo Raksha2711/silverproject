@@ -11,7 +11,7 @@ PurchaseOrderUpdate.documentClick = function () {
         }
         else {
             $('#divpayment').hide();
-          //  $('input[name="PaymentValue"]').hide();
+            //  $('input[name="PaymentValue"]').hide();
             $('input[name="PaymentValue"]').val(0);
         }
     });
@@ -24,15 +24,20 @@ PurchaseOrderUpdate.documentClick = function () {
         }
     });
     $('.btn-add-item').on('click', function () {
-        $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
-            $('.tblpo>tbody').append(res);
-        });
+        if (validate()) {
+            $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
+                $('.tblpo>tbody').prepend(res);
+                setTimeout(addSerialNumber(), 100);
+            });
+            
+        }
+
     });
     $(document).on('click', '.btn_row_delete', function (e) {
         var isCreate = PurchaseOrderUpdate.btn.attr('data-isupdate') == 'True'
         alert(isCreate);
         //$(this).parent().parent().remove()
-    
+
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this data!",
@@ -47,7 +52,8 @@ PurchaseOrderUpdate.documentClick = function () {
                     });
                     debugger
                     if (isCreate) {
-                        $(this).parent().parent().remove();}
+                        $(this).parent().parent().remove();
+                    }
                     else {
                         alert("else");
                         var frmData = getFromData();
@@ -64,37 +70,50 @@ PurchaseOrderUpdate.documentClick = function () {
                             type: 'POST',
                             url: baseurl + ('PurchaseOrder/deleterow/' + frmData.Id + '.json'),
                             data: JSON.stringify(frmData),
-                            success: function (resut) {  },
+                            success: function (resut) { },
                             error: function (jqXHR) { debugger },
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8'
                         });
                     }
-                   
+
                 } else {
                     swal("Your data is safe!");
                 }
             });
-    
-});
-   // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
+        addSerialNumber();
+    });
+    // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
     $(document).on('click', '.btn-submit', function () {
         var frmData = getFromData();
         frmData.billItems = [];
+        var isValid = true;
         var tr = $('.tblpo>tbody>tr');
         $.each(tr, function (k, v) {
             var trobj = {};
             var td = $(v).find(':input');
-            $.each(td, function (tdk, tdv) { trobj[$(tdv).attr('name')] = $(tdv).val(); });
+            $.each(td, function (tdk, tdv) {
+                if (tdv.validity.valid) {
+                    $(tdv).removeClass('is-invalid')
+                    trobj[$(tdv).attr('name')] = $(tdv).val();
+                }
+                else {
+                    $(tdv).addClass('is-invalid')
+                    isValid = false;
+                    return false;
+                }
+            });
+            if (!isValid) { return false; }
             frmData.billItems.push(trobj);
         })
-        SaveOrUpdate(frmData);
-        debugger;
+        if (isValid)
+            SaveOrUpdate(frmData);
     })
 }
 
 $(document).ready(function () {
     PurchaseOrderUpdate.documentClick();
+    addSerialNumber();
 });
 
 function getFromData() {
@@ -110,9 +129,30 @@ function SaveOrUpdate(obj) {
         type: 'POST',
         url: baseurl + (!!isCreate ? 'PurchaseOrder/create.json' : 'PurchaseOrder/update/' + obj.Id + '.json'),
         data: JSON.stringify(obj),
-        success: function (resut) {window.location.href = baseurl + 'purchaseorder' },
+        success: function (resut) { window.location.href = baseurl + 'purchaseorder' },
         error: function (jqXHR) { debugger },
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
     });
 }
+
+function validate() {
+    var $obj = $('.tblpo>tbody>tr:eq(0)');
+    var form = $obj.find(':input');
+    var result = true;
+    form.each(function (k, v) {
+        if (!v.validity.valid) {
+            $(v).addClass('is-invalid')
+            console.log('invalid:' + v.name);
+            result = false;
+            return false;
+        }
+        $(v).removeClass('is-invalid')
+    })
+    return result;
+}
+function addSerialNumber() {
+    $('table tr').each(function (index) {
+        $(this).find('td:nth-child(1)').html(index);
+    });
+};
