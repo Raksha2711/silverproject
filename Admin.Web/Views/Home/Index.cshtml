@@ -3,14 +3,18 @@
     ViewData["Title"] = "Home Page";
 }
 @{
-    var approver = Model.Where(w => w.Approver == 0).ToList();
+var approver = Model.Where(w => w.Approver == 0).ToList();
+var approvercount = Model.Where(w => w.Approver == 0).Count();
+var purchasecount  = Model.Where(w => w.Approver == 1 && w.Purchase == 0).Count();
+var accountcount  = Model.Where(w => w.Approver == 1 && w.Purchase == 1 && w.Accounts == 0).Count();
+
 }
 <!-- Content Wrapper. Contains page content -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Dash Board</h1>
+                <h1>Control Panel</h1>
             </div>
             <div class="col-sm-6 d-none d-sm-block">
                 <ol class="breadcrumb float-sm-right">
@@ -26,18 +30,18 @@
     <div class="container-fluid h-100">
         <div class="row">
             <div class="p-0 col card card-row card-default">
-                <div class="card-header">
+                <div class="card-header bg-info">
                     <h3 class="card-title">
-                        Approver
+                        Approver (Total : @approvercount)
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">
                     @foreach (var item in Model.Where(w => w.Approver == 0))
                     {
                         item.CanEdit = true;
-                        <div class="card card-primary card-outline">
-                            <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
-                        </div>
+                    <div class="card card-primary card-outline">
+                        <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
+                    </div>
                     }
 
                 </div>
@@ -45,7 +49,7 @@
             <div class="p-0 ml-1 mr-1 col card card-row card-default">
                 <div class="card-header bg-orange">
                     <h3 class="card-title">
-                        Purchase
+                        Purchase (Total : @purchasecount)
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">
@@ -61,7 +65,7 @@
             <div class="p-0 col card card-row card-default">
                 <div class="card-header bg-info">
                     <h3 class="card-title">
-                        Account
+                        Account (Total : @accountcount)
                     </h3>
                 </div>
                 <div class="card-body pl-0 pr-0">

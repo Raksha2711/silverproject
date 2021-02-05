@@ -12,6 +12,7 @@ namespace Admin.Web.Models
         {
             this.WarehouseDetail = new Warehouse();
         }
+       
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }
         public string ContactNo { get; set; }

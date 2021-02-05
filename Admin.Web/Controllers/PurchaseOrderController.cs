@@ -157,6 +157,8 @@ namespace Admin.Web.Controllers
                                   WarehouseDetail = wh,
 
                               }).Where(w => w.Id.Equals(id)).FirstOrDefault();
+                
+                                        
                 return View(result);
             }
             catch (Exception ex)

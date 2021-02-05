@@ -26,7 +26,13 @@
     </td>
         <td><input name="CDC" asp-for="CDC" class="form-control w-70p" placeholder="CDC"></td>
         <td><input name="Discount1" asp-for="Discount1" class="form-control" placeholder="Discount"></td>
-        <td><input name="Scheme1" asp-for="Scheme1" class="form-control" placeholder="Scheme1"></td>
+        <td>
+            <select type="select" name="Scheme1" asp-for="Scheme1" class="form-control w-120p">
+                <option value="0">Select</option>
+                <option value="GST">GST</option>
+                <option value="WithOut GST">W/O GST</option>
+            </select>
+    @*<input name="Scheme1" asp-for="Scheme1" class="form-control" placeholder="Scheme1">*@</td>
         <td><input name="scheme2" asp-for="Scheme2" class="form-control" placeholder="Scheme2"></td>
         <td><input name="SchemeAmt" asp-for="SchemeAmt" class="form-control" placeholder="SchemeAmt"></td>
         @*<td><input name="GSTRate" asp-for="GSTRate" class="form-control" placeholder="GSTRate"></td>*@

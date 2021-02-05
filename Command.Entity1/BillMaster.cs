@@ -104,7 +104,7 @@ namespace Command.Entity1
         public string AddCost { get; set; }
         public double CDC { get; set; }
         public double Discount1 { get; set; }
-        public double Scheme1 { get; set; }
+        public string Scheme1 { get; set; }
         public double Scheme2 { get; set; }
         public double SchemeAmt { get; set; }
         public int GSTRate { get; set; }

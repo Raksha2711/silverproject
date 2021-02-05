@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Item List";
 }
+
 @*List<Command.Entity1.Bill>*@
     <section class="content-header">
         <div class="container-fluid">
@@ -39,7 +40,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0" style="height: 300px;">
+                        <div class="card-body table-responsive p-0" style="height: 500px;">
                             <table class="table table-head-fixed">
                                 <thead>
                                     <tr>
@@ -65,9 +66,14 @@
                                             <td>@item.SalesPersoName</td>
                                             <td>@item.DeliveryType</td>
                                             <td>@item.PaymentTerm</td>
-                                            <th>@item.Approver</th>
-                                            <th>@item.Purchase</th>
-                                            <th>@item.Accounts</th>
+                                            <td>
+                                                @if (@item.Approver == 1)
+{
+                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+}
+                                                </td>
+                                            <td>@if (@item.Purchase == 1) {<i class="fa fa-check-circle" aria-hidden="true"></i>}</td>
+                                            <td>@if (@item.Accounts == 1) {<i class="fa fa-check-circle" aria-hidden="true"></i>}</td>
                                             @*<td>
                                                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                                     | <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
@@ -85,3 +91,8 @@
 
         </div>
     </div>
+<style>
+    .AddImage{
+
+    }
+</style>
