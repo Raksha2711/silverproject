@@ -111,6 +111,7 @@ ipch/
 *.sap
 *.vs
 .vs/
+Admin.Web/obj/
 
 # Visual Studio Trace Files
 *.e2e
