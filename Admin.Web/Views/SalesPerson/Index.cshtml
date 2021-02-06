@@ -1,7 +1,7 @@
 ﻿
 @model List<Command.Entity1.SalesPerson>
 @{ ViewData["Title"] = "Sales Person List";
-    }
+}
 
 
 <section class="content-header">
@@ -38,8 +38,8 @@
                                 <a href="@Url.Action("ExportToExcel", "SalesPerson")" class="btn-primary input-group-text">Download</a>
                             </div>
                             @*<div class="input-group-append">
-                                <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
-                            </div>*@
+                                    <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                 </div>
                                 <div class="input-group-append">
-                                    <a href="/SalesPerson/Create" class="btn btn-default">
+                                    <a asp-controller="SalesPerson" asp-action="Create" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
                                 </div>
@@ -112,105 +112,105 @@
                 }
             });
         });
-            });
+    });
     $(function () {
 
         $('#btnupload').on('click', function () {
 
-    debugger
-           var fileExtension = ['xls', 'xlsx'];
+            debugger
+            var fileExtension = ['xls', 'xlsx'];
 
-           var filename = $('#fileupload').val();
+            var filename = $('#fileupload').val();
 
-           if (filename.length == 0) {
+            if (filename.length == 0) {
 
-               alert("Please select a file.");
+                alert("Please select a file.");
 
-              return false;
+                return false;
 
-          }
+            }
 
-          else {
+            else {
 
-              var extension = filename.replace(/^.*\./, '');
+                var extension = filename.replace(/^.*\./, '');
 
-              if ($.inArray(extension, fileExtension) == -1) {
+                if ($.inArray(extension, fileExtension) == -1) {
 
-                  alert("Please select only excel files.");
+                    alert("Please select only excel files.");
 
-                  return false;
+                    return false;
 
-              }
+                }
 
-          }
+            }
 
-          var fdata = new FormData();
+            var fdata = new FormData();
 
-          var fileUpload = $("#fileupload").get(0);
+            var fileUpload = $("#fileupload").get(0);
 
-          var files = fileUpload.files;
+            var files = fileUpload.files;
 
-          fdata.append(files[0].name, files[0]);
+            fdata.append(files[0].name, files[0]);
 
-          $.ajax({
+            $.ajax({
 
-              type: "POST",
+                type: "POST",
 
-              url: "/SalesPerson/Import",
+                url: "/SalesPerson/Import",
 
-              beforeSend: function (xhr) {
+                beforeSend: function (xhr) {
 
-                  xhr.setRequestHeader("XSRF-TOKEN",
+                    xhr.setRequestHeader("XSRF-TOKEN",
 
-                      $('input:hidden[name="__RequestVerificationToken"]').val());
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
 
-              },
+                },
 
-              data: fdata,
+                data: fdata,
 
-              contentType: false,
+                contentType: false,
 
-              processData: false,
+                processData: false,
 
-              success: function (response) {
+                success: function (response) {
 
-                  if (response.length == 0)
+                    if (response.length == 0)
 
-                      alert('Some error occured while uploading');
+                        alert('Some error occured while uploading');
 
-                  else {
+                    else {
 
-                      $('#divPrint').html(response);
+                        $('#divPrint').html(response);
 
-                  }
+                    }
 
-              },
+                },
 
-              error: function (e) {
+                error: function (e) {
 
-                  $('#divPrint').html(e.responseText);
+                    $('#divPrint').html(e.responseText);
 
-              }
+                }
 
-          });
+            });
 
-      })
+        })
 
-      $('#btnExport').on('click', function () {
+        $('#btnExport').on('click', function () {
 
-          var fileExtension = ['xls', 'xlsx'];
+            var fileExtension = ['xls', 'xlsx'];
 
-          var filename = $('#fileupload').val();
+            var filename = $('#fileupload').val();
 
-          if (filename.length == 0) {
+            if (filename.length == 0) {
 
-              alert("Please select a file then Import");
+                alert("Please select a file then Import");
 
-              return false;
+                return false;
 
-          }
+            }
 
-      });
+        });
 
     });
 

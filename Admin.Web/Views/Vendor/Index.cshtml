@@ -38,8 +38,8 @@
                                 <a href="@Url.Action("ExportToExcel", "Vendor")" class="btn-primary input-group-text">Download</a>
                             </div>
                             @*<div class="input-group-append">
-            <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
-        </div>*@
+                                    <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                 </div>
                                 <div class="input-group-append">
-                                    <a href="/Vendor/Create" class="btn btn-default">
+                                    <a href="@Url.Action("Create","Vendor")" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
                                 </div>
@@ -80,16 +80,16 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Address</td>
-                                    <td>@item.EmailId</td>
-                                    <td>@item.ContactNo</td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                        | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.EmailId</td>
+                                        <td>@item.ContactNo</td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                            | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
