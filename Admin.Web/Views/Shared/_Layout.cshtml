@@ -5,7 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
     <title>Silverline | @ViewData["Title"]</title>
-    <base href="/"/>
+    <environment exclude="development">
+        <base href="http://b2bpotential.com/po/" />
+    </environment>
+    <environment include="development">
+        <base href="/" />
+    </environment>
     <partial name="_Styles" />
 </head>
 <body class="hold-transition sidebar-mini">
