@@ -7,10 +7,10 @@
     @if (Model.CanEdit)
     {
         <div class="card-tools">
-            <a href="/PurchaseOrder/detail/@Model.Id" class="btn btn-tool">
+            <a href="@Url.Action("detail","PurchaseOrder",new { id = Model.Id })" class="btn btn-tool">
                 <i class="fas fa fa-arrow-circle-right"></i>
             </a>
-            
+
         </div>
     }
 </div>

@@ -39,8 +39,8 @@
                                 <a href="@Url.Action("ExportToExcel", "Warehouse")" class="btn-primary input-group-text">Download</a>
                             </div>
                             @*<div class="input-group-append">
-            <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
-        </div>*@
+                                    <a href="@Url.Action("Download", "Home")" class="btn-primary input-group-text">Download</a>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                 </div>
                                 <div class="input-group-append">
-                                    <a href="/WareHouse/Create" class="btn btn-default">
+                                    <a asp-controller="WareHouse" asp-action="Create" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
                                 </div>
