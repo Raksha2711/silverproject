@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Admin.Web.Controllers
@@ -235,106 +237,52 @@ namespace Admin.Web.Controllers
         [Route("purchase")]
         public IActionResult Purchase(PurchaseRequestModel model)
         {
+             SendMail();
             var po = _dbContext.Bills.Where(w => w.Id == model.PoId).FirstOrDefault();
             po.PurchaseInvoiceNo = model.InvoceNo;
             po.PurchaseDate = model.InvoceDate ?? DateTime.Now;
             po.GoodReceiveDate = model.GoodRecordDate ?? DateTime.Now;
             po.Purchase = 1;
             _dbContext.SaveChanges();
+            
             return RedirectToAction("index", "home");
         }
-        [HttpPost]
-        [Route("cancel")]
-        public IActionResult Cancel(int poid, string rejectreason)
+        internal void SendMail()
         {
-            var po = _dbContext.Bills.Where(w => w.Id == poid).FirstOrDefault();
-            po.Recstatus = 'D';
-            po.Rejectreason = rejectreason;
-            _dbContext.SaveChanges();
-            return RedirectToAction("index", "home");
-        }
-        [HttpPost]
-        [Route("list.json")]
-        public IActionResult List(DTParameters param)
-        {
-            var result = GetList(param);
-            result.draw = param.Draw;
-            return Json(result);
-        }
-        internal DtResult<TaskItemViewModel> GetList(DTParameters param)
-        {
-            var result = new DtResult<TaskItemViewModel>();
-            //var isSuperAdmin = User.IsSuperAdmin();
-            var query = (from s in _dbContext.Bills
-                          join v in _dbContext.Vendor on s.Vendor equals v.Id
-                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
-
-                          select new TaskItemViewModel
-                          {
-                              No = s.No,
-                              Id = s.Id,
-                              Date = s.Date,
-                              SalesPersoName = sp.Name,
-                              VendorName = v.Name,
-                              DeliveryType = s.DeliveryType,
-                              DelieveryPlaceId = s.DelieveryPlaceId,
-                              PaymentTerm = s.PaymentTerm,
-                              PaymentValue = s.PaymentValue,
-                              Purchase = s.Purchase,
-                              Accounts = s.Accounts,
-                              Approver = s.Approver
-
-
-                          });
-
-            result.data = new List<TaskItemViewModel>();
-            result.recordsTotal = query.Count();
-
-            if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
+            try
             {
-                var keyword = param.Search.Value;
-                query = query.Where(w => w.SalesPersoName.Contains(keyword));// ||
-                //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
+                SmtpClient client = new SmtpClient();
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+
+                // setup Smtp authentication
+                System.Net.NetworkCredential credentials =
+                    new System.Net.NetworkCredential("raxa1989@gmail.com", "imd2st9429110235");
+                client.UseDefaultCredentials = true;
+                client.Credentials = credentials;
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress("raxa1989@gmail.com");
+                msg.To.Add(new MailAddress("kaushikthakkar27@gmail.com"));
+                msg.Subject = "Final Test Mail";
+                msg.IsBodyHtml = true;
+                msg.Body = string.Format("<html><head></head><body><b>Test HTML Email</b></body>");
+
+                try
+                {
+                    client.Send(msg);
+                    
+                }
+                catch (Exception ex)
+                {
+                   
+                }
+                
             }
-
-            //if (param.Columns.Any(w => !string.IsNullOrEmpty(w.Search.Value)))
-            //{
-            //    foreach (var item in param.Columns.Where(w => !string.IsNullOrEmpty(w.Search.Value)).ToList())
-            //    {
-            //        if (item.Data != null && !string.IsNullOrEmpty(item.Search.Value) && item.Name.Equals(nameof(TaskItemViewModel.VendorName)))
-            //        {
-            //            var promoterId = Convert.ToInt32(item.Search.Value.ToLower().Trim());
-            //            query = query.Where(w => w.Entity.PromoterId == promoterId);
-            //        }
-            //    }
-            //}
-
-            //if (param.Order != null && param.Order.Length > 0)
-            //{
-            //    foreach (var item in param.Order)
-            //    {
-            //        if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Key), StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Key) : query.OrderBy(o => o.Entity.Key);
-            //        else if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Value), StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Value) : query.OrderBy(o => o.Entity.Value);
-            //        else if (param.Columns[item.Column].Data.Equals("PromoterName", StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PromoterName) : query.OrderBy(o => o.PromoterName);
-            //    }
-            //}
-
-            result.recordsFiltered = query.Count();
-            if (param.Length > 0)
+            catch(Exception e)
             {
-                query = query.Skip(param.Start).Take(param.Length);
             }
-
-            var entries = query.ToList();
-
-            foreach (var e in entries)
-            {
-                result.data.Add(e);
-            }
-            return result;
         }
     }
 }
