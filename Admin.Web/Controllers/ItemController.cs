@@ -20,16 +20,10 @@ namespace Admin.Web.Controllers
     public class ItemController : Controller
     {
         public CommandDbContext _dbContext;
-        private readonly IConfiguration _configuration;
 
-        //public ItemController(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
         public ItemController(CommandDbContext dbContext)
         {
             _dbContext = dbContext;
-            //  _configuration = configuration;
         }
         public IActionResult Index()
         {
