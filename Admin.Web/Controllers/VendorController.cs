@@ -10,9 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
+
 
 namespace Admin.Web.Controllers
 {
