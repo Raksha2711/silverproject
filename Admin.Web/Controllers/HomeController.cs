@@ -11,7 +11,7 @@ using Command.Entity1;
 
 namespace Admin.Web.Controllers
 {
-    //[Authorize(Roles = "PowerUser")]
+    [Authorize]
     public class HomeController : Controller
     {
         public CommandDbContext _dbContext;

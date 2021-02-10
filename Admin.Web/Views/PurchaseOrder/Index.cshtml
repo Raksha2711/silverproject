@@ -26,6 +26,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <div class="callout callout-info">
+                    <div class="col-12">
+                        <form class="filter">
+                            <div class="form-group col-6">
+                                <label>Date Range</label>
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start" />
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" name="end" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-tools">
@@ -47,43 +66,17 @@
                         <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","purchaseorder")">
                             <thead>
                                 <tr>
+                                    <th>date</th>
+                                    <th>date</th>
                                     <th>PO No</th>
                                     <th>Vendor</th>
                                     <th>Sales Person</th>
                                     <th>Delivery Type</th>
                                     <th>Payment Term</th>
                                     <th>Status( A | P | A)</th>
-                                    @*<th>Date</th>*@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.No</td>
-                                            <td>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", @item.Date))</td>
-                                            <td>@item.VendorName</td>
-                                            <td>@item.SalesPersoName</td>
-                                            <td>@item.DeliveryType</td>
-                                            <td>@item.PaymentTerm</td>
-                                            <td>
-                                                @if (item.Recstatus == 'D')
-                                                {<small class="badge badge-danger"><i class="far fa-check-circle"></i> Cancel</small> }
-                                                else if (item.Approver == 0)
-                                                {<a href="@Url.Action("edit","purchaseorder",new { id = item.Id })">Edit</a> }
-                                                else
-                                                {
-                                                    @if (item.Approver == 1)
-                                                    {<small class="badge badge-info"><i class="far fa-check-circle"></i> App</small>}
-                                                    @if (@item.Purchase == 1)
-                                                    {<small class="badge badge-warning"><i class="far fa-check-circle"></i> Pur</small>}
-                                                    @if (@item.Accounts == 1)
-                                                    {<small class="badge badge-success"><i class="far fa-check-circle"></i> Acc</small>
-                                                    }
-                                                }
-                                            </td>
-                                        </tr>
-                                    }*@
                             </tbody>
                         </table>
                     </div>
@@ -99,9 +92,10 @@
     <script src="~/cdn/app/JS/common.js"></script>
     <script type="text/javascript">
         var table;
-        var table;
         $(function () {
             var columns = [
+                { name: "start", "data": "date", "orderable": false },
+                { name: "end", "data": "date", "orderable": false, },
                 { name: "no", "data": "no", "orderable": true },
                 { name: "vendorName", "data": "vendorName", "orderable": true },
                 { name: "salesPersoName", "data": "salesPersoName", "orderable": true },
@@ -130,7 +124,23 @@
                     }
                 }
             ];
-            table = $$.dataTable('#table', { columns: columns });
+            table = $$.dataTable('#table', {
+                columns: columns, columnDefs: [
+                    {"targets": [0], "visible": false},
+                    {"targets": [1], "visible": false}
+                ]
+            });
+
+            $('#datepicker').datepicker({
+                format: "dd-mm-yyyy",
+                orientation: "bottom auto",
+                autoclose: true,
+                todayHighlight: true,
+            });
+            $(document.body).on('change', '#datepicker', function () {
+                var tbl = $('#table').DataTable()
+                tbl.draw();
+            });
         });
     </script>
 }

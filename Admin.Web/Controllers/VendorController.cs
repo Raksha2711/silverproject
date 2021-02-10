@@ -10,10 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Admin.Web.Controllers
 {
+    [Authorize]
     public class VendorController : Controller
     {
         public CommandDbContext _dbContext;

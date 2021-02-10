@@ -115,7 +115,7 @@ $$.dataTable = function (selector, options) {
 
     var $iboxtoolbar = $(selector).parents('.ibox').find('.ibox-toolbar');
     var iboxtoolbarData = $iboxtoolbar.data();
-    if (!!$iboxtoolbar && iboxtoolbarData.buttons != undefined) {
+    if (!!iboxtoolbarData && iboxtoolbarData.buttons != undefined) {
         var iButtons = iboxtoolbarData.buttons.split(',');
         
         var queryString = window.location.search;
@@ -134,4 +134,30 @@ $$.dataTable = function (selector, options) {
         //$iboxHead.append(tbar);
     }
     return table;
+};
+
+$$.getFormData = function ($form) {
+    
+    var o = {};
+    var a = $form.serializeArray();
+    //if (typeof (CKEDITOR) !== "undefined") {
+    //    for (var i in CKEDITOR.instances) {
+    //        if (i.length > 0) {
+    //            var _value = CKEDITOR.instances[i].element.hasClass('get-html') ? CKEDITOR.instances[i].getData() : CKEDITOR.instances[i].document.getBody().getText();
+    //            _value.length > 1 ? a.find(input => input.name == CKEDITOR.instances[i].name).value = _value : "";
+    //        }
+    //    };
+    //}
+    $.each(a, function () {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+            o[this.name] = o[this.name].join(',');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
 };

@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SilverLine | Log in</title>
-    <partial name="AdminTemplate/_Styles" />
+    <partial name="_Styles" />
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -20,7 +20,7 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="/account/signin" id="account" method="post">
+                <form asp-controller="account" asp-action="signin" id="account" method="post">
                     <div class="input-group mb-3">
                         <input type="email" asp-for="Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -56,12 +56,11 @@
                     </div>
                 </form>
 
-                
-                <!-- /.social-auth-links -->
 
-                <p class="mb-1">
-                    <a href="forgot-password.html hidden">I forgot my password</a>
-                </p>
+                <!-- /.social-auth-links -->
+                @*<p class="mb-1">
+                        <a href="forgot-password.html hidden">I forgot my password</a>
+                    </p>*@
                 <p class="mb-0">
                     <a href="@Url.Action("SignUp","Account")" class="text-center">Register a new membership</a>
                 </p>
@@ -70,5 +69,6 @@
         </div>
     </div>
     <partial name="_Scripts" />
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

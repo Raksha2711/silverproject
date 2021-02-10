@@ -14,12 +14,11 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Admin.Web.Helper;
-
-using iTextSharp.tool.xml;
-using System.Net.Mime;
+using System.Globalization;
 
 namespace Admin.Web.Controllers
 {
+    [Authorize]
     [Route("purchaseorder")]
     public class PurchaseOrderController : Controller
     {
@@ -78,6 +77,7 @@ namespace Admin.Web.Controllers
                 model.Recstatus = 'A';
                 _dbContext.Bills.Add(model);
                 _dbContext.SaveChanges();
+                TempData["success"] = $"Purchase Invoice No:{model.No} created successfully";
                 return Json(model.Id);
             }
             return BadRequest(ModelState);
@@ -91,6 +91,7 @@ namespace Admin.Web.Controllers
             {
                 _dbContext.Update(model);
                 _dbContext.SaveChanges();
+                TempData["success"] = $"Purchase Invoice No:{model.No} updated successfully";
                 return Json(model.Id);
             }
             return BadRequest(ModelState);
@@ -98,18 +99,9 @@ namespace Admin.Web.Controllers
         [HttpGet("detail/{id:int}")]
         public IActionResult Detail([FromRoute] int id)
         {
-            try
-            {
-                SendMail(id);
-                var result = GetPoDetail(id);
+            var result = GetPoDetail(id);
+            return View(result);
 
-                return View(result);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
         }
         [HttpGet("additem")]
         public IActionResult AddItem()
@@ -160,6 +152,7 @@ namespace Admin.Web.Controllers
                 if (po.Approver == 0) { po.Approver = 1; SendMail(poid); }
                 else if (po.Purchase == 0) po.Purchase = 1;
                 else if (po.Accounts == 0) po.Accounts = 1;
+                TempData["success"] = $"purchase Invoice No:{po.No} successfully confirm.";
             }
             else if (status == "cancel")
             {
@@ -179,7 +172,7 @@ namespace Admin.Web.Controllers
             po.GoodReceiveDate = model.GoodRecordDate ?? DateTime.Now;
             po.Purchase = 1;
             _dbContext.SaveChanges();
-
+            TempData["success"] = $"Purchase Invoice No:{model.InvoceNo} successfully confirm.";
             return RedirectToAction("index", "home");
         }
         internal void SendMail(int poid)
@@ -188,11 +181,14 @@ namespace Admin.Web.Controllers
             {
                 var poDetail = GetPoDetail(poid);
                 var html = this.RenderViewAsync("_popdf", poDetail).Result;
-                Email.Send("vardhik007@gmail.com",
-                    $"PurchaseInvoice(#{poDetail.No})",
-                    $"Hello Team,{System.Environment.NewLine}",
-                    false, $"PurchaseInvoice-{poDetail.No}.pdf",
-                    PdfHelper.ConvertToPdf(html)).Wait();
+                if (!string.IsNullOrWhiteSpace(poDetail.Email))
+                {
+                    Email.Send(poDetail.Email,
+                        $"PurchaseInvoice(#{poDetail.No})",
+                        $"Hello Team,{System.Environment.NewLine}",
+                        false, $"PurchaseInvoice-{poDetail.No}.pdf",
+                        PdfHelper.ConvertToPdf(html)).Wait();
+                }
             }
             catch (Exception ex)
             {
@@ -234,6 +230,7 @@ namespace Admin.Web.Controllers
                               Date = s.Date,
                               SalesPersoName = sp.Name,
                               VendorName = v.Name,
+                              Email = v.EmailId,
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,
                               PaymentTerm = s.PaymentTerm,
@@ -254,6 +251,7 @@ namespace Admin.Web.Controllers
             po.Recstatus = 'D';
             po.Rejectreason = rejectreason;
             _dbContext.SaveChanges();
+            TempData["warring"] = $"Purchase Invoice No:{po.No} was canceled.";
             return RedirectToAction("index", "home");
         }
         [HttpPost]
@@ -292,6 +290,26 @@ namespace Admin.Web.Controllers
 
             result.data = new List<TaskItemViewModel>();
             result.recordsTotal = query.Count();
+
+            var searchColumn = (from sr in param.Columns where !string.IsNullOrWhiteSpace(sr.Search.Value) select sr).ToList();
+            if (searchColumn?.Count() > 0)
+            {
+                foreach (var item in searchColumn)
+                {
+                    if (item.Name.ToLower().Equals("start"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.Search.Value))
+                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+
+                    }
+                    if (item.Name.ToLower().Equals("end"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.Search.Value))
+                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                    }
+
+                }
+            }
 
             if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
             {

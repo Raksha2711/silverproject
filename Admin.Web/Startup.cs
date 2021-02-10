@@ -38,8 +38,15 @@ namespace Admin.Web
             //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             //services.AddRazorPages();
             services.AddDefaultIdentity<IdentityUser>(options =>
-             options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<CommandDbContext>();
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            }).AddEntityFrameworkStores<CommandDbContext>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/account/signin";

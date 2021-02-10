@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SilverLine | Registration Page</title>
 
-    <partial name="AdminTemplate/_Styles" />
+    <partial name="_Styles" />
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
@@ -21,15 +21,17 @@
             <div class="card-body register-card-body">
                 <p class="login-box-msg">Register a new membership</p>
 
-                <form action="/account/signup" method="post">
-                    @*<div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Full name">
+                <form asp-controller="account" asp-action="signup" method="post">
+                    
+                    <div class="input-group mb-3">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Name">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-user"></span>
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                    </div>*@
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
                     <div class="input-group mb-3">
                         <input asp-for="Email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -80,6 +82,7 @@
         </div><!-- /.card -->
     </div>
     <!-- /.register-box -->
-    <partial name="AdminTemplate/_Scripts" />
+    <partial name="_Scripts" />
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>
