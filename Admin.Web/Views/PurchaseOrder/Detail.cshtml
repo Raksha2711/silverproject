@@ -193,26 +193,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Invoice Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="purchaseorder" asp-action="purchase" method="post">
+            <form asp-controller="purchaseorder" id="invoiceDetail" asp-action="purchase" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="PoId" value="@Model.Id" />
                     <div class="row">
                         <div class="form-group col-12">
-                            <label>Invoce No</label>
-                            <input type="text" name="InvoceNo" class="form-control">
+                            <label>Invoice No</label>
+                            <input type="text" name="InvoceNo" class="form-control" autocomplete="off">
                         </div>
                         <div class="form-group col-12">
-                            <label>Invoce Date</label>
-                            <input type="text" name="InvoceDate" class="form-control">
+                            <label>Invoice Date</label>
+                            <input type="text" name="InvoceDate" class="form-control datepicker" autocomplete="off">
                         </div>
                         <div class="form-group col-12">
-                            <label>Good Record Date</label>
-                            <input type="text" name="GoodRecordDate" class="form-control">
+                            <label>Goods Record Date</label>
+                            <input type="text" name="GoodRecordDate" class="form-control datepicker" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -224,3 +224,39 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker({
+                format: "dd-mm-yyyy",
+                orientation: "bottom auto",
+                autoclose: true,
+                todayHighlight: true,
+                //setStartDate: minDate,
+                //endDate: "12-02-2021",
+            });
+            validatefrm();
+        });
+        function validatefrm() {
+
+            $('#invoiceDetail').validate({
+                rules: {
+                    InvoceNo: { required: true },
+                    InvoceDate: { required: true },
+                    GoodRecordDate: { required: true },
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        }
+    </script>
+}

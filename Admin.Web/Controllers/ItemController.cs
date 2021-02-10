@@ -13,10 +13,12 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 //using Dapper;
 
 namespace Admin.Web.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         public CommandDbContext _dbContext;

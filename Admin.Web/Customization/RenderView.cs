@@ -76,37 +76,46 @@ namespace Admin.Web.Helper
     {
         public static async Task Send(string to, string subject, string body, bool isHtml = false, string fileName = null, byte[] attachment = null)
         {
-            using (var client = new SmtpClient())
+            try
             {
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.EnableSsl = true;
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
+                using (var client = new SmtpClient())
+                {
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    // client.EnableSsl = true;
+                    //client.Host = "smtp.gmail.com";
+                    //client.Port = 587;
+                    client.Host = "smtpout.asia.secureserver.net";
+                    client.Port = 80;
 
-                // setup Smtp authentication
-                NetworkCredential credentials = new NetworkCredential("raxa1989@gmail.com", "imd2st9429110235");
-                client.UseDefaultCredentials = true;
-                client.Credentials = credentials;
-                MailMessage msg = new MailMessage();
-                msg.From = new MailAddress("raxa1989@gmail.com");
-                msg.To.Add(new MailAddress(to));
-                msg.Subject = subject;
-                msg.IsBodyHtml = isHtml;
-                msg.Body = body;
-                //Attachment attachment;
-                if (attachment != null)
-                {
-                    Attachment attach = new Attachment(new MemoryStream(attachment), fileName, MediaTypeNames.Application.Pdf);
-                    msg.Attachments.Add(attach);
-                }
-                try
-                {
-                    client.Send(msg);
-                }
-                catch (Exception ex)
-                {
+                    // setup Smtp authentication
+                    NetworkCredential credentials = new NetworkCredential("purchase@slprice.com", "health@159");
+                    client.UseDefaultCredentials = true;
+                    client.Credentials = credentials;
+                    MailMessage msg = new MailMessage();
+                    msg.From = new MailAddress("purchase@slprice.com");
+                    msg.To.Add(new MailAddress(to));
+                    msg.Subject = subject;
+                    msg.IsBodyHtml = isHtml;
+                    msg.Body = body;
+                    //Attachment attachment;
+                    if (attachment != null)
+                    {
+                        Attachment attach = new Attachment(new MemoryStream(attachment), fileName, MediaTypeNames.Application.Pdf);
+                        msg.Attachments.Add(attach);
+                    }
+                    try
+                    {
+                        client.Send(msg);
+                    }
+                    catch (Exception ex)
+                    {
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

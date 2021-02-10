@@ -29,7 +29,7 @@ PurchaseOrderUpdate.documentClick = function () {
                 $('.tblpo>tbody').prepend(res);
                 setTimeout(addSerialNumber(), 100);
             });
-            
+
         }
 
     });
@@ -50,7 +50,6 @@ PurchaseOrderUpdate.documentClick = function () {
                     swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                     });
-                    debugger
                     if (isCreate) {
                         $(this).parent().parent().remove();
                     }
@@ -114,6 +113,17 @@ PurchaseOrderUpdate.documentClick = function () {
 $(document).ready(function () {
     PurchaseOrderUpdate.documentClick();
     addSerialNumber();
+    var today = new Date();
+    //var minDate = new Date(today.getFullYear(), today, today.getMonth(), today.getDate() - 1);
+    //var maxDate = new Date(today.getFullYear(), today, today.getMonth(), today.getDate() + 1);
+    $('#Date').datepicker({
+        format: "dd-mm-yyyy",
+        orientation: "bottom auto",
+        autoclose: true,
+        todayHighlight: true,
+        //setStartDate: minDate,
+        //endDate: "12-02-2021",
+    });
 });
 
 function getFromData() {

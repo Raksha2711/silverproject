@@ -54,7 +54,7 @@ namespace Admin.Web.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(Input.Email);
-                    await _userManager.AddClaimAsync(user,new Claim(ClaimTypes.Role,"Admin"));
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
                     //return LocalRedirect(returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
@@ -89,7 +89,7 @@ namespace Admin.Web.Controllers
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.Name, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
