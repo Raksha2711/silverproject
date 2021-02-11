@@ -50,6 +50,7 @@ namespace Admin.Web.Controllers
                 }
                 else
                 {
+                    model.CreatedDate = DateTime.Now;
                     _dbContext.Vendor.Update(model);
                 }
                 _dbContext.SaveChanges();
@@ -85,6 +86,9 @@ namespace Admin.Web.Controllers
                             list.Add(new Vendor
                             {
                                 Name = (worksheet.Cells[row, 1].Value).ToString(),
+                                Address = (worksheet.Cells[row, 2].Value).ToString(),
+                                EmailId= (worksheet.Cells[row, 3].Value).ToString(),
+                                ContactNo = (worksheet.Cells[row, 4].Value).ToString(),
                                 CreatedDate = DateTime.Now,
                                 Status = "1"
                             });
@@ -93,7 +97,7 @@ namespace Admin.Web.Controllers
                         if (list.Count > 0)
                         {
                             var newUserIDs = list.Select(u => u.Name).Distinct().ToArray();
-                            var usersInDb = _dbContext.Vendor.Where(u => newUserIDs.Contains(u.Name))
+                            var usersInDb = _dbContext.Vendor.Where(u => newUserIDs.Contains(u.Name) && u.Status.Equals("1"))
                                                            .Select(u => u.Name).ToArray();
                             var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
                             foreach (Vendor user in usersNotInDb)
@@ -113,7 +117,7 @@ namespace Admin.Web.Controllers
         }
         public async Task<IActionResult> ExportToExcel()
         {
-            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
+            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.ContactNo }).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))
@@ -123,7 +127,7 @@ namespace Admin.Web.Controllers
                 package.Save();
             }
             stream.Position = 0;
-            string excelName = $"ItemData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
+            string excelName = $"VendorData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
     }

@@ -53,7 +53,9 @@ namespace Admin.Web.Controllers
                 }
                 else
                 {
+                    model.CreatedDate = DateTime.Now;
                     _dbContext.SalesPerson.Update(model);
+                   
                 }
                 _dbContext.SaveChanges();
             }
@@ -98,7 +100,7 @@ namespace Admin.Web.Controllers
                         if (list.Count > 0)
                         {
                             var newUserIDs = list.Select(u => u.Name).Distinct().ToArray();
-                            var usersInDb = _dbContext.SalesPerson.Where(u => newUserIDs.Contains(u.Name))
+                            var usersInDb = _dbContext.SalesPerson.Where(u => newUserIDs.Contains(u.Name) && u.Status.Equals("1"))
                                                            .Select(u => u.Name).ToArray();
                             var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
                             foreach (SalesPerson user in usersNotInDb)
@@ -118,7 +120,7 @@ namespace Admin.Web.Controllers
         }
         public async Task<IActionResult> ExportToExcel()
         {
-            var item = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
+            var item = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).Select(s => s.Name).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))

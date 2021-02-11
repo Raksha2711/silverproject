@@ -55,6 +55,8 @@ namespace Admin.Web.Controllers
                 }
                 else
                 {
+                    model.CreatedDate = DateTime.Now;
+
                     _dbContext.Warehouse.Update(model);
                 }
                 _dbContext.SaveChanges();
@@ -92,6 +94,7 @@ namespace Admin.Web.Controllers
                             list.Add(new Warehouse
                             {
                                 Name = (worksheet.Cells[row, 1].Value).ToString(),
+                                Address = (worksheet.Cells[row, 2].Value).ToString(),
                                 CreatedDate = DateTime.Now,
                                 Status = "1"
                             });
@@ -100,7 +103,7 @@ namespace Admin.Web.Controllers
                         if (list.Count > 0)
                         {
                             var newUserIDs = list.Select(u => u.Name).Distinct().ToArray();
-                            var usersInDb = _dbContext.Warehouse.Where(u => newUserIDs.Contains(u.Name)).Select(u => u.Name).ToArray();
+                            var usersInDb = _dbContext.Warehouse.Where(u => newUserIDs.Contains(u.Name) && u.Status.Equals("1")).Select(u => u.Name).ToArray();
                             var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
                             foreach (Warehouse user in usersNotInDb)
                             {
@@ -119,7 +122,7 @@ namespace Admin.Web.Controllers
         }
         public async Task<IActionResult> ExportToExcel()
         {
-            var item = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
+            var item = _dbContext.Warehouse.Where(w => w.Status.Equals("1")).Select(s =>new { s.Name,s.Address} ).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))
@@ -129,7 +132,7 @@ namespace Admin.Web.Controllers
                 package.Save();
             }
             stream.Position = 0;
-            string excelName = $"FlashSale-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
+            string excelName = $"WareHouse-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
     }
