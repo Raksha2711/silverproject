@@ -39,7 +39,7 @@ namespace Command.Entity1
 
             set { this.dateCreated = value; }
         }
-
         private DateTime? dateCreated = null;
+        public string ContactPerson { get; set; }
     }
 }

@@ -61,13 +61,8 @@ namespace Admin.Web.Controllers
                 }
                 _dbContext.SaveChanges();
             }
-            //redirect to edit
               return RedirectToAction("Index");
-            // var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
-            //Index();
-           // return View(list);
         }
-
         public IActionResult Delete(int id)
         {
             var result = _dbContext.Item.Where(w => w.Id.Equals(id)).FirstOrDefault();
@@ -76,7 +71,7 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        public async Task<List<Item>> Import()
+        public  async  Task<List<Item>> Import()
         {
             IFormFile formFile = Request.Form.Files[0];
             var list = new List<Item>();
@@ -120,7 +115,7 @@ namespace Admin.Web.Controllers
                     }
                 }
             }
-            return list;
+            return  list;
         }
         public async Task<IActionResult> ExportToExcel()
         {

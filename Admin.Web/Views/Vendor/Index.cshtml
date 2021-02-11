@@ -71,22 +71,24 @@
                                     <th>Address</th>
                                     <th>Email</th>
                                     <th>ContactNo</th>
+                                    <th>Contact Person</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@item.Name</td>
-                                        <td>@item.Address</td>
-                                        <td>@item.EmailId</td>
-                                        <td>@item.ContactNo</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                            | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.EmailId</td>
+                                    <td>@item.ContactNo</td>
+                                    <td>@item.ContactPerson</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                        | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
