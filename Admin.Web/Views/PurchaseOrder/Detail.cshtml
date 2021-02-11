@@ -22,6 +22,7 @@
                 </ol>
             </div>
         </div>
+    </div>
 </section>
 
 <section class="content">
@@ -32,32 +33,33 @@
                 <!-- Main content -->
                 <div class="invoice p-3 mb-3">
                     <!-- this row will not appear when printing -->
-                    <div class="row no-print mb-3">
-
-                        <div class="col-12">
-                            @if (Model.Approver == 1 && Model.Purchase == 0)
-                            {
-                                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modelPurchase">
-                                    <i class="far fa-credit-card"></i> Confirm and Forward
-                                </button>
-                            }
-                            else
-                            {
-                                <form asp-controller="purchaseorder" asp-action="forwardpo" method="post">
-                                    <input type="hidden" name="poid" value="@Model.Id" />
-                                    <input type="hidden" name="status" value="accept" />
-                                    <button type="submit" class="btn btn-success float-right">
+                    @if (ViewBag.detail)
+                    {
+                        <div class="row no-print mb-3">
+                            <div class="col-12">
+                                @if (Model.Approver == 1 && Model.Purchase == 0)
+                                {
+                                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modelPurchase">
                                         <i class="far fa-credit-card"></i> Confirm and Forward
                                     </button>
-                                </form>
-                            }
+                                }
+                                else
+                                {
+                                    <form asp-controller="purchaseorder" asp-action="forwardpo" method="post">
+                                        <input type="hidden" name="poid" value="@Model.Id" />
+                                        <input type="hidden" name="status" value="accept" />
+                                        <button type="submit" class="btn btn-success float-right">
+                                            <i class="far fa-credit-card"></i> Confirm and Forward
+                                        </button>
+                                    </form>
+                                }
 
-
-                            <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
-                                Cancel Order
-                            </button>
+                                <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
+                                    Cancel Order
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    }
                     <!-- title row -->
                     <div class="row">
                         <div class="col-12">
