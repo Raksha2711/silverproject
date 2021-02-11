@@ -4,15 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
 using Admin.Web.Helper;
 using System.Globalization;
 
@@ -83,6 +77,23 @@ namespace Admin.Web.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpGet("detail/{id:int}")]
+        public IActionResult Detail([FromRoute] int id)
+        {
+            var result = GetPoDetail(id);
+            ViewBag.detail = true;
+            return View(result);
+
+        }
+        [HttpGet("view/{id:int}")]
+        public IActionResult View([FromRoute] int id)
+        {
+            ViewBag.detail = false;
+            var result = GetPoDetail(id);
+            return View("~/Views/PurchaseOrder/Detail.cshtml", result);
+
+        }
+
         [HttpPost]
         [Route("update/{id:int}.json")]
         public IActionResult Update(int id, [FromBody] Bill model)
@@ -96,13 +107,7 @@ namespace Admin.Web.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpGet("detail/{id:int}")]
-        public IActionResult Detail([FromRoute] int id)
-        {
-            var result = GetPoDetail(id);
-            return View(result);
 
-        }
         [HttpGet("additem")]
         public IActionResult AddItem()
         {
@@ -284,8 +289,6 @@ namespace Admin.Web.Controllers
                              Purchase = s.Purchase,
                              Accounts = s.Accounts,
                              Approver = s.Approver
-
-
                          });
 
             result.data = new List<TaskItemViewModel>();
@@ -305,7 +308,7 @@ namespace Admin.Web.Controllers
                     if (item.Name.ToLower().Equals("end"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture).AddHours(23));
                     }
 
                 }
@@ -317,18 +320,20 @@ namespace Admin.Web.Controllers
                 query = query.Where(w => w.SalesPersoName.Contains(keyword));// ||
                                                                              //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
             }
-            //if (param.Order != null && param.Order.Length > 0)
-            //{
-            //    foreach (var item in param.Order)
-            //    {
-            //        if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Key), StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Key) : query.OrderBy(o => o.Entity.Key);
-            //        else if (param.Columns[item.Column].Data.Equals(nameof(PromoterConfig.Value), StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Entity.Value) : query.OrderBy(o => o.Entity.Value);
-            //        else if (param.Columns[item.Column].Data.Equals("PromoterName", StringComparison.OrdinalIgnoreCase))
-            //            query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PromoterName) : query.OrderBy(o => o.PromoterName);
-            //    }
-            //}
+            if (param.Order != null && param.Order.Length > 0)
+            {
+                foreach (var item in param.Order)
+                {
+                    if (param.Columns[item.Column].Data.Equals("no"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
+                    else if (param.Columns[item.Column].Data.Equals("vendorName"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.VendorName) : query.OrderBy(o => o.VendorName);
+                    else if (param.Columns[item.Column].Data.Equals("deliveryType"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.DeliveryType) : query.OrderBy(o => o.DeliveryType);
+                    else if (param.Columns[item.Column].Data.Equals("paymentTerm"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PaymentTerm) : query.OrderBy(o => o.PaymentTerm);
+                }
+            }
             result.recordsFiltered = query.Count();
             if (param.Length > 0)
             {

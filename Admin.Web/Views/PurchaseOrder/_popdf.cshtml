@@ -10,16 +10,16 @@
     <title>Purchase Invoice</title>
 
     @*<style type='text/css'>
-        td, th {
-            border: 0px solid #dddddd;
-            text-align: left;
-            padding: 10px 5px 10px 5px;
-        }
+            td, th {
+                border: 0px solid #dddddd;
+                text-align: left;
+                padding: 10px 5px 10px 5px;
+            }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    </style>*@
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+        </style>*@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body style='padding: 10px;'>
@@ -51,24 +51,37 @@
     </table>
     <center>
         <table style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
-            @foreach (var item in Model.BillItemsView)
-            {
+            <thead>
                 <tr>
                     <th>#NO</th>
-                    <th>@item.ItemName</th>
-                    <th>@item.Qty</th>
-                    <th>@item.BasicRate</th>
-                    <th>@item.AddCost</th>
-                    <th>@item.CDC</th>
-                    <td>@item.Discount1</td>
-                    <td>@item.Scheme1</td>
-                    <td>@item.Scheme2</td>
-                    <td>@item.SchemeAmt</td>
-                    <td>@item.NLC</td>
-                    <td>@item.Remarks</td>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Basic Rate</th>
+                    <th>Add Cost</th>
+                    <th>CDC</th>
+                    <th>Discount1</th>
+                    <th>GST</th>
+                    <th>NLC</th>
+                    <th>Remarks</th>
                 </tr>
-            }
-
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i }))
+                {
+                    <tr>
+                        <th>@item.Index</th>
+                        <th>@item.Data.ItemName</th>
+                        <th>@item.Data.Qty</th>
+                        <th>@item.Data.BasicRate</th>
+                        <th>@item.Data.AddCost</th>
+                        <th>@item.Data.CDC</th>
+                        <td>@item.Data.Discount1</td>
+                        <td>@item.Data.Scheme1</td>
+                        <td>@item.Data.NLC</td>
+                        <td>@item.Data.Remarks</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </center>
 </body>
