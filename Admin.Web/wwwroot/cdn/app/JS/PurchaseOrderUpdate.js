@@ -28,6 +28,7 @@ PurchaseOrderUpdate.documentClick = function () {
             $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
                 $('.tblpo>tbody').prepend(res);
                 setTimeout(addSerialNumber(), 100);
+                $('.custome-select2').select2();
             });
 
         }
@@ -107,7 +108,8 @@ PurchaseOrderUpdate.documentClick = function () {
         })
         if (isValid)
             SaveOrUpdate(frmData);
-    })
+    });
+
 }
 
 $(document).ready(function () {
@@ -124,6 +126,7 @@ $(document).ready(function () {
         //setStartDate: minDate,
         //endDate: "12-02-2021",
     });
+    $('.custome-select2').select2();
 });
 
 function getFromData() {

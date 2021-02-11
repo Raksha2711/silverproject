@@ -29,14 +29,21 @@
                 <div class="callout callout-info">
                     <div class="col-12">
                         <form class="filter">
-                            <div class="form-group col-6">
-                                <label>Date Range</label>
+                            <div class="form-group col-5">
+                                <label>From</label>
                                 <div class="input-daterange input-group" id="datepicker">
                                     <input type="text" class="input-sm form-control" name="start" />
-                                    <span class="input-group-addon">to</span>
+                                    <span class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </span>
+                                    <span class="input-group-addon">End Date</span>
                                     <input type="text" class="input-sm form-control" name="end" />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </span>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -67,8 +74,8 @@
                             <thead>
                                 <tr>
                                     <th>date</th>
-                                    <th>date</th>
                                     <th>PO No</th>
+                                    <th>Po Date</th>
                                     <th>Vendor</th>
                                     <th>Sales Person</th>
                                     <th>Delivery Type</th>
@@ -94,9 +101,14 @@
         var table;
         $(function () {
             var columns = [
-                { name: "start", "data": "date", "orderable": false },
                 { name: "end", "data": "date", "orderable": false, },
                 { name: "no", "data": "no", "orderable": true },
+                //{ name: "start", "data": "date", "orderable": false },
+                { name: "start", data: null, "orderable": false,
+                    "render": function (data, type, full, meta) {
+                        return moment(full.date).format("DD-MM-YYYY");
+                    }
+                },
                 { name: "vendorName", "data": "vendorName", "orderable": true },
                 { name: "salesPersoName", "data": "salesPersoName", "orderable": true },
                 { name: "deliveryType", "data": "deliveryType", "orderable": true },
@@ -127,7 +139,6 @@
             table = $$.dataTable('#table', {
                 columns: columns, columnDefs: [
                     {"targets": [0], "visible": false},
-                    {"targets": [1], "visible": false}
                 ]
             });
 

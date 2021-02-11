@@ -14,7 +14,19 @@
     .w-120p {
         width: 70px;
     }
-    
+
+    .w-100p {
+        width: 100px;
+    }
+
+    .select2-container .select2-selection--single {
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 37px;
+        user-select: none;
+        -webkit-user-select: none;
+    }
 </style>
 <section class="content-header">
     <div class="container-fluid">
@@ -45,16 +57,12 @@
                             <input type="text" class="form-control" asp-for="No" readonly>
                         </div>
                         <div class="form-group col-3">
-                            @*<label asp-for="Date">Date</label>
-                                <input type="text" class="form-control datetimepicker-input" asp-for="Date" data-target="#reservationdate">
-                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>*@
+
                             <label asp-for="Date">Date</label>
-                            <div class='input-group date' id='datepicker'>
+                            <div class="input-group">
                                 <input asp-for="Date" type="text" class="form-control" value="@DateTime.Now.ToString("dd-MM-yyyy")" />
-                                <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
+                                <span class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </span>
                             </div>
                         </div>
@@ -81,7 +89,7 @@
                         </div>
                         <div class="form-group col-3 hidden" id="divaddress">
                             <label asp-for="DelieveryPlaceId">Place of Delivery</label>
-                            <select type="select" asp-for="DelieveryPlaceId" asp-items="ViewBag.WareHouse" class="form-control">
+                            <select type="select" asp-for="DelieveryPlaceId" asp-items="ViewBag.WareHouse" class="form-control custome-select2">
                                 <option value="">Select Address</option>
                             </select>
                         </div>
@@ -130,7 +138,7 @@
                         </table>
                     </div>
                 </div>
-                
+
             </div>
             <div class="card-footer">
                 <a href="@Url.Action("Index","purchaseorder")" class="btn btn-default"><i class="fas fa-save"></i>Cancel</a>
@@ -140,7 +148,7 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/cdn/app/JS/PurchaseOrderUpdate.js"></script>
+    <script src="~/cdn/app/JS/PurchaseOrderUpdate.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 }
 

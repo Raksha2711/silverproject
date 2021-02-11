@@ -7,7 +7,7 @@
     </td>
     <td>
         <input type="hidden" name="id" asp-for="Id" />
-        <select type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control w-120p">
+        <select type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control w-100p custome-select2">
             <option value="">Select Item</option>
         </select>
     </td>
@@ -17,8 +17,8 @@
     <td>
         <select type="select" required name="AddCost" asp-for="AddCost" class="form-control w-120p">
             <option value="">Select</option>
-            <option value="1">YES</option>
-            <option value="2">NO</option>
+            <option value="Yes">YES</option>
+            <option value="No">NO</option>
         </select>
     </td>
     <td><input name="CDC" asp-for="CDC" class="form-control w-70p" placeholder="CDC"></td>
@@ -26,8 +26,8 @@
     <td>
         <select type="select" required name="Scheme1" asp-for="Scheme1" class="form-control w-120p">
             <option value="">Select</option>
-            <option value="With GST">With GST</option>
-            <option value="WithOut GST">W/O GST</option>
+            <option value="Basic">W/O GST</option>
+            <option value="All">With GST</option>
         </select>
     <td><input name="scheme2" asp-for="Scheme2" class="form-control" placeholder="Scheme2"></td>
     <td><input name="SchemeAmt" asp-for="SchemeAmt" class="form-control" placeholder="SchemeAmt"></td>
