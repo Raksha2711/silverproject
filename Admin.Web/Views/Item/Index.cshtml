@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Item List";
 }
-
+@section styles{
+    <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
+}
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -64,24 +66,25 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="height: 500px;">
-                        <table class="table table-head-fixed">
+                        @*<table class="table table-head-fixed">*@
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("index","item")">
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Action</th>
+                                    @*<th>Action</th>*@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>@item.Name</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                            | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                        </td>
-                                    </tr>
-                                }
+                                @*@foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }*@
                             </tbody>
                         </table>
                     </div>
@@ -93,120 +96,138 @@
 
     </div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#btndownload').on('click', function () {
-            $.ajax({
-                type: "POST",
-                url: "/Item/ExportToExcel",
-                contentType: false,
-                processData: false,
-                success: function (response) {
 
-                }
+@section scripts{
+    
+    <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
+    <script src="~/cdn/app/JS/common.js"></script>
+    <script type="text/javascript">
+        var table;
+        $(function () {
+            var columns = [
+                { name: "name", "data": "name", "orderable": true, },
+                @*{
+                    name: "Action", data: null, "orderable": false,
+                    "render": function (data, type, full, meta) {
+                       return '<a href=@Url.Action("edit","item")/' + full.id + '>Edit</a>';
+                    }
+                }*@
+            ];
+            table = $$.dataTable('#table', { columns: columns });
+        });
+        $(function () {
+            $('#btndownload').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Item/ExportToExcel",
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+
+                    }
+                });
             });
         });
-    });
-    $(function () {
+        $(function () {
 
-        $('#btnupload').on('click', function () {
+            $('#btnupload').on('click', function () {
 
-            debugger
-            var fileExtension = ['xls', 'xlsx'];
+                debugger
+                var fileExtension = ['xls', 'xlsx'];
 
-            var filename = $('#fileupload').val();
+                var filename = $('#fileupload').val();
 
-            if (filename.length == 0) {
+                if (filename.length == 0) {
 
-                alert("Please select a file.");
-
-                return false;
-
-            }
-
-            else {
-
-                var extension = filename.replace(/^.*\./, '');
-
-                if ($.inArray(extension, fileExtension) == -1) {
-
-                    alert("Please select only excel files.");
+                    alert("Please select a file.");
 
                     return false;
 
                 }
 
-            }
+                else {
 
-            var fdata = new FormData();
+                    var extension = filename.replace(/^.*\./, '');
 
-            var fileUpload = $("#fileupload").get(0);
+                    if ($.inArray(extension, fileExtension) == -1) {
 
-            var files = fileUpload.files;
+                        alert("Please select only excel files.");
 
-            fdata.append(files[0].name, files[0]);
-
-            $.ajax({
-
-                type: "POST",
-
-                url: "/Item/Import",
-
-                beforeSend: function (xhr) {
-
-                    xhr.setRequestHeader("XSRF-TOKEN",
-
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-
-                },
-
-                data: fdata,
-
-                contentType: false,
-
-                processData: false,
-
-                success: function (response) {
-
-                    if (response.length == 0)
-
-                        alert('Some error occured while uploading');
-
-                    else {
-
-                        $('#divPrint').html(response);
+                        return false;
 
                     }
 
-                },
+                }
 
-                error: function (e) {
+                var fdata = new FormData();
 
-                    $('#divPrint').html(e.responseText);
+                var fileUpload = $("#fileupload").get(0);
+
+                var files = fileUpload.files;
+
+                fdata.append(files[0].name, files[0]);
+
+                $.ajax({
+
+                    type: "POST",
+
+                    url: "/Item/Import",
+
+                    beforeSend: function (xhr) {
+
+                        xhr.setRequestHeader("XSRF-TOKEN",
+
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+
+                    },
+
+                    data: fdata,
+
+                    contentType: false,
+
+                    processData: false,
+
+                    success: function (response) {
+
+                        if (response.length == 0)
+
+                            alert('Some error occured while uploading');
+
+                        else {
+
+                            $('#divPrint').html(response);
+
+                        }
+
+                    },
+
+                    error: function (e) {
+
+                        $('#divPrint').html(e.responseText);
+
+                    }
+
+                });
+
+            })
+
+            $('#btnExport').on('click', function () {
+
+                var fileExtension = ['xls', 'xlsx'];
+
+                var filename = $('#fileupload').val();
+
+                if (filename.length == 0) {
+
+                    alert("Please select a file then Import");
+
+                    return false;
 
                 }
 
             });
 
-        })
-
-        $('#btnExport').on('click', function () {
-
-            var fileExtension = ['xls', 'xlsx'];
-
-            var filename = $('#fileupload').val();
-
-            if (filename.length == 0) {
-
-                alert("Please select a file then Import");
-
-                return false;
-
-            }
-
         });
+    </script>
+}
 
-    });
-
-</script>
