@@ -14,11 +14,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Admin.Web.Models;
 //using Dapper;
 
 namespace Admin.Web.Controllers
 {
     [Authorize]
+    [Route("item")]
     public class ItemController : Controller
     {
         public CommandDbContext _dbContext;
@@ -27,22 +29,25 @@ namespace Admin.Web.Controllers
         {
             _dbContext = dbContext;
         }
+        [Route("", Name = "item")]
         public IActionResult Index()
         {
-            var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
-            return View(list);
+            //var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
+            return View();
         }
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View("~/Views/Item/Update.cshtml");
         }
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var result = _dbContext.Item.Where(w => w.Id.Equals(id)).FirstOrDefault();
             return View("~/Views/Item/Update.cshtml", result);
         }
         [HttpPost]
+        [Route("update")]
         public IActionResult Update(Item model)
         {
             if (model != null)
@@ -55,14 +60,22 @@ namespace Admin.Web.Controllers
                 }
                 else
                 {
-                    model.CreatedDate = DateTime.Now;
-                    _dbContext.Item.Update(model);
-                    
+                    var res = _dbContext.Item.Where(x => x.Id == model.Id).FirstOrDefault();
+                    if(res!= null)
+                    {
+                        res.Name = model.Name;
+                        res.ModifiedBy = model.ModifiedBy;
+                        res.ModifiedDate = model.ModifiedDate;
+                        res.CreatedDate = DateTime.Now;
+                        _dbContext.Item.Update(res);
+                    }
+
                 }
                 _dbContext.SaveChanges();
             }
               return RedirectToAction("Index");
         }
+        [Route("deleterow/{id:int}")]
         public IActionResult Delete(int id)
         {
             var result = _dbContext.Item.Where(w => w.Id.Equals(id)).FirstOrDefault();
@@ -71,6 +84,7 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Route("Import")]
         public  async  Task<List<Item>> Import()
         {
             IFormFile formFile = Request.Form.Files[0];
@@ -117,6 +131,7 @@ namespace Admin.Web.Controllers
             }
             return  list;
         }
+        [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
         {
             //var item =  _dbContext.Item.Where(w => w.Status.Equals("1")).Select(s => new { s.Name}).ToList();
@@ -132,6 +147,68 @@ namespace Admin.Web.Controllers
             stream.Position = 0;
             string excelName = $"ItemData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+        [HttpPost]
+        [Route("list.json")]
+        public IActionResult List(DTParameters param)
+        {
+            var result = GetList(param);
+            result.draw = param.Draw;
+            return Json(result);
+        }
+        internal DtResult<Item> GetList(DTParameters param)
+        {
+            //var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
+            var result = new DtResult<Item>();
+            var query = (from s in _dbContext.Item
+                         where s.Status.Equals("1")
+                         select new Item
+                         {
+                             Id = s.Id,
+                             Name = s.Name
+                         });
+
+            result.data = new List<Item>();
+            result.recordsTotal = query.Count();
+
+            var searchColumn = (from sr in param.Columns where !string.IsNullOrWhiteSpace(sr.Search.Value) select sr).ToList();
+            if (searchColumn?.Count() > 0)
+            {
+                foreach (var item in searchColumn)
+                {
+                    if (item.Name.ToLower().Equals("name"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.Search.Value))
+                            query = query.Where(w => w.Name.Contains(item.Search.Value));
+
+                    }
+                }
+            }
+
+            if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
+            {
+                var keyword = param.Search.Value;
+                query = query.Where(w => w.Name.Contains(keyword));// ||
+                                                                   //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
+            }
+            if (param.Order != null && param.Order.Length > 0)
+            {
+                foreach (var item in param.Order)
+                {
+                    if (param.Columns[item.Column].Data.Equals("name"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Name) : query.OrderBy(o => o.Name);
+                }
+            }
+            result.recordsFiltered = query.Count();
+            if (param.Length > 0)
+            {
+                query = query.Skip(param.Start).Take(param.Length);
+            }
+            var entries = query.ToList();
+
+            foreach (var e in entries) { result.data.Add(e); }
+            return result;
         }
 
     }

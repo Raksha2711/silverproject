@@ -12,10 +12,12 @@ using System.Text.Json;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Admin.Web.Models;
 
 namespace Admin.Web.Controllers
 {
     [Authorize]
+    [Route("salesperson")]
     public class SalesPersonController : Controller
     {
         public CommandDbContext _dbContext;
@@ -25,22 +27,26 @@ namespace Admin.Web.Controllers
             _dbContext = dbContext;
             //  _configuration = configuration;
         }
+        [Route("", Name = "salesperson")]
         public IActionResult Index()
         {
             var list = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
             return View(list);
         }
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View("~/Views/SalesPerson/Update.cshtml");
         }
+
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var result = _dbContext.SalesPerson.Where(w => w.Id.Equals(id)).FirstOrDefault();
             return View("~/Views/SalesPerson/Update.cshtml", result);
         }
         [HttpPost]
+        [Route("update")]
         public IActionResult Update(SalesPerson model)
         {
             if (model != null)
@@ -53,9 +59,17 @@ namespace Admin.Web.Controllers
                 }
                 else
                 {
-                    model.CreatedDate = DateTime.Now;
-                    _dbContext.SalesPerson.Update(model);
-                   
+                    var res = _dbContext.SalesPerson.Where(x => x.Id == model.Id).FirstOrDefault();
+                    if(res != null)
+                    {
+                        res.ModifiedDate = model.ModifiedDate;
+                        res.Name = model.Name;
+                        res.CreatedDate = DateTime.Now;
+                        res.Status = model.Status;
+                        res.ModifiedBy = model.ModifiedBy;
+                        _dbContext.SalesPerson.Update(res);
+                    }
+
                 }
                 _dbContext.SaveChanges();
             }
@@ -63,7 +77,7 @@ namespace Admin.Web.Controllers
             //return RedirectToAction("Edit", new { id = model.Id });
             return RedirectToAction("Index");
         }
-
+        [Route("deleterow/{id:int}")]
         public IActionResult Delete(int id)
         {
             var result = _dbContext.SalesPerson.Where(w => w.Id.Equals(id)).FirstOrDefault();
@@ -72,6 +86,7 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Route("Import")]
         public async Task<List<SalesPerson>> Import()
         {
             IFormFile formFile = Request.Form.Files[0];
@@ -118,6 +133,7 @@ namespace Admin.Web.Controllers
             }
             return list;
         }
+        [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
         {
             var item = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).Select(s => s.Name).ToList();
@@ -132,6 +148,67 @@ namespace Admin.Web.Controllers
             stream.Position = 0;
             string excelName = $"SalesPersonData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+        [HttpPost]
+        [Route("list.json")]
+        public IActionResult List(DTParameters param)
+        {
+            var result = GetList(param);
+            result.draw = param.Draw;
+            return Json(result);
+        }
+        internal DtResult<SalesPerson> GetList(DTParameters param)
+        {
+            var result = new DtResult<SalesPerson>();
+            var query = (from s in _dbContext.SalesPerson
+                         where s.Status.Equals("1")
+                         select new SalesPerson
+                         {
+                             Id = s.Id,
+                             Name = s.Name
+                         });
+
+            result.data = new List<SalesPerson>();
+            result.recordsTotal = query.Count();
+
+            var searchColumn = (from sr in param.Columns where !string.IsNullOrWhiteSpace(sr.Search.Value) select sr).ToList();
+            if (searchColumn?.Count() > 0)
+            {
+                foreach (var item in searchColumn)
+                {
+                    if (item.Name.ToLower().Equals("name"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.Search.Value))
+                            query = query.Where(w => w.Name.Contains(item.Search.Value));
+
+                    }
+                }
+            }
+
+            if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
+            {
+                var keyword = param.Search.Value;
+                query = query.Where(w => w.Name.Contains(keyword));// ||
+                                                                   //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
+            }
+            if (param.Order != null && param.Order.Length > 0)
+            {
+                foreach (var item in param.Order)
+                {
+                    if (param.Columns[item.Column].Data.Equals("name"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Name) : query.OrderBy(o => o.Name);
+                }
+            }
+            result.recordsFiltered = query.Count();
+            if (param.Length > 0)
+            {
+                query = query.Skip(param.Start).Take(param.Length);
+            }
+            var entries = query.ToList();
+
+            foreach (var e in entries) { result.data.Add(e); }
+            return result;
         }
     }
 }

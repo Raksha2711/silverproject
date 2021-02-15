@@ -1,4 +1,4 @@
-﻿@model List<Command.Entity1.Item>
+﻿@*@model List<Command.Entity1.Item>*@
 @{
     ViewData["Title"] = "Item List";
 }
@@ -52,10 +52,7 @@
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
+                                
                                 <div class="input-group-append">
                                     <a href="@Url.Action("Create","Item")" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
@@ -67,11 +64,12 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="height: 500px;">
                         @*<table class="table table-head-fixed">*@
-                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("index","item")">
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","item")">
                             <thead>
                                 <tr>
+                                    <th>id</th>
                                     <th>Name</th>
-                                    @*<th>Action</th>*@
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,129 +103,139 @@
         var table;
         $(function () {
             var columns = [
+                { name: "id", "data": "id", "orderable": false, },
                 { name: "name", "data": "name", "orderable": true, },
-                @*{
+                {
                     name: "Action", data: null, "orderable": false,
                     "render": function (data, type, full, meta) {
-                       return '<a href=@Url.Action("edit","item")/' + full.id + '>Edit</a>';
+                         var html;
+                        html = "<a href=@Url.Action("edit", "item")/" + full.id + ">Edit</a>"
+                        html += "|<a href=@Url.Action("deleterow", "item")/" + full.id + ">Delete</a>"
+                        //return '<a href=@Url.Action("edit","item")/' + full.id + '>Edit</a>';
+                        return html;
                     }
-                }*@
+                }
             ];
-            table = $$.dataTable('#table', { columns: columns });
-        });
-        $(function () {
-            $('#btndownload').on('click', function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/Item/ExportToExcel",
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-
-                    }
-                });
+            //table = $$.dataTable('#table', { columns: columns });
+            table = $$.dataTable('#table', {
+                columns: columns, columnDefs: [
+                    { "targets": [0], "visible": false },
+                ]
             });
         });
-        $(function () {
+        //$(function () {
+        //    $('#btndownload').on('click', function () {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/Item/ExportToExcel",
+        //            contentType: false,
+        //            processData: false,
+        //            success: function (response) {
 
-            $('#btnupload').on('click', function () {
+        //            }
+        //        });
+        //    });
+        //});
+        //$(function () {
 
-                debugger
-                var fileExtension = ['xls', 'xlsx'];
+        //    $('#btnupload').on('click', function () {
 
-                var filename = $('#fileupload').val();
+        //        debugger
+        //        var fileExtension = ['xls', 'xlsx'];
 
-                if (filename.length == 0) {
+        //        var filename = $('#fileupload').val();
 
-                    alert("Please select a file.");
+        //        if (filename.length == 0) {
 
-                    return false;
+        //            alert("Please select a file.");
 
-                }
+        //            return false;
 
-                else {
+        //        }
 
-                    var extension = filename.replace(/^.*\./, '');
+        //        else {
 
-                    if ($.inArray(extension, fileExtension) == -1) {
+        //            var extension = filename.replace(/^.*\./, '');
 
-                        alert("Please select only excel files.");
+        //            if ($.inArray(extension, fileExtension) == -1) {
 
-                        return false;
+        //                alert("Please select only excel files.");
 
-                    }
+        //                return false;
 
-                }
+        //            }
 
-                var fdata = new FormData();
+        //        }
 
-                var fileUpload = $("#fileupload").get(0);
+        //        var fdata = new FormData();
 
-                var files = fileUpload.files;
+        //        var fileUpload = $("#fileupload").get(0);
 
-                fdata.append(files[0].name, files[0]);
+        //        var files = fileUpload.files;
 
-                $.ajax({
+        //        fdata.append(files[0].name, files[0]);
 
-                    type: "POST",
+        //        $.ajax({
 
-                    url: "/Item/Import",
+        //            type: "POST",
 
-                    beforeSend: function (xhr) {
+        //            url: "/Item/Import",
 
-                        xhr.setRequestHeader("XSRF-TOKEN",
+        //            beforeSend: function (xhr) {
 
-                            $('input:hidden[name="__RequestVerificationToken"]').val());
+        //                xhr.setRequestHeader("XSRF-TOKEN",
 
-                    },
+        //                    $('input:hidden[name="__RequestVerificationToken"]').val());
 
-                    data: fdata,
+        //            },
 
-                    contentType: false,
+        //            data: fdata,
 
-                    processData: false,
+        //            contentType: false,
 
-                    success: function (response) {
+        //            processData: false,
 
-                        if (response.length == 0)
+        //            success: function (response) {
 
-                            alert('Some error occured while uploading');
+        //                if (response.length == 0)
 
-                        else {
+        //                    alert('Some error occured while uploading');
 
-                            $('#divPrint').html(response);
+        //                else {
 
-                        }
+        //                    $('#divPrint').html(response);
 
-                    },
+        //                }
 
-                    error: function (e) {
+        //            },
 
-                        $('#divPrint').html(e.responseText);
+        //            error: function (e) {
 
-                    }
+        //                $('#divPrint').html(e.responseText);
 
-                });
+        //            }
 
-            })
+        //        });
 
-            $('#btnExport').on('click', function () {
+        //    })
 
-                var fileExtension = ['xls', 'xlsx'];
+        //    $('#btnExport').on('click', function () {
 
-                var filename = $('#fileupload').val();
+        //        var fileExtension = ['xls', 'xlsx'];
 
-                if (filename.length == 0) {
+        //        var filename = $('#fileupload').val();
 
-                    alert("Please select a file then Import");
+        //        if (filename.length == 0) {
 
-                    return false;
+        //            alert("Please select a file then Import");
 
-                }
+        //            return false;
 
-            });
+        //        }
 
-        });
+        //    });
+
+        //});
     </script>
 }
 

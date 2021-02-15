@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using Admin.Web.Models;
+using System.Globalization;
 
 namespace Admin.Web.Controllers
 {
     [Authorize]
+    [Route("vendor")]
     public class VendorController : Controller
     {
         public CommandDbContext _dbContext;
@@ -22,22 +25,25 @@ namespace Admin.Web.Controllers
         {
             _dbContext = dbContext;
         }
+        [Route("", Name = "vendor")]
         public IActionResult Index()
         {
             var list = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
             return View(list);
         }
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View("~/Views/Vendor/Update.cshtml");
         }
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var result = _dbContext.Vendor.Where(w => w.Id.Equals(id)).FirstOrDefault();
             return View("~/Views/Vendor/Update.cshtml", result);
         }
         [HttpPost]
+        [Route("update")]
         public IActionResult Update(Vendor model)
         {
             if (model != null)
@@ -51,13 +57,26 @@ namespace Admin.Web.Controllers
                 else
                 {
                     model.CreatedDate = DateTime.Now;
-                    _dbContext.Vendor.Update(model);
+                    var res = _dbContext.Vendor.Where(x => x.Id == model.Id).FirstOrDefault();
+                    if(res != null)
+                    {
+                        res.CreatedDate = DateTime.Now;
+                        res.Name = model.Name;
+                        res.Address = model.Address;
+                        res.EmailId = model.EmailId;
+                        res.ContactNo = model.ContactNo;
+                        res.ContactPerson = model.ContactPerson;
+                        res.ModifiedDate = model.ModifiedDate;
+                        res.ModifiedBy = model.ModifiedBy;
+                        _dbContext.Vendor.Update(res);
+                    }
                 }
                 _dbContext.SaveChanges();
             }
             // return RedirectToAction("Edit", new { id = model.Id });
             return RedirectToAction("Index");
         }
+        [Route("deleterow/{id:int}")]
         public IActionResult Delete(int id)
         {
             var result = _dbContext.Vendor.Where(w => w.Id.Equals(id)).FirstOrDefault();
@@ -66,6 +85,82 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [Route("list.json")]
+        public IActionResult List(DTParameters param)
+        {
+            var result = GetList(param);
+            result.draw = param.Draw;
+            return Json(result);
+        }
+        internal DtResult<Vendor> GetList(DTParameters param)
+        {
+            var result = new DtResult<Vendor>();
+            var query = (from v in _dbContext.Vendor
+                         where v.Status.Equals("1")
+                         select new Vendor
+                         {
+                             Id = v.Id,
+                             CreatedDate = v.CreatedDate,
+                             Name = v.Name,
+                             Address = v.Address,
+                             EmailId = v.EmailId,
+                             ContactNo = v.ContactNo,
+                             ContactPerson = v.ContactPerson
+                         });
+
+            result.data = new List<Vendor>();
+            result.recordsTotal = query.Count();
+
+            var searchColumn = (from sr in param.Columns where !string.IsNullOrWhiteSpace(sr.Search.Value) select sr).ToList();
+            if (searchColumn?.Count() > 0)
+            {
+                foreach (var item in searchColumn)
+                {
+                    if (item.Name.ToLower().Equals("name"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.Search.Value))
+                            query = query.Where(w => w.Name.Contains(item.Search.Value));
+                    }
+                }
+            }
+
+            if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
+            {
+                var keyword = param.Search.Value;
+                query = query.Where(w => w.Name.Contains(keyword) || w.Address.Contains(keyword) || w.EmailId.Contains(keyword) || w.ContactNo.Contains(keyword) || w.ContactPerson.Contains(keyword));
+                                                                             //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
+            }
+            if (param.Order != null && param.Order.Length > 0)
+            {
+                foreach (var item in param.Order)
+                {
+                    //if (param.Columns[item.Column].Data.Equals("id"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
+                     if (param.Columns[item.Column].Data.Equals("name"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Name) : query.OrderBy(o => o.Name);
+                    else if (param.Columns[item.Column].Data.Equals("address"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Address) : query.OrderBy(o => o.Address);
+                    else if (param.Columns[item.Column].Data.Equals("emailId"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.EmailId) : query.OrderBy(o => o.EmailId);
+                    else if (param.Columns[item.Column].Data.Equals("contactNo"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.ContactNo) : query.OrderBy(o => o.ContactNo);
+                    else if (param.Columns[item.Column].Data.Equals("contactPerson"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.ContactPerson) : query.OrderBy(o => o.ContactPerson);
+                }
+            }
+            result.recordsFiltered = query.Count();
+            if (param.Length > 0)
+            {
+                query = query.Skip(param.Start).Take(param.Length);
+            }
+            var entries = query.ToList();
+
+            foreach (var e in entries) { result.data.Add(e); }
+            return result;
+        }
+        [Route("Import")]
         public async Task<List<Vendor>> Import()
         {
             IFormFile formFile = Request.Form.Files[0];
@@ -115,6 +210,7 @@ namespace Admin.Web.Controllers
             }
             return list;
         }
+        [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
         {
             var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.ContactNo }).ToList();
