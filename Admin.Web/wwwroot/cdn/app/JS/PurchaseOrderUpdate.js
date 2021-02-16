@@ -2,7 +2,12 @@
 PurchaseOrderUpdate.frm = $('form[name="frmAddBill"]')
 PurchaseOrderUpdate.btn = $('button[type="button"].btn-submit')
 PurchaseOrderUpdate.documentClick = function () {
-
+    //$('select[name="Vendor"]').change(function () {
+    //    alert("1");
+    //    $("#ContactPerson").value = "12";
+    //    $("#ContactNo").val("1k2");
+    //    $("#EmailId").val("1j2");
+    //});
     $('select[name="PaymentTerm"]').change(function () {
         if ($(this).val() == "PDC") {
             // $('input[name="PaymentValue"]').show();
@@ -36,9 +41,7 @@ PurchaseOrderUpdate.documentClick = function () {
     });
     $(document).on('click', '.btn_row_delete', function (e) {
         var isCreate = PurchaseOrderUpdate.btn.attr('data-isupdate') == 'True'
-        alert(isCreate);
-        //$(this).parent().parent().remove()
-
+        //alert(isCreate);
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this data!",

@@ -34,7 +34,15 @@
                     <a asp-controller="Home" asp-action="Index" class="nav-link @Url.MakeActiveClass("home","index")">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                           Control Panel
+                            Dash Board
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="PurchaseOrder" asp-action="Index" class="nav-link @Url.MakeActiveClass("PurchaseOrder","index")">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>
+                            Purchase Order
                         </p>
                     </a>
                 </li>
@@ -70,25 +78,18 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a asp-controller="PurchaseOrder" asp-action="Index" class="nav-link @Url.MakeActiveClass("PurchaseOrder","index")">
-                        <i class="nav-icon fas fa-file-invoice"></i>
-                        <p>
-                            Purchase Order
-                        </p>
-                    </a>
-                </li>
+
                 @*@if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item ">
-                        <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
-                            <i class="nav-icon fas fa-lock"></i>
-                            <p>
-                                Privacy
-                            </p>
-                        </a>
-                    </li>
-                }*@
+        {
+            <li class="nav-item ">
+                <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
+                    <i class="nav-icon fas fa-lock"></i>
+                    <p>
+                        Privacy
+                    </p>
+                </a>
+            </li>
+        }*@
             </ul>
         </nav>
     </div>

@@ -109,10 +109,8 @@ namespace Admin.Web.Controllers
                              ContactNo = v.ContactNo,
                              ContactPerson = v.ContactPerson
                          });
-
             result.data = new List<Vendor>();
             result.recordsTotal = query.Count();
-
             var searchColumn = (from sr in param.Columns where !string.IsNullOrWhiteSpace(sr.Search.Value) select sr).ToList();
             if (searchColumn?.Count() > 0)
             {

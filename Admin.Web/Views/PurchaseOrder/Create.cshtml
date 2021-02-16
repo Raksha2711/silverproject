@@ -60,10 +60,10 @@
 
                             <label asp-for="Date">Date</label>
                             <div class="input-group">
-                                <input asp-for="Date" type="text" class="form-control" value="@DateTime.Now.ToString("dd-MM-yyyy")" />
+                                @*<input asp-for="Date" type="text" class="form-control" value="@DateTime.Now.ToString("dd-MM-yyyy")" />
                                 <span class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                </span>
+                                </span>*@
                             </div>
                         </div>
                         <div class="form-group col-3">
@@ -79,6 +79,19 @@
                                 <option value="0">Select Vendor</option>
                             </select>
                         </div>
+                        <div class="form-group col-3">
+                            <label asp-for="ContactPerson" >Contact Person</label>
+                            <input type="text" asp-for="ContactPerson" name="ContactPerson" class="form-control" placeholder="Enter" value="">
+                        </div>
+                        <div class="form-group col-3">
+                            <label asp-for="ContactNo">Contact No</label>
+                            <input type="text" asp-for="ContactNo" name="ContactNo" class="form-control" placeholder="Enter" value="">
+                        </div>
+                        <div class="form-group col-3">
+                            <label asp-for="EmailId">EmailId</label>
+                            <input type="text" asp-for="EmailId" name="EmailId" class="form-control" placeholder="Enter" value="">
+                        </div>
+
                         <div class="form-group col-3">
                             <label asp-for="DeliveryType">Pick Up/Delivery</label>
                             <select class="form-control" asp-for="DeliveryType">

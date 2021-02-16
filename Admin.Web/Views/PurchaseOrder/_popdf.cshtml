@@ -53,7 +53,7 @@
         <table style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
             <thead>
                 <tr>
-                    <th>#NO</th>
+                    <th>Sr No</th>
                     <th>Item</th>
                     <th>Qty</th>
                     <th>Basic Rate</th>
@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i }))
+                @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i + 1}))
                 {
                     <tr>
                         <th>@item.Index</th>

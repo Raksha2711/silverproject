@@ -91,6 +91,10 @@ namespace Command.Entity1
         public string PurchaseInvoiceNo { get; set; }
         public DateTime PurchaseDate { get; set; }
         public DateTime GoodReceiveDate { get; set; }
+        //Add 3 column of vendor
+        public string ContactPerson { get; set; }
+        public string ContactNo { get; set; }
+        public string EmailId { get; set; }
     }
     [Table("BillItem", Schema = "po")]
     public partial class BillItem : IUpdateAuditable

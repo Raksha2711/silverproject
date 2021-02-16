@@ -94,6 +94,7 @@ namespace Admin.Web.Helper
                     MailMessage msg = new MailMessage();
                     msg.From = new MailAddress("purchase@slprice.com");
                     msg.To.Add(new MailAddress(to));
+                    msg.CC.Add(new MailAddress("accounts@slprice.com"));
                     msg.Subject = subject;
                     msg.IsBodyHtml = isHtml;
                     msg.Body = body;
