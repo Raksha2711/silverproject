@@ -7,7 +7,7 @@
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Purchase Invoice</title>
+    <title>Purchase Order</title>
 
     @*<style type='text/css'>
             td, th {
@@ -25,8 +25,8 @@
 <body style='padding: 10px;'>
     <table style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
         <tr>
-            <th><h3><i class="fas fa-globe"> Silverline, Inc.</i></h3></th>
-            <th style='text-align-last: end;'>Date: @Model.Date.Value.ToString("dd/MM/yyyy")</th>
+            <th><h3><i class="fas fa-globe"> Silverline IT Hub.</i></h3></th>
+            <th style='text-align-last: end;'>Date: @(Model.Date.HasValue? Model.Date.Value.ToString("dd/MM/yyyy"):"")</th>
         </tr>
         <tr style='background: #0000;'>
             <th>
@@ -39,46 +39,58 @@
 
             </th>
         </tr>
-        <tr style='background: #0000;'>
+        <tr style='background:#0000;'>
             <th>
             </th>
             <th>
                 <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Sales Person: @Model.SalesPersoName</h6>
                 <br>
                 <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Payment Term: @Model.PaymentTerm</h6>
+                <br>
             </th>
         </tr>
+        @if (Model.PaymentTerm == "PDC")
+        {
+            <tr style='background:#0000;'>
+                <th>
+                </th>
+                <th>
+                    <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Dayes: @Model.PaymentValue</h6>
+                    <br>
+                </th>
+            </tr>
+        }
     </table>
     <center>
         <table style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
             <thead>
                 <tr>
-                    <th>Sr No</th>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Basic Rate</th>
-                    <th>Add Cost</th>
-                    <th>CDC</th>
-                    <th>Discount1</th>
-                    <th>GST</th>
-                    <th>NLC</th>
-                    <th>Remarks</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Sr No</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Item</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Qty</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Basic Rate</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Add Cost</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">CDC</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Discount1</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">GST</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">NLC</th>
+                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Remarks</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i + 1}))
+                @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i + 1 }))
                 {
-                    <tr>
-                        <th>@item.Index</th>
-                        <th>@item.Data.ItemName</th>
-                        <th>@item.Data.Qty</th>
-                        <th>@item.Data.BasicRate</th>
-                        <th>@item.Data.AddCost</th>
-                        <th>@item.Data.CDC</th>
-                        <td>@item.Data.Discount1</td>
-                        <td>@item.Data.Scheme1</td>
-                        <td>@item.Data.NLC</td>
-                        <td>@item.Data.Remarks</td>
+                    <tr style="@(item.Index%2==0?"":"background-color: #f9f9f9;")">
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Index</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.ItemName</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Qty</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.BasicRate</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
+                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
+                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
+                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Scheme1</td>
+                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
+                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
                     </tr>
                 }
             </tbody>
