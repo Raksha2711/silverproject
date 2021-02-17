@@ -114,11 +114,11 @@ namespace Admin.Web.Controllers
                         }
                         if (list.Count > 0)
                         {
-                            var newUserIDs = list.Select(u => u.Name).Distinct().ToArray();
+                            var newUserIDs = list.Select(u => u.Name).Distinct().ToList();
                             var usersInDb = _dbContext.SalesPerson.Where(u => newUserIDs.Contains(u.Name) && u.Status.Equals("1"))
                                                            .Select(u => u.Name).ToArray();
-                            var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
-                            foreach (SalesPerson user in usersNotInDb)
+                            var usersNotInDb = newUserIDs.Where(w => !usersInDb.Contains(w)).ToList();//.Where(u => !usersInDb.Contains(u.Name));
+                            foreach (var user in usersNotInDb)
                             {
                                 _dbContext.Add(user);
                                 _dbContext.SaveChanges();
