@@ -120,6 +120,7 @@
                         { html='<a href=@Url.Action("edit","purchaseorder")/'+full.id+'>Edit</a>' }
                         else
                         {
+                            if (full.recstatus == 'D') { html = '<small class="badge badge-danger"><i class="far fa-check-circle"></i> Cancel</small>';}
                             if (full.approver == 1)
                             { html='<small class="badge badge-info"><i class="far fa-check-circle"></i> App</small>'}
                             if (full.purchase == 1)
