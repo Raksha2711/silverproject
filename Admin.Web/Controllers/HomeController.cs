@@ -43,7 +43,8 @@ namespace Admin.Web.Controllers
                               Approver=s.Approver,
                               Purchase=s.Purchase,
                               Accounts=s.Accounts,
-
+                              GoodReceiveDate=s.GoodReceiveDate,
+                              PurchaseInvoiceNo=s.PurchaseInvoiceNo
                           }).ToList();
 
             return View(result);

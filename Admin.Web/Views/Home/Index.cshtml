@@ -73,7 +73,23 @@
                     {
                         item.CanEdit = true;
                         <div class="card card-primary card-outline">
-                            <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
+                            <div class="card-header">
+                                <h5 class="card-title">PO No :<a href="@Url.Action("view","PurchaseOrder",new { id = item.Id })">@item.No</a> (D:@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Date)))<span class="badge @(item.DeliveryType=="PickUp"?"bg-success": "bg-gradient-indigo")">@item.DeliveryType</span></h5>
+                                <div class="card-tools">
+                                    <a href="@Url.Action("detail","PurchaseOrder",new { id = item.Id })" class="btn btn-tool">
+                                        <i class="fas fa fa-arrow-circle-right"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><b>Sales Person : </b>@item.SalesPersoName</li>
+                                    <li class="list-group-item"><b>Vendor : </b>@item.VendorName</li>
+                                    <li class="list-group-item"><b>Invoice No : </b>@item.PurchaseInvoiceNo</li>
+                                    <li class="list-group-item"><b>Goods Rec Date : </b>@item.GoodReceiveDate.ToString("dd/MM//yyyy")</li>
+                                </ul>
+                            </div>
                         </div>
                     }
                 </div>
