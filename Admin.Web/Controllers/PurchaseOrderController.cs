@@ -235,6 +235,7 @@ namespace Admin.Web.Controllers
                               Date = s.Date,
                               SalesPersoName = sp.Name,
                               VendorName = v.Name,
+                              VendorAddress=v.Address,
                               Email = v.EmailId,
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,

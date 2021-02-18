@@ -9,17 +9,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Purchase Order</title>
 
-    @*<style type='text/css'>
-            td, th {
-                border: 0px solid #dddddd;
-                text-align: left;
-                padding: 10px 5px 10px 5px;
-            }
 
-            tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-        </style>*@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body style='padding: 10px;'>
@@ -31,16 +21,17 @@
         <tr style='background: #0000;'>
             <th>
                 <p style='margin: 0 0 -10px;color: #878787;font-size: 13px;'>From</p>
-                <br>
-                <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>@Model.VendorName</h6>
+                
             </th>
             <th>
                 <p style='margin:0 0 -10px;color: #878787;font-size: 13px;'>PO #@Model.No</p>
-
             </th>
         </tr>
         <tr style='background:#0000;'>
             <th>
+                <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>@Model.VendorName</h6>
+                <br>
+                <p style='margin: 0 0 -10px;color: #000;font-size: 12px;'>@Model.VendorAddress</p>
             </th>
             <th>
                 <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Sales Person: @Model.SalesPersoName</h6>
@@ -55,42 +46,43 @@
                 <th>
                 </th>
                 <th>
-                    <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Dayes: @Model.PaymentValue</h6>
+                    <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Days: @Model.PaymentValue</h6>
                     <br>
                 </th>
             </tr>
         }
+
     </table>
     <center>
-        <table style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
+        <table border="1" style='font-family: arial, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #dddddd;'>
             <thead>
                 <tr>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Sr No</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Item</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Qty</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Basic Rate</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Add Cost</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">CDC</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Discount1</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">GST</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">NLC</th>
-                    <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">Remarks</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Sr No</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Item</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Qty</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Basic Rate</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Add Cost</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">CDC</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Discount1</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">GST</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">NLC</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Remarks</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i + 1 }))
                 {
                     <tr style="@(item.Index%2==0?"":"background-color: #f9f9f9;")">
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Index</th>
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.ItemName</th>
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Qty</th>
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.BasicRate</th>
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
-                        <th style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
-                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
-                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Scheme1</td>
-                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
-                        <td style="border: 1px solid black; text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Index</th>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.ItemName</th>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Qty</th>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.BasicRate</th>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
+                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
+                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
+                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Scheme1</td>
+                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
+                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
                     </tr>
                 }
             </tbody>
