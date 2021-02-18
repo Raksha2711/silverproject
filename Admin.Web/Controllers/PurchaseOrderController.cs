@@ -290,7 +290,8 @@ namespace Admin.Web.Controllers
                              PaymentValue = s.PaymentValue,
                              Purchase = s.Purchase,
                              Accounts = s.Accounts,
-                             Approver = s.Approver
+                             Approver = s.Approver,
+                             Recstatus=s.Recstatus
                          });
 
             result.data = new List<TaskItemViewModel>();

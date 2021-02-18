@@ -115,6 +115,7 @@ PurchaseOrderUpdate.documentClick = function () {
         })
         if (isValid)
             SaveOrUpdate(frmData);
+        else {alert('Fill up all data') }
     });
 
 }
@@ -133,7 +134,7 @@ $(document).ready(function () {
         //setStartDate: minDate,
         //endDate: "12-02-2021",
     });
-    $('.custome-select2').select2();
+    $('.custome-select2').select2({ dropdownAutoWidth: true });
 });
 
 function getFromData() {
