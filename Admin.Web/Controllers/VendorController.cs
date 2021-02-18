@@ -182,6 +182,7 @@ namespace Admin.Web.Controllers
                                 Address = (worksheet.Cells[row, 2].Value).ToString(),
                                 EmailId= (worksheet.Cells[row, 3].Value).ToString(),
                                 ContactNo = (worksheet.Cells[row, 4].Value).ToString(),
+                                ContactPerson = (worksheet.Cells[row, 5].Value).ToString(),
                                 CreatedDate = DateTime.Now,
                                 Status = "1"
                             });
@@ -211,7 +212,7 @@ namespace Admin.Web.Controllers
         [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
         {
-            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.ContactNo }).ToList();
+            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.ContactNo,s.ContactPerson }).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))

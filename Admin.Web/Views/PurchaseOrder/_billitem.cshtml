@@ -11,8 +11,15 @@
             <option value="">Select Item</option>
         </select>
     </td>
-    <td><input name="Qty" asp-for="Qty" required class="form-control w-70p" placeholder="Qty"></td>
+    <td><input name="Qty" asp-for="Qty" required class="form-control w-70p" placeholder="Qty" min="0"></td>
     <td><input name="Unit" asp-for="Unit" class="form-control w-70p" placeholder="Unit" value="Pcs" readonly></td>
+    <td>
+        <select type="select" required name="Scheme1" asp-for="Scheme1" class="form-control w-120p">
+            <option value="">Select</option>
+            <option value="Basic">Basic</option>
+            <option value="All">All</option>
+        </select>
+    </td>
     <td><input name="BasicRate" required asp-for="BasicRate" class="form-control" placeholder="BasicRate"></td>
     <td>
         <select type="select" required name="AddCost" asp-for="AddCost" class="form-control w-120p">
@@ -23,12 +30,7 @@
     </td>
     <td><input name="CDC" asp-for="CDC" class="form-control w-70p" placeholder="CDC"></td>
     <td><input name="Discount1" asp-for="Discount1" class="form-control" placeholder="Discount"></td>
-    <td>
-        <select type="select" required name="Scheme1" asp-for="Scheme1" class="form-control w-120p">
-            <option value="">Select</option>
-            <option value="Basic">Basic</option>
-            <option value="All">All</option>
-        </select>
+
     <td><input name="scheme2" asp-for="Scheme2" class="form-control" placeholder="Scheme2"></td>
     <td><input name="SchemeAmt" asp-for="SchemeAmt" class="form-control" placeholder="SchemeAmt"></td>
     <td><input name="NLC" required asp-for="NLC" class="form-control w-70p" placeholder="NLC"></td>
