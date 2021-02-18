@@ -67,6 +67,7 @@ namespace Admin.Web.Controllers
 
             if (ModelState.IsValid && model != null)
             {
+                model.Date = DateTime.Now;
                 model.CreatedDate = DateTime.Now;
                 model.Recstatus = 'A';
                 _dbContext.Bills.Add(model);
@@ -189,7 +190,7 @@ namespace Admin.Web.Controllers
                 if (!string.IsNullOrWhiteSpace(poDetail.Email))
                 {
                     Email.Send(poDetail.Email,
-                        $"PurchaseInvoice(#{poDetail.No})",
+                        $"Silverline IT Hub - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
                         false, $"PurchaseInvoice-{poDetail.No}.pdf",
                         PdfHelper.ConvertToPdf(html)).Wait();
@@ -344,6 +345,14 @@ namespace Admin.Web.Controllers
 
             foreach (var e in entries) { result.data.Add(e); }
             return result;
+        }
+
+        [HttpPost]
+        [Route("GetDataById")]
+        public JsonResult GetDataById(int vendorId)
+        {
+            var res = _dbContext.Vendor.Where(x => x.Id == vendorId).FirstOrDefault();
+            return Json(res);
         }
     }
 }

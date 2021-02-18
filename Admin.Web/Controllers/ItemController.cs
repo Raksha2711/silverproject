@@ -85,13 +85,13 @@ namespace Admin.Web.Controllers
             return RedirectToAction("Index");
         }
         [Route("Import")]
-        public  async  Task<List<Item>> Import()
+        public  IActionResult Import()
         {
             IFormFile formFile = Request.Form.Files[0];
             var list = new List<Item>();
             using (var stream = new MemoryStream())
             {
-                await formFile.CopyToAsync(stream);
+                 formFile.CopyToAsync(stream);
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage(stream))
                 {
@@ -129,7 +129,7 @@ namespace Admin.Web.Controllers
                     }
                 }
             }
-            return  list;
+            return RedirectToAction("Index");
         }
         [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()

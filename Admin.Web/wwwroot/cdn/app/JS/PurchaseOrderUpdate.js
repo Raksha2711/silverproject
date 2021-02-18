@@ -89,6 +89,10 @@ PurchaseOrderUpdate.documentClick = function () {
     // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
     $(document).on('click', '.btn-submit', function () {
         var frmData = getFromData();
+        debugger
+       // alert(frmData);
+        var b1 = moment(frmData["Date"], 'YYYY-MM-DD').toDate()
+        frmData["Date"] = b1;
         frmData.billItems = [];
         var isValid = true;
         var tr = $('.tblpo>tbody>tr');
