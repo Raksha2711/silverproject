@@ -140,13 +140,13 @@
         });
     </script>
 }
-@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
         $(function () {
             $('#btndownload').on('click', function () {
                 $.ajax({
                     type: "POST",
-                    url: "/Warehouse/ExportToExcel",
+                    url: "@Url.Action("ExportToExcel", "WareHouse")",
                     contentType: false,
                     processData: false,
                     success: function (response) {
@@ -198,7 +198,7 @@
 
                     type: "POST",
 
-                    url: "/Warehouse/Import",
+                    url: "@Url.Action("Import", "WareHouse")",
 
                     beforeSend: function (xhr) {
 
@@ -256,4 +256,4 @@
 
         });
 
-    </script>*@
+</script>

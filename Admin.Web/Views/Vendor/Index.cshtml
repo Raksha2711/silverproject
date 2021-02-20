@@ -159,13 +159,13 @@
             $('#btndownload').on('click', function () {
                 $.ajax({
                     type: "POST",
-                    url: "/Vendor/ExportToExcel",
+                    url: "@Url.Action("ExportToExcel","Vendor")",
                     contentType: false,
                     processData: false,
                     success: function (response) {
 
-                    }
-                });
+                }
+            });
             });
         });
         $(function () {
@@ -211,7 +211,7 @@
 
                     type: "POST",
 
-                    url: "/Vendor/Import",
+                    url:  "@Url.Action("Import", "Vendor")",
 
                     beforeSend: function (xhr) {
 

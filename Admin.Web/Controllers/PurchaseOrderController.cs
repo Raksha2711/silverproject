@@ -190,7 +190,7 @@ namespace Admin.Web.Controllers
                 if (!string.IsNullOrWhiteSpace(poDetail.Email))
                 {
                     Email.Send(poDetail.Email,
-                        $"Silverline IT Hub - Purchase Order (PO NO : {poDetail.No})",
+                        $"Silverline IT HUB - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
                         false, $"PurchaseInvoice-{poDetail.No}.pdf",
                         PdfHelper.ConvertToPdf(html)).Wait();
@@ -290,7 +290,8 @@ namespace Admin.Web.Controllers
                              PaymentValue = s.PaymentValue,
                              Purchase = s.Purchase,
                              Accounts = s.Accounts,
-                             Approver = s.Approver
+                             Approver = s.Approver,
+                             Recstatus = s.Recstatus,
                          });
 
             result.data = new List<TaskItemViewModel>();
@@ -304,13 +305,13 @@ namespace Admin.Web.Controllers
                     if (item.Name.ToLower().Equals("start"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).OrderByDescending(o =>o.Id);
 
                     }
                     if (item.Name.ToLower().Equals("end"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture).AddHours(23));
+                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture).AddHours(23)).OrderByDescending(o => o.Id);
                     }
 
                 }
@@ -326,14 +327,14 @@ namespace Admin.Web.Controllers
             {
                 foreach (var item in param.Order)
                 {
-                    if (param.Columns[item.Column].Data.Equals("no"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
-                    else if (param.Columns[item.Column].Data.Equals("vendorName"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.VendorName) : query.OrderBy(o => o.VendorName);
-                    else if (param.Columns[item.Column].Data.Equals("deliveryType"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.DeliveryType) : query.OrderBy(o => o.DeliveryType);
-                    else if (param.Columns[item.Column].Data.Equals("paymentTerm"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PaymentTerm) : query.OrderBy(o => o.PaymentTerm);
+                    //if (param.Columns[item.Column].Data.Equals("no"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
+                    //else if (param.Columns[item.Column].Data.Equals("vendorName"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.VendorName) : query.OrderBy(o => o.VendorName);
+                    //else if (param.Columns[item.Column].Data.Equals("deliveryType"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.DeliveryType) : query.OrderBy(o => o.DeliveryType);
+                    //else if (param.Columns[item.Column].Data.Equals("paymentTerm"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PaymentTerm) : query.OrderBy(o => o.PaymentTerm);
                 }
             }
             result.recordsFiltered = query.Count();

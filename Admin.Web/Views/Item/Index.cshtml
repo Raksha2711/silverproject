@@ -127,7 +127,7 @@
             $('#btndownload').on('click', function () {
                 $.ajax({
                     type: "POST",
-                    url: "/Item/ExportToExcel",
+                    url: "@Url.Action("ExportToExcel","Item")",
                     contentType: false,
                     processData: false,
                     success: function (response) {
@@ -179,7 +179,7 @@
 
                     type: "POST",
 
-                    url: "/Item/Import",
+                    url: "@Url.Action("Import", "Item")",
 
                     beforeSend: function (xhr) {
 
