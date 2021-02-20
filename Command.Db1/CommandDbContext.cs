@@ -22,6 +22,7 @@ namespace Command.Entity1
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<BillItem> BillItems { get; set; }
         public virtual DbSet<ItemGroup> ItemGroup { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

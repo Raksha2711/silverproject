@@ -1,5 +1,225 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@*@model List<Command.Entity1.Item>*@
+@{ ViewData["Title"] = "Item Group List"; }
+@section styles{
+    <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
 }
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Item Group List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Item Group</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <div class="col-12">
+                <!--<div class="callout callout-info">-->
+                    
+                    <!--<div class=" offset-6 col-6">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" id="fileupload" name="files" class="form-control" />
+                            </div>
+                            <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
+                            <div class="input-group-append">
+                                <a href="@Url.Action("ExportToExcel", "ItemGroup")" class="btn-primary input-group-text">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+
+
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+
+                                <div class="input-group-append">
+                                    <a href="@Url.Action("Create","ItemGroup")" class="btn btn-default">
+                                        <i class="fas fa-plus"></i>&nbsp; Add
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 500px;">
+                        @*<table class="table table-head-fixed">*@
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","ItemGroup")">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Item Group Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
+    <script src="~/cdn/app/JS/common.js"></script>
+    <script type="text/javascript">
+        var table;
+        $(function () {
+            var columns = [
+                { name: "id", "data": "id", "orderable": false, },
+                { name: "ItemGroupName", "data": "itemgroupName", "orderable": true, },
+                {
+                    name: "Action", data: null, "orderable": false,
+                    "render": function (data, type, full, meta) {
+                         var html;
+                        html = "<a href=@Url.Action("edit", "item")/" + full.id + ">Edit</a>"
+                        html += "|<a href=@Url.Action("deleterow", "item")/" + full.id + ">Delete</a>"
+                        return html;
+                    }
+                }
+            ];
+            table = $$.dataTable('#table', {
+                columns: columns, columnDefs: [
+                    { "targets": [0], "visible": false },
+                ]
+            });
+        });
+        $(function () {
+            $('#btndownload').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ExportToExcel","Item")",
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+
+                    }
+                });
+            });
+        });
+        $(function () {
+
+            $('#btnupload').on('click', function () {
+
+                debugger
+                var fileExtension = ['xls', 'xlsx'];
+
+                var filename = $('#fileupload').val();
+
+                if (filename.length == 0) {
+
+                    alert("Please select a file.");
+
+                    return false;
+
+                }
+
+                else {
+
+                    var extension = filename.replace(/^.*\./, '');
+
+                    if ($.inArray(extension, fileExtension) == -1) {
+
+                        alert("Please select only excel files.");
+
+                        return false;
+
+                    }
+
+                }
+
+                var fdata = new FormData();
+
+                var fileUpload = $("#fileupload").get(0);
+
+                var files = fileUpload.files;
+
+                fdata.append(files[0].name, files[0]);
+
+                $.ajax({
+
+                    type: "POST",
+
+                    url: "@Url.Action("Import", "Item")",
+
+                    beforeSend: function (xhr) {
+
+                        xhr.setRequestHeader("XSRF-TOKEN",
+
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+
+                    },
+
+                    data: fdata,
+
+                    contentType: false,
+
+                    processData: false,
+
+                    success: function (response) {
+
+                        if (response.length == 0)
+
+                            alert('Some error occured while uploading');
+
+                        else {
+                            location.reload();
+                           // $('#divPrint').html(response);
+
+                        }
+
+                    },
+
+                    error: function (e) {
+
+                        $('#divPrint').html(e.responseText);
+
+                    }
+
+                });
+
+            })
+
+            $('#btnExport').on('click', function () {
+
+                var fileExtension = ['xls', 'xlsx'];
+
+                var filename = $('#fileupload').val();
+
+                if (filename.length == 0) {
+
+                    alert("Please select a file then Import");
+
+                    return false;
+
+                }
+
+            });
+
+        });
+    </script>
+}
+
