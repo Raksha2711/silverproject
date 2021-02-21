@@ -13,15 +13,15 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
+            @*<div class="col-sm-6">
                 <h1>Dash Board</h1>
-            </div>
-            <div class="col-sm-6 d-none d-sm-block">
+            </div>*@
+            @*<div class="col-sm-6 d-none d-sm-block">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">ControlPanel</li>
                 </ol>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>
@@ -30,7 +30,7 @@
     <div class="container-fluid h-100">
         <div class="row">
             <div class="p-0 col card card-row card-default">
-                <div class="card-header bg-info">
+                <div class="card-header bg-orange">
                     <h3 class="card-title">
                         Approver (Total : @approver.Count())
                     </h3>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="p-0 ml-1 mr-1 col card card-row card-default">
-                <div class="card-header bg-orange">
+                <div class="card-header bg-gradient-green">
                     <h3 class="card-title">
                         Purchase (Total : @purchase.Count())
                     </h3>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="p-0 col card card-row card-default">
-                <div class="card-header bg-info">
+                <div class="card-header bg-red">
                     <h3 class="card-title">
                         Account (Total : @account.Count())
                     </h3>

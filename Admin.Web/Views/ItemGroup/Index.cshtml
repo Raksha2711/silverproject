@@ -65,6 +65,7 @@
                                 <tr>
                                     <th>id</th>
                                     <th>Item Group Name</th>
+                                    <th>Item Group NLevel String</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -90,13 +91,14 @@
         $(function () {
             var columns = [
                 { name: "id", "data": "id", "orderable": false, },
-                { name: "ItemGroupName", "data": "itemgroupName", "orderable": true, },
+                { name: "itemgroupname", "data": "itemGroupName", "orderable": true, },
+                { name: "itemgroupnlevelstring", "data": "itemGroupNLevelString", "orderable": true, },
                 {
                     name: "Action", data: null, "orderable": false,
                     "render": function (data, type, full, meta) {
                          var html;
-                        html = "<a href=@Url.Action("edit", "item")/" + full.id + ">Edit</a>"
-                        html += "|<a href=@Url.Action("deleterow", "item")/" + full.id + ">Delete</a>"
+                        html = "<a href=@Url.Action("edit", "itemgroup")/" + full.id + ">Edit</a>"
+                        html += "|<a href=@Url.Action("deleterow", "itemgroup")/" + full.id + ">Delete</a>"
                         return html;
                     }
                 }

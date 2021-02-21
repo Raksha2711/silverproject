@@ -1,102 +1,101 @@
 ﻿@*@model List<Command.Entity1.Item>*@
-@{
-    ViewData["Title"] = "Item List";
-}
-@section styles{
-    <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
-}
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Item List</h1>
+
+    @{ ViewData["Title"] = "Item List"; }
+    @section styles{
+        <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
+    }
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Item List</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Item</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Item</li>
-                </ol>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="callout callout-info">
+                        @*<h5><i class="fas fa-info"></i> Action:</h5>*@
+<div class=" offset-6 col-6">
+    <div class="input-group">
+        <div class="custom-file">
+            <input type="file" id="fileupload" name="files" class="form-control" />
+            @*<label class="form-control" for="fileupload">Choose file</label>*@
+
+        </div>
+        <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
+        <div class="input-group-append">
+            <a href="@Url.Action("ExportToExcel", "Item")" class="btn-primary input-group-text">Download</a>
+        </div>
+    </div>
+</div>
+                </div>
+
+
+
+            </div>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+
+            <div class="card-tools">
+                <div class="input-group input-group-sm">
+
+                    <div class="input-group-append">
+                        <a href="@Url.Action("Create","Item")" class="btn btn-default">
+                            <i class="fas fa-plus"></i>&nbsp; Add
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
-</section>
-<div class="content">
-    <div class="container-fluid">
-
-
-        <div class="row">
-            <div class="col-12">
-                <div class="callout callout-info">
-                    @*<h5><i class="fas fa-info"></i> Action:</h5>*@
-                    <div class=" offset-6 col-6">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" id="fileupload" name="files" class="form-control" />
-                                @*<label class="form-control" for="fileupload">Choose file</label>*@
-
-                            </div>
-                            <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
-                            <div class="input-group-append">
-                                <a href="@Url.Action("ExportToExcel", "Item")" class="btn-primary input-group-text">Download</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm">
-                                
-                                <div class="input-group-append">
-                                    <a href="@Url.Action("Create","Item")" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>&nbsp; Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0" style="height: 500px;">
-                        @*<table class="table table-head-fixed">*@
-                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","item")">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @*@foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.Name</td>
-                                            <td>
-                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                                | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                            </td>
-                                        </tr>
-                                    }*@
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 500px;">
+            @*<table class="table table-head-fixed">*@
+            <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","item")">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*@foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                    | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }*@
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
         </div>
 
     </div>
 </div>
 
 @section scripts{
-    
+
     <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
     <script src="~/cdn/app/JS/common.js"></script>
     <script type="text/javascript">

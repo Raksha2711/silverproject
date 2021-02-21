@@ -10,7 +10,8 @@ namespace Command.Entity1
     {
         [Key]
         public int Id { get; set; }
-
+        public int ItemGroupId { set; get; }
+        public virtual ItemGroup ItemGroup { get; set; }
         [StringLength(64)]
         public string Name { get; set; }
         [StringLength(20)]
