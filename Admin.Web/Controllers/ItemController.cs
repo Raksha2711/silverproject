@@ -258,8 +258,8 @@ namespace Admin.Web.Controllers
                         select * from nleveltbl";
                     var queryResult = await db.QueryAsync<ItemViewModel>(query);
                     db.Close();
-                    result = queryResult.ToList();
-                    ViewBag.ItemGroupList = new SelectList(result.ToList(), "Id", "ItemGroupName");
+                    var result1 = queryResult.ToList();
+                    ViewBag.ItemGroupNLevelString = result1.Select(s => new SelectListItem { Text = s.ItemGroupName, Value = s.Id.ToString() }).ToList();
                 }
             }
             catch (Exception ex)
@@ -269,6 +269,7 @@ namespace Admin.Web.Controllers
             
 
         }
+        
         [HttpPost]
         [Route("additemgroup")]
         public IActionResult AddItemGroup(ItemGroup model)
@@ -318,5 +319,49 @@ namespace Admin.Web.Controllers
             }
             return RedirectToAction("Create", "item");
         }
+
+
+
+
+        //[HttpGet]
+        //[Route("additemingroup")]
+        //public async Task<List<ItemGroup>> FillDD()
+        //{
+        //    var result = new List<ItemGroup>();
+        //    try
+        //    {
+        //        using (var db = new SqlConnection(DbConnection))
+        //        {
+        //            var query = $@"with  nleveltbl(Id,Name,ItemGroupName,ItemGroupId) as
+        //            (
+        //                select 
+        //                id as Id,
+        //                Name  ,
+        //                CAST( Name as varchar(max)) as ItemGroupName ,
+        //                ItemGroupId
+        //                from po.Item 
+        //                where ItemGroupId =0
+        //                UNION ALL
+        //                select 
+        //                i.id as Id,
+        //                i.Name ,
+        //                CAST( CONCAT(ig.Name,' >> ', i.Name)as varchar(max)) as ItemGroupName,
+        //                i.ItemGroupId
+        //                from po.Item i
+        //                join nleveltbl ig on i.ItemGroupId=ig.Id
+        //                )
+        //                select * from nleveltbl";
+        //            var queryResult = await db.QueryAsync<ItemGroup>(query);
+        //            db.Close();
+        //            result = queryResult.ToList();
+        //            ViewBag.ItemGroupList = new SelectList(result.ToList(), "Id", "ItemGroupName");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return result;
+        //}
     }
 }

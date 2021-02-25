@@ -28,10 +28,11 @@ PurchaseOrderUpdate.documentClick = function () {
             $("#divaddress").hide();
         }
     });
+   
     $('.btn-add-item').on('click', function () {
         if (validate()) {
             $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
-                $('.tblpo>tbody').prepend(res);
+                $('.tblpo>tbody').append(res);
                 setTimeout(addSerialNumber(), 100);
                 $('.custome-select2').select2();
             });

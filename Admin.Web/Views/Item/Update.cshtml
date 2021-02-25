@@ -1,50 +1,51 @@
-﻿@model Admin.Web.ViewModel.ItemViewModel
-
-
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Create Item</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Create Item</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
-<div class="content">
-    <div class="container-fluid">
-        <div class="card card-default">
-            <form asp-controller="item" asp-action="update" method="post">
-                <div class="card-header">
-                    <h3 class="card-title">Item</h3>
+﻿@model Command.Entity1.Item
+@section scripts{
+    <script src="~/cdn/app/JS/common.js"></script>
+}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Create Item</h1>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    @Html.HiddenFor(m => m.Id)
-                    @Html.HiddenFor(m => m.ModifiedBy)
-                    @Html.HiddenFor(m => m.ModifiedDate)
-                    <div class="row">
-                        
-                        <div class="col-md-6">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Create Item</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card card-default">
+                <form asp-controller="item" asp-action="update" method="post">
+                    <div class="card-header">
+                        <h3 class="card-title">Item</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.ModifiedBy)
+                        @Html.HiddenFor(m => m.ModifiedDate)
+                        <div class="row">
+
+                            <div class="col-md-6">
 
 
-                            <div class="form-group">
-                                <label>Item Name</label>
-                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                                <div class="form-group">
+                                    <label>Item Name</label>
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                                </div>
                             </div>
-                        </div>
-                        
+
                             <div class="col-md-6">
                                 @*@if (Model == null)
-                                {
-                        <div class="col-md-1" style="margin-top:25px;" title="Add Item Group">
-                            
-                        </div>}*@
+                                            {
+                                    <div class="col-md-1" style="margin-top:25px;" title="Add Item Group">
+
+                                    </div>}*@
 
                                 <div class="form-group">
                                     <label>
@@ -53,48 +54,54 @@
                                                 <span class="fas fa-plus"></span>
                                             </a>}
                                     </label>
-                                   
-                                    <select type="select" asp-for="Id" asp-items="ViewBag.ItemGroupList" class="form-control custome-select2">
+                                    @*<select class="addItemGroup" asp-for="ItemGroupId">
+                                    <option value="0">None</option>
+                                    @if (Model != null)
+                                    {
+                        @foreach (var item in Model.Itemgroup)
+                        {
+
+        <option value="@item.Id">@item.ItemGroupName</option>}}
+                                </select>*@
+                                    <select type="select" asp-for="ItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control custome-select2 ">
                                         <option value="0">None</option>
                                     </select>
-                                    @*<select type="select" asp-for="ItemGroupId" asp-items="ViewBag.ItemGroupList" class="form-control">
-            <option value="0">None</option>
-        </select>*@
+                                    
                                 </div>
 
                             </div>
-                        
+
+                        </div>
                     </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <div class="card-tools">
-                        <button type="submit" class="btn btn-primary" ><i class="fas fa-save"></i>Save</button>
-                        <button type="submit" class="btn btn-primary" asp-controller="Item" asp-action="Index"><i class="fas fa-times"></i>Cancel</button>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="card-tools">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Save</button>
+                            <button type="submit" class="btn btn-primary" asp-controller="Item" asp-action="Index"><i class="fas fa-times"></i>Cancel</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Item Group</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Item Group</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    @if (Model == null)
+                    {
+        @await Component.InvokeAsync("ItemGroup")}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                @if (Model == null)
-                {
-    @await Component.InvokeAsync("ItemGroup")}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+
         </div>
-
     </div>
-</div>
