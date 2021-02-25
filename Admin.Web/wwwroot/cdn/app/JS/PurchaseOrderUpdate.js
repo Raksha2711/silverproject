@@ -60,6 +60,7 @@ PurchaseOrderUpdate.documentClick = function () {
                     else {
                         alert("else");
                         var frmData = getFromData();
+
                         frmData.billItems = [];
                         var tr = $('.tblpo>tbody>tr');
                         $.each(tr, function (k, v) {
@@ -69,9 +70,10 @@ PurchaseOrderUpdate.documentClick = function () {
                             frmData.billItems.push(trobj);
                         })
                         alert(frmData.Id);
+                        var Id = $("#item_Id").val()
                         $.ajax({
                             type: 'POST',
-                            url: baseurl + ('PurchaseOrder/deleterow/' + frmData.Id + '.json'),
+                            url: baseurl + ('PurchaseOrder/deleterow/' + Id + '.json'),
                             data: JSON.stringify(frmData),
                             success: function (resut) { },
                             error: function (jqXHR) { debugger },

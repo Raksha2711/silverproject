@@ -37,6 +37,6 @@ namespace Command.Entity1
         private DateTime? dateCreated = null;
         [StringLength(1)]
         public string Status { get; set; }
-        public ICollection<Item> Item { get; set; }
+       // public ICollection<Item> Item { get; set; }
     }
 }
