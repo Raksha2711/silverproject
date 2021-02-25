@@ -60,11 +60,11 @@
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Sr No</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Item</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Qty</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">GST</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Basic Rate</th>
-                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Add Cost</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">Freight</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">CDC</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Discount1</th>
-                    <th style="text-align: left; padding: 10px 5px 10px 5px;">GST</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">NLC</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Remarks</th>
                 </tr>
@@ -72,18 +72,18 @@
             <tbody>
                 @foreach (var item in Model.BillItemsView.Select((x, i) => new { Data = x, Index = i + 1 }))
                 {
-                    <tr style="@(item.Index%2==0?"":"background-color: #f9f9f9;")">
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Index</th>
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.ItemName</th>
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Qty</th>
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.BasicRate</th>
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
-                        <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
-                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
-                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Scheme1</td>
-                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
-                        <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
-                    </tr>
+                <tr style="@(item.Index%2==0?"":"background-color: #f9f9f9;")">
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Index</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.ItemName</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Qty</th>
+                    <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Scheme1</td>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.BasicRate</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
+                    <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
+                    <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
+                    <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
+                    <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
+                </tr>
                 }
             </tbody>
         </table>

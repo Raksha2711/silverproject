@@ -5,12 +5,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Create Sales Person</h1>
+                <h1>Create User</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Create Sales Person</li>
+                    <li class="breadcrumb-item active">Create User</li>
                 </ol>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="card card-default">
             <form asp-controller="salesperson" asp-action="update" method="post">
                 <div class="card-header">
-                    <h3 class="card-title">Sales Person</h3>
+                    <h3 class="card-title">User</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -29,13 +29,26 @@
                     @Html.HiddenFor(m => m.ModifiedBy)
                     @Html.HiddenFor(m => m.ModifiedDate)
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>Name</label>
-                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                                <label asp-for="Name">Name</label>
+                                <input type="text" asp-for="Name" class="form-control" placeholder="Enter Name" />
                             </div>
-
                         </div>
+                        <div class="col-md-5">
+                            <label asp-for="DepartmentId">Department Name</label>
+                            <select type="select" asp-for="DepartmentId" asp-items="ViewBag.DepartmentList" class="form-control">
+                                <option value="0">Select Department</option>
+                            </select>
+                        </div>
+
+                        @if (Model == null)
+                        {
+            <div class="col-md-1" style="margin-top:25px;" title="Add Department">
+                <a href="#" data-toggle="modal" data-target="#myModal">
+                    <span class="fas fa-plus"></span>
+                </a>
+            </div>}
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -50,3 +63,25 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Department</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @if (Model == null)
+                {
+    @await Component.InvokeAsync("Department")}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

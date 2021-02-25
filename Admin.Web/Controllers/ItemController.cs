@@ -11,11 +11,9 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Admin.Web.Models;
-//using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.Web.Controllers
 {
@@ -38,6 +36,7 @@ namespace Admin.Web.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
+            FillDropDown();
             return View("~/Views/Item/Update.cshtml");
         }
         [HttpGet("edit/{id:int}")]
@@ -159,7 +158,6 @@ namespace Admin.Web.Controllers
         }
         internal DtResult<Item> GetList(DTParameters param)
         {
-            //var list = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
             var result = new DtResult<Item>();
             var query = (from s in _dbContext.Item
                          where s.Status.Equals("1")
@@ -168,7 +166,15 @@ namespace Admin.Web.Controllers
                              Id = s.Id,
                              Name = s.Name
                          });
-
+            //var query = (from s in _dbContext.Item
+            //             join st in _dbContext.ItemGroup on s.ItemGroupId equals st.Id
+            //             where (s.Status.Equals("1"))
+            //             select new ItemViewModel
+            //             {
+            //                 Id = s.Id,
+            //                 Name = s.Name,
+            //                 ItemGroupName = st.ItemGroupName
+            //             });
             result.data = new List<Item>();
             result.recordsTotal = query.Count();
 
@@ -181,7 +187,6 @@ namespace Admin.Web.Controllers
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
                             query = query.Where(w => w.Name.Contains(item.Search.Value));
-
                     }
                 }
             }
@@ -210,6 +215,63 @@ namespace Admin.Web.Controllers
             foreach (var e in entries) { result.data.Add(e); }
             return result;
         }
+        internal void FillDropDown()
+        {
+            List<ItemGroup> ItemGroupList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(x => new ItemGroup
+            {
+                Id = x.Id,
+                ItemGroupName = x.ItemGroupName
+            }).ToList();
+            ViewBag.ItemGroupNLevelString = new SelectList(ItemGroupList, "Id", "ItemGroupName");
+        }
+        [HttpPost]
+        [Route("additemgroup")]
+        public IActionResult AddItemGroup(ItemGroup model)
+        {
+            if (model != null)
+            {
+                model.Status = "1";
+                if (model.Id == 0)
+                {
+                    model.CreatedDate = DateTime.Now;
+                    _dbContext.ItemGroup.Add(model);
+                }
+                else
+                {
+                    var res = _dbContext.ItemGroup.Where(x => x.Id == model.Id).FirstOrDefault();
+                    if (res != null)
+                    {
+                        res.ModifiedDate = model.ModifiedDate;
+                        if(model.ItemGroupNLevelString == "0")
+                        {
+                            res.ParentItemGroupId = "0";
+                            res.ItemGroupNLevelString = model.ItemGroupName;
+                            
+                        }
+                        else
+                        {
 
+                           //produces flat sequence
+
+                            res.ParentItemGroupId = model.ItemGroupNLevelString;
+                            var a = from category in _dbContext.ItemGroup
+                            join prod in _dbContext.ItemGroup on category.Id.ToString() equals prod.ParentItemGroupId
+                            select new { c =  category.ItemGroupName + ">>" + prod.ItemGroupName };
+                            res.ParentItemGroupId = model.ItemGroupNLevelString;
+                            res.ItemGroupNLevelString = a.ToString();//_dbContext.ItemGroup.Where(x => x.Id == model.Id).Select(s => s.ItemGroupName).FirstOrDefault();
+                        }
+                        
+                        res.ItemGroupNLevelString = _dbContext.ItemGroup.Where(x => x.Id == model.Id).Select(s => s.ItemGroupName).FirstOrDefault();
+                        res.CreatedDate = DateTime.Now;
+                        res.Status = model.Status;
+                        res.ModifiedBy = model.ModifiedBy;
+                        _dbContext.ItemGroup.Update(res);
+                    }
+
+                }
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Create", "item");
+        }
     }
 }

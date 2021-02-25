@@ -36,5 +36,8 @@ namespace Command.Entity1
         }
         [StringLength(1)]
         public string Status { get; set; }
+
+        public int DepartmentId { get; set; }
+        public virtual Department Dept { get; set; }
     }
 }

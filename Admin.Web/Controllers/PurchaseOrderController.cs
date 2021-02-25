@@ -190,7 +190,7 @@ namespace Admin.Web.Controllers
                 if (!string.IsNullOrWhiteSpace(poDetail.Email))
                 {
                     Email.Send(poDetail.Email,
-                        $"Silverline IT Hub - Purchase Order (PO NO : {poDetail.No})",
+                        $"Silverline IT HUB - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
                         false, $"PurchaseInvoice-{poDetail.No}.pdf",
                         PdfHelper.ConvertToPdf(html)).Wait();
@@ -291,7 +291,7 @@ namespace Admin.Web.Controllers
                              Purchase = s.Purchase,
                              Accounts = s.Accounts,
                              Approver = s.Approver,
-                             Recstatus=s.Recstatus
+                             Recstatus = s.Recstatus,
                          });
 
             result.data = new List<TaskItemViewModel>();
@@ -305,13 +305,13 @@ namespace Admin.Web.Controllers
                     if (item.Name.ToLower().Equals("start"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).OrderByDescending(o =>o.Id);
 
                     }
                     if (item.Name.ToLower().Equals("end"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture).AddHours(23));
+                            query = query.Where(w => w.Date <= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture).AddHours(23)).OrderByDescending(o => o.Id);
                     }
 
                 }

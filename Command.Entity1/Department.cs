@@ -5,13 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Command.Entity1
 {
-    [Table("Item", Schema = "po")]
-    public partial class Item
+    [Table("Department", Schema = "po")]
+    public partial class Department
     {
         [Key]
         public int Id { get; set; }
-        public int ItemGroupId { set; get; }
-        public virtual ItemGroup ItemGroup { get; set; }
+
         [StringLength(64)]
         public string Name { get; set; }
         [StringLength(20)]
@@ -22,6 +21,7 @@ namespace Command.Entity1
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
+        private DateTime? dateCreated = null;
         [Column(TypeName = "datetime")]
         public DateTime ModifiedDate
         {
@@ -34,9 +34,9 @@ namespace Command.Entity1
 
             set { this.dateCreated = value; }
         }
-
-        private DateTime? dateCreated = null;
         [StringLength(1)]
         public string Status { get; set; }
+
+        public ICollection<SalesPerson> SalesPerson { get; set;  }
     }
 }

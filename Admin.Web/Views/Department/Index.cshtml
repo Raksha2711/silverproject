@@ -1,5 +1,4 @@
-﻿@*@model List<Command.Entity1.SalesPerson>*@
-@{ ViewData["Title"] = "User List"; }
+﻿@{ ViewData["Title"] = "Department List"; }
 
 @section styles{
     <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
@@ -8,12 +7,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>User List</h1>
+                <h1>Department List</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">User</li>
+                    <li class="breadcrumb-item active">Department</li>
                 </ol>
             </div>
         </div>
@@ -21,8 +20,6 @@
 </section>
 <div class="content">
     <div class="container-fluid">
-
-
         <div class="row">
             <div class="col-12">
                 <div class="callout callout-info">
@@ -33,7 +30,7 @@
                             </div>
                             <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
                             <div class="input-group-append">
-                                <a href="@Url.Action("ExportToExcel", "salesperson")" class="btn-primary input-group-text">Download</a>
+                                <a href="@Url.Action("ExportToExcel", "department")" class="btn-primary input-group-text">Download</a>
                             </div>
                         </div>
                     </div>
@@ -45,7 +42,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-append">
-                                    <a href="@Url.Action("create","salesperson")" class="btn btn-default">
+                                    <a href="@Url.Action("create","department")" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
                                 </div>
@@ -54,12 +51,11 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="height: 500px;">
-                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","salesperson")">
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","department")">
                             <thead>
                                 <tr>
                                     <th>id</th>
                                     <th>Name</th>
-                                    <th>Department</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -86,13 +82,12 @@
             var columns = [
                 { name: "id", "data": "id", "orderable": false },
                 { name: "name", "data": "name", "orderable": true },
-                { name: "department", "data": "department", "orderable": true },
                 {
                     name: "Action", data: null, "orderable": false,
                     "render": function (data, type, full, meta) {
                         var html;
-                        html = "<a href=@Url.Action("edit", "salesperson")/" + full.id + ">Edit</a>"
-                        html += "|<a href=@Url.Action("deleterow", "salesperson")/" + full.id + ">Delete</a>"
+                        html = "<a href=@Url.Action("edit", "department")/" + full.id + ">Edit</a>"
+                        html += "|<a href=@Url.Action("deleterow", "department")/" + full.id + ">Delete</a>"
                         return html
                     }
                 }
@@ -106,7 +101,7 @@
                 $('#btndownload').on('click', function () {
                     $.ajax({
                         type: "POST",
-                        url: "@Url.Action("ExportToExcel","SalesPerson")",
+                        url: "@Url.Action("ExportToExcel","Department")",
                         contentType: false,
                         processData: false,
                         success: function (response) {
@@ -158,7 +153,7 @@
 
                         type: "POST",
 
-                        url: "@Url.Action("Import","SalesPerson")",
+                        url: "@Url.Action("Import","Department")",
 
                         beforeSend: function (xhr) {
 

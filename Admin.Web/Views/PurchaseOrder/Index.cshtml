@@ -99,7 +99,16 @@
         $(function () {
             var columns = [
                 { name: "end", "data": "date", "orderable": false, },
-                { name: "no", "data": "no", "orderable": true },
+                {
+                    name: "no", "data": "no", "orderable": true,
+
+                    "render": function (data, type, full, meta) {
+                        var html;
+                        html = '<a href=@Url.Action("view", "purchaseorder")/' + full.id + '>' + full.no + '</a > '
+                        return html;
+                    }
+                },
+                
                 //{ name: "start", "data": "date", "orderable": false },
                 { name: "start", data: null, "orderable": false,
                     "render": function (data, type, full, meta) {

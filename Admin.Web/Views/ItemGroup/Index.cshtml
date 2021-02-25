@@ -1,6 +1,5 @@
-﻿@*@model List<Command.Entity1.Vendor>*@
-@{ ViewData["Title"] = "Vendor List"; }
-
+﻿@*@model List<Command.Entity1.Item>*@
+@{ ViewData["Title"] = "Item Group List"; }
 @section styles{
     <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
 }
@@ -8,12 +7,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Vendor List</h1>
+                <h1>Item Group List</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Vendor</li>
+                    <li class="breadcrumb-item active">Item Group</li>
                 </ol>
             </div>
         </div>
@@ -21,47 +20,24 @@
 </section>
 <div class="content">
     <div class="container-fluid">
-        <div class="row">
-            @*<div class="col-12">
-                <div class="callout callout-info">
-                    <div class="col-12">
-                        <form class="filter">
-                            <div class="form-group col-5">
-                                <label>From</label>
-                                <div class="input-daterange input-group" id="datepicker">
-                                    <input type="text" class="input-sm form-control" name="start" />
-                                    <span class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                    </span>
-                                    <span class="input-group-addon">End Date</span>
-                                    <input type="text" class="input-sm form-control" name="end" />
-                                    <span class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                    </span>
-                                </div>
-                            </div>
 
-                        </form>
-                    </div>
-                </div>
-            </div>*@
+
+        <div class="row">
             <div class="col-12">
-                <div class="callout callout-info">
-                    @*<h5><i class="fas fa-info"></i> Action:</h5>*@
-                    <div class=" offset-6 col-6">
+                <!--<div class="callout callout-info">-->
+                    
+                    <!--<div class=" offset-6 col-6">
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" id="fileupload" name="files" class="form-control" />
-                                @*<label class="custom-file-label" for="fileupload">Choose file</label>*@
-
                             </div>
                             <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
                             <div class="input-group-append">
-                                <a href="@Url.Action("ExportToExcel", "vendor")" class="btn-primary input-group-text">Download</a>
+                                <a href="@Url.Action("ExportToExcel", "ItemGroup")" class="btn-primary input-group-text">Download</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
 
@@ -72,9 +48,9 @@
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                
+
                                 <div class="input-group-append">
-                                    <a href="@Url.Action("Create","vendor")" class="btn btn-default">
+                                    <a href="@Url.Action("Create","ItemGroup")" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
                                 </div>
@@ -83,35 +59,18 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="height: 500px;">
-                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","vendor")">
+                        @*<table class="table table-head-fixed">*@
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","ItemGroup")">
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>Name</th>
-                                    @*<th>CreatedDate</th>*@
-                                    <th>Address</th>
-                                    <th>Email</th>
-                                    <th>ContactNo</th>
-                                    <th>Contact Person</th>
+                                    <th>Item Group Name</th>
+                                    <th>Item Group NLevel String</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
-                            @*<tbody>
-                                            @foreach (var item in Model)
-                                            {
-                                <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Address</td>
-                                    <td>@item.EmailId</td>
-                                    <td>@item.ContactNo</td>
-                                    <td>@item.ContactPerson</td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                        | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                    </td>
-                                </tr>}
-                                        </tbody>*@
+                            <tbody>
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -123,9 +82,8 @@
     </div>
 </div>
 
-
 @section scripts{
-    @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
+
     <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
     <script src="~/cdn/app/JS/common.js"></script>
     <script type="text/javascript">
@@ -133,25 +91,21 @@
         $(function () {
             var columns = [
                 { name: "id", "data": "id", "orderable": false, },
-                { name: "name", "data": "name", "orderable": true },
-                { name: "address", "data": "address", "orderable": true },
-                { name: "emailId", "data": "emailId", "orderable": true },
-                { name: "contactNo", "data": "contactNo", "orderable": true },
-                { name: "contactPerson", "data": "contactPerson", "orderable": true },
+                { name: "itemgroupname", "data": "itemGroupName", "orderable": true, },
+                { name: "itemgroupnlevelstring", "data": "itemGroupNLevelString", "orderable": true, },
                 {
                     name: "Action", data: null, "orderable": false,
                     "render": function (data, type, full, meta) {
-                        var html;
-                        html = "<a href=@Url.Action("edit","vendor")/" + full.id + ">Edit</a>"
-                        html += "|<a href=@Url.Action("deleterow", "vendor")/" + full.id + ">Delete</a>"
-                        //return "<button data-toggle='tooltip' class='btn-link js-edit' data-Brand-id=" + row.BrandID + " title='Edit Brand'><i class='glyphicon glyphicon-edit'></i></button><button data-toggle='tooltip' class='btn-link js-delete' data-Brand-id=" + row.BrandID + " title='Delete Brand'><i class='glyphicon glyphicon-trash'></i></button>";
-                        return html
+                         var html;
+                        html = "<a href=@Url.Action("edit", "itemgroup")/" + full.id + ">Edit</a>"
+                        html += "|<a href=@Url.Action("deleterow", "itemgroup")/" + full.id + ">Delete</a>"
+                        return html;
                     }
                 }
             ];
             table = $$.dataTable('#table', {
                 columns: columns, columnDefs: [
-                    {"targets": [0], "visible": false},
+                    { "targets": [0], "visible": false },
                 ]
             });
         });
@@ -159,13 +113,13 @@
             $('#btndownload').on('click', function () {
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("ExportToExcel","Vendor")",
+                    url: "@Url.Action("ExportToExcel","Item")",
                     contentType: false,
                     processData: false,
                     success: function (response) {
 
-                }
-            });
+                    }
+                });
             });
         });
         $(function () {
@@ -211,7 +165,7 @@
 
                     type: "POST",
 
-                    url:  "@Url.Action("Import", "Vendor")",
+                    url: "@Url.Action("Import", "Item")",
 
                     beforeSend: function (xhr) {
 
@@ -234,9 +188,9 @@
                             alert('Some error occured while uploading');
 
                         else {
-
-                            //$('#divPrint').html(response);
                             location.reload();
+                           // $('#divPrint').html(response);
+
                         }
 
                     },
@@ -270,3 +224,4 @@
         });
     </script>
 }
+

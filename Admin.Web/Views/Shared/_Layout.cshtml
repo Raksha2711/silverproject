@@ -13,11 +13,11 @@
     </environment>
     <partial name="_Styles" />
 </head>
-<body class="hold-transition sidebar-mini sidebar-collapse">
+<body class="hold-transition sidebar-mini sidebar-collapse" style="height: auto;">
     <div class="wrapper">
         <partial name="_TopNavigation" />
-        <partial name="_MainNavigation" />
-        <div class="content-wrapper ">
+        @*<partial name="_MainNavigation" />*@
+        <div class="content">
             <partial name="_messaging" />
             @RenderBody()
         </div>

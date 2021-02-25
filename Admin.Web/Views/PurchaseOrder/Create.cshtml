@@ -175,21 +175,21 @@
         //var d = new Date();
         //d.setDate(d.getDate() - 2);
         //$('#Date').attr('min', d);
-        
+
         $("#Vendor").on("change", function () {
             debugger
             var idvalue = $(this).val();
             $.ajax({
                 type: 'POST',
-                url: "/purchaseorder/GetDataById",
+                url: "@Url.Action("GetDataById", "purchaseorder")",
                 data: { vendorId: parseInt(idvalue) },
                 dataType: 'json',
                 success: function (response) {
                     $("#ContactPerson").val(response.contactPerson);
                     $("#ContactNo").val(response.contactNo);
                     $("#EmailId").val(response.emailId);
-                }
-            });
+                    }
+                });
         });
     });
 </script>

@@ -5,10 +5,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="~/Home" class="brand-link">
         <img src="~/img/logo.png" alt="AdminLTE Logo" class="logo-image">
-        @*<span class="brand-text font-weight-light">SilverLine</span>*@
     </a>
     <div class="sidebar">
-        @*@if (User.Identity.IsAuthenticated)*@
         @if (SignInManager.IsSignedIn(User))
         {
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -66,7 +64,7 @@
                     <a asp-controller="SalesPerson" asp-action="Index" class="nav-link @Url.MakeActiveClass("SalesPerson","index")">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
-                            Sales Person
+                            User
                         </p>
                     </a>
                 </li>
@@ -78,8 +76,16 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a asp-controller="department" asp-action="Index" class="nav-link @Url.MakeActiveClass("Department","index")">
+                        <i class="nav-icon fas fa-laptop-house"></i>
+                        <p>
+                            Department
+                        </p>
+                    </a>
+                </li>
 
-                @*@if (User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
         {
             <li class="nav-item ">
                 <a asp-controller="Home" asp-action="Privacy" class="nav-link @Url.MakeActiveClass("home","privacy")">
@@ -89,7 +95,7 @@
                     </p>
                 </a>
             </li>
-        }*@
+        }
             </ul>
         </nav>
     </div>

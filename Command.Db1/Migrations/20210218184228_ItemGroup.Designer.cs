@@ -4,14 +4,16 @@ using Command.Entity1;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Command.Db1.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210218184228_ItemGroup")]
+    partial class ItemGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,40 +268,6 @@ namespace Command.Db1.Migrations
                     b.ToTable("BillMaster","po");
                 });
 
-            modelBuilder.Entity("Command.Entity1.Department", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(1)")
-                        .HasMaxLength(1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Department","po");
-                });
-
             modelBuilder.Entity("Command.Entity1.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -314,9 +282,6 @@ namespace Command.Db1.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("ItemGroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -333,8 +298,6 @@ namespace Command.Db1.Migrations
                         .HasMaxLength(1);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemGroupId");
 
                     b.ToTable("Item","po");
                 });
@@ -353,14 +316,6 @@ namespace Command.Db1.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("ItemGroupNLevelString")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("ItemGroupName")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -368,8 +323,9 @@ namespace Command.Db1.Migrations
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("ParentItemGroupId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(1)")
@@ -394,9 +350,6 @@ namespace Command.Db1.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -413,8 +366,6 @@ namespace Command.Db1.Migrations
                         .HasMaxLength(1);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("SalesPerson","po");
                 });
@@ -709,24 +660,6 @@ namespace Command.Db1.Migrations
                     b.HasOne("Command.Entity1.Bill", "Bill")
                         .WithMany("BillItems")
                         .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Command.Entity1.Item", b =>
-                {
-                    b.HasOne("Command.Entity1.ItemGroup", "ItemGroup")
-                        .WithMany("Item")
-                        .HasForeignKey("ItemGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Command.Entity1.SalesPerson", b =>
-                {
-                    b.HasOne("Command.Entity1.Department", "Dept")
-                        .WithMany("SalesPerson")
-                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
