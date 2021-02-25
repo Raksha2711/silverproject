@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Admin.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Dapper;
+using Admin.Web.ViewModel;
 
 namespace Admin.Web.Controllers
 {
@@ -22,10 +25,11 @@ namespace Admin.Web.Controllers
     public class ItemController : Controller
     {
         public CommandDbContext _dbContext;
-
+        public static string DbConnection { get; set; }
         public ItemController(CommandDbContext dbContext)
         {
             _dbContext = dbContext;
+            DbConnection = "Data Source=sql5050.site4now.net;User ID=DB_A6EA60_Raksha2710_admin;Password=Mazda@123;";
         }
         [Route("", Name = "item")]
         public IActionResult Index()
@@ -117,6 +121,7 @@ namespace Admin.Web.Controllers
                             var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
                             foreach (Item user in usersNotInDb)
                             {
+                                user.ItemGroupId = 20;
                                 _dbContext.Add(user);
                                 _dbContext.SaveChanges();
                             }
@@ -215,14 +220,54 @@ namespace Admin.Web.Controllers
             foreach (var e in entries) { result.data.Add(e); }
             return result;
         }
-        internal void FillDropDown()
+        //internal void FillDropDown()
+        //{
+        //    List<ItemGroup> ItemGroupList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(x => new ItemGroup
+        //    {
+        //        Id = x.Id,
+        //        ItemGroupName = x.ItemGroupName
+        //    }).ToList();
+        //    ViewBag.ItemGroupNLevelString = new SelectList(ItemGroupList, "Id", "ItemGroupName");
+        //}
+        internal async void FillDropDown()
+
         {
-            List<ItemGroup> ItemGroupList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(x => new ItemGroup
+            var result = new List<ItemViewModel>();
+            try
             {
-                Id = x.Id,
-                ItemGroupName = x.ItemGroupName
-            }).ToList();
-            ViewBag.ItemGroupNLevelString = new SelectList(ItemGroupList, "Id", "ItemGroupName");
+                using (var db = new SqlConnection(DbConnection))
+                {
+                    var query = $@"with  nleveltbl(Id,Name,ItemGroupName,ItemGroupId) as
+                    (
+                        select 
+                        id as Id,
+                        Name  ,
+                        CAST( Name as varchar(max)) as ItemGroupName ,
+                        ItemGroupId
+                        from po.Item 
+                        where ItemGroupId =0
+                        UNION ALL
+                        select 
+                        i.id as Id,
+                        i.Name ,
+                        CAST( CONCAT(ig.Name,' >> ', i.Name)as varchar(max)) as ItemGroupName,
+                        i.ItemGroupId
+                        from po.Item i
+                        join nleveltbl ig on i.ItemGroupId=ig.Id
+                        )
+                        select * from nleveltbl";
+                    var queryResult = await db.QueryAsync<ItemViewModel>(query);
+                    db.Close();
+                    result = queryResult.ToList();
+                    ViewBag.ItemGroupList = new SelectList(result.ToList(), "Id", "ItemGroupName");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+
         }
         [HttpPost]
         [Route("additemgroup")]

@@ -1,4 +1,4 @@
-﻿@model Command.Entity1.Item
+﻿@model Admin.Web.ViewModel.ItemViewModel
 
 
 <section class="content-header">
@@ -52,10 +52,14 @@
                                         {<a href="#" data-toggle="modal" data-target="#myModal">
                                                 <span class="fas fa-plus"></span>
                                             </a>}
-                                        </label>
-                                    <select type="select" asp-for="ItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
+                                    </label>
+                                   
+                                    <select type="select" asp-for="Id" asp-items="ViewBag.ItemGroupList" class="form-control custome-select2">
                                         <option value="0">None</option>
                                     </select>
+                                    @*<select type="select" asp-for="ItemGroupId" asp-items="ViewBag.ItemGroupList" class="form-control">
+            <option value="0">None</option>
+        </select>*@
                                 </div>
 
                             </div>

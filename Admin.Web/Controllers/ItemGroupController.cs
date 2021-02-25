@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Admin.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Dapper;
 
 namespace Admin.Web.Controllers
 {
@@ -23,9 +26,15 @@ namespace Admin.Web.Controllers
     {
         public CommandDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        public static string DbConnection { get; set; }
+        //static PDFControllerService()
+        //{
+        //    DbConnection = "Server=todtrips.database.windows.net;Database=TodTrip;persist security info=True;user id=todtrips;password=clouddb@7519;MultipleActiveResultSets=True";
+        //}
         public ItemGroupController(CommandDbContext dbContext)
         {
             _dbContext = dbContext;
+            DbConnection = "Data Source=sql5050.site4now.net;User ID=DB_A6EA60_Raksha2710_admin;Password=Mazda@123;";
         }
 
         [Route("", Name = "itemgroup")]
@@ -58,7 +67,6 @@ namespace Admin.Web.Controllers
                 if (model.ParentItemGroupId == "0")
                 {
                     model.ItemGroupNLevelString = model.ItemGroupName;
-
                 }
                 else
                 {
@@ -83,7 +91,6 @@ namespace Admin.Web.Controllers
                         res.ModifiedBy = model.ModifiedBy;
                         _dbContext.ItemGroup.Update(res);
                     }
-
                 }
                 _dbContext.SaveChanges();
             }
@@ -227,15 +234,52 @@ namespace Admin.Web.Controllers
             foreach (var e in entries) { result.data.Add(e); }
             return result;
         }
-        internal void FillDropDown()
+        internal async void FillDropDown()
         
         {
-            List<ItemGroup> ItemGroupList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(x => new ItemGroup
+            var result = new List<ItemGroup>();
+            try
             {
-                Id = x.Id,
-                ItemGroupNLevelString = x.ItemGroupNLevelString
-            }).ToList();
-            ViewBag.ItemGroupNLevelString = new SelectList(ItemGroupList, "Id", "ItemGroupNLevelString");
+                using (var db = new SqlConnection(DbConnection))
+                {
+                    var query = $@"with  nleveltbl(Id,ItemGroupName,ItemGroupNLevelString,ParentItemGroupId) as
+                    (
+                        select 
+                        id as Id,
+                        ItemGroupName  ,
+                        CAST( ItemGroupName as varchar(max)) as ItemGroupNLevelString ,
+                        ParentItemGroupId
+                        from po.ItemGroup 
+                        where ParentItemGroupId =0
+                        UNION ALL
+                        select 
+                        i.id as Id,
+                        i.ItemGroupName ,
+                        CAST( CONCAT(ig.ItemGroupName,' >> ', i.ItemGroupName)as varchar(max)) as ItemGroupNLevelString,
+                        i.ParentItemGroupId
+                        from po.ItemGroup i
+                        join nleveltbl ig on i.ParentItemGroupId=ig.Id
+                        )
+                        select * from nleveltbl";
+                    var queryResult = await db.QueryAsync<ItemGroup>(query);
+                    db.Close();
+                    result = queryResult.ToList();
+                    ViewBag.ItemGroupNLevelString = new SelectList(result, "Id", "ItemGroupNLevelString");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            //        List<ItemGroup> ItemGroupList = _dbContext.ItemGroup
+            //.FromSqlRaw("with  nleveltbl(Id,Item,GroupName,ParentItemGroupId,CreatedBy) as (select id,ItemGroupName,CAST(ItemGroupName as varchar(max)), ParentItemGroupId from po.ItemGroup where ParentItemGroupId = 0 UNION ALL select i.id as [key],i.ItemGroupName as Item, CAST(CONCAT(ig.GroupName, ' >> ', i.ItemGroupName) as varchar(max)) as GroupName, i.ParentItemGroupId from po.ItemGroup i join nleveltbl ig on i.ParentItemGroupId = ig.Id )select * from nleveltbl")
+            //.ToList();
+            //List<ItemGroup> ItemGroupList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(x => new ItemGroup
+            //{
+            //    Id = x.Id,
+            //    ItemGroupNLevelString = x.ItemGroupNLevelString
+            //}).ToList();
+            
         }
     }
 }

@@ -3,7 +3,14 @@
 @{ ViewData["Title"] = "Purchase Order";
 }
 <style>
+    .bg-blue {
+        background: #414c95 !important;
+    }
+    .table td, .table th {
+        padding: 0.50rem !important;
+    }
     .hidden {
+
         display: none;
     }
 
@@ -53,7 +60,7 @@
                     <input type="hidden" asp-for="Id" />
                     <div class="row">
                         <div class="form-group col-3">
-                            <label asp-for="No">#No</label>
+                            <label asp-for="No">Sr No</label>
                             <input type="text" class="form-control" asp-for="No" readonly>
                         </div>
                         <div class="form-group col-3">
@@ -126,27 +133,29 @@
                         <table class="table table-hover text-nowrap tblpo">
                             <thead>
                                 <tr>
-                                    <th>#No</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-                                    <th>Unit</th>
-                                    <th>GST</th>
-                                    <th>Basic Rate</th>
-                                    <th>Freight</th>
-                                    <th>CDC</th>
-                                    <th>Discount 1</th>
-                                    <th>Scheme(%)</th>
-                                    <th>Scheme(Amt)</th>
-                                    @*<th>GST Rate</th>*@
-                                    <th>NLC</th>
-                                    <th>Remark</th>
-                                    <th><span class="btn btn-sm btn-success btn-add-item">Add New</span> |</th>
+                                    <th style="width:50px !important;">Sr No</th>
+                                    <th style="width:50px !important;">Item Name</th>
+                                    <th style="width:50px !important;">Qty</th>
+                                    <th style="width:50px !important;">Unit</th>
+                                    <th style="width:50px !important;">GST</th>
+                                    <th style="width:50px !important;">Basic Rate</th>
+                                    <th style="width:50px !important;">Freight</th>
+                                    <th style="width:50px !important;">CDC(%)</th>
+                                    <th style="width:50px !important;">Discount(Amt)</th>
+                                    <th style="width:50px !important;">Scheme(%)</th>
+                                    <th style="width:50px !important;">Scheme(Amt)</th>
+                                    <th style="width:50px !important;">NLC</th>
+                                    <th style="width:50px !important;">Remark</th>
+                                    <th style="width:50px !important;"><span class="btn btn-sm btn-success btn-add-item">Add New</span> |</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
+                                @if (Model.BillItems.Count > 0)
+                                {
                                 @foreach (var item in Model.BillItems)
                                 {
                                     <partial name="_billitem" for="@item" />
+                                }
                                 }
                             </tbody>
                         </table>

@@ -55,7 +55,7 @@ namespace Admin.Web.Controllers
         [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
-            var result = _dbContext.Bills.Include(i => i.BillItems).Where(w => w.Id.Equals(id)).FirstOrDefault();
+            var result = _dbContext.Bills.Include(i => i.BillItems).Where(w => w.Id.Equals(id) && w.Recstatus.Equals("A")).FirstOrDefault();
             FillDropDown();
             return View("~/Views/PurchaseOrder/Create.cshtml", result);
         }
@@ -64,8 +64,8 @@ namespace Admin.Web.Controllers
         [AllowAnonymous]
         public IActionResult add([FromBody] Bill model)
         {
-
-            if (ModelState.IsValid && model != null)
+            var No = _dbContext.Bills.Where(w => w.No.Equals(model.No)).FirstOrDefault();
+            if (ModelState.IsValid && model != null && No == null)
             {
                 model.Date = DateTime.Now;
                 model.CreatedDate = DateTime.Now;
@@ -276,7 +276,7 @@ namespace Admin.Web.Controllers
             var query = (from s in _dbContext.Bills
                          join v in _dbContext.Vendor on s.Vendor equals v.Id
                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
-
+                         orderby s.Id descending
                          select new TaskItemViewModel
                          {
                              No = s.No,
@@ -292,6 +292,8 @@ namespace Admin.Web.Controllers
                              Accounts = s.Accounts,
                              Approver = s.Approver,
                              Recstatus = s.Recstatus,
+                             Rejectreason = s.Rejectreason,
+
                          });
 
             result.data = new List<TaskItemViewModel>();
@@ -327,14 +329,14 @@ namespace Admin.Web.Controllers
             {
                 foreach (var item in param.Order)
                 {
-                    if (param.Columns[item.Column].Data.Equals("no"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
-                    else if (param.Columns[item.Column].Data.Equals("vendorName"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.VendorName) : query.OrderBy(o => o.VendorName);
-                    else if (param.Columns[item.Column].Data.Equals("deliveryType"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.DeliveryType) : query.OrderBy(o => o.DeliveryType);
-                    else if (param.Columns[item.Column].Data.Equals("paymentTerm"))
-                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PaymentTerm) : query.OrderBy(o => o.PaymentTerm);
+                    //if (param.Columns[item.Column].Data.Equals("no"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Id) : query.OrderBy(o => o.Id);
+                    //else if (param.Columns[item.Column].Data.Equals("vendorName"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.VendorName) : query.OrderBy(o => o.VendorName);
+                    //else if (param.Columns[item.Column].Data.Equals("deliveryType"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.DeliveryType) : query.OrderBy(o => o.DeliveryType);
+                    //else if (param.Columns[item.Column].Data.Equals("paymentTerm"))
+                    //    query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.PaymentTerm) : query.OrderBy(o => o.PaymentTerm);
                 }
             }
             result.recordsFiltered = query.Count();

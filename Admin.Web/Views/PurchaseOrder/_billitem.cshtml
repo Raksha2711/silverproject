@@ -7,22 +7,22 @@
     </td>
     <td>
         <input type="hidden" name="id" asp-for="Id" />
-        <select type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control w-100p custome-select2">
+        <select style="width:250px !important"  type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control  custome-select2">
             <option value="">Select Item</option>
         </select>
     </td>
-    <td><input name="Qty" asp-for="Qty" required class="form-control w-70p" placeholder="Qty" min="0"></td>
-    <td><input name="Unit" asp-for="Unit" class="form-control w-70p" placeholder="Unit" value="Pcs" readonly></td>
+    <td><input style="width:80px !important" name="Qty" asp-for="Qty" required class="form-control" placeholder="Qty" min="0"></td>
+    <td><input style="width:50px !important" name="Unit" asp-for="Unit" class="form-control" placeholder="Unit" value="Pcs" readonly></td>
     <td>
-        <select type="select" required name="Scheme1" asp-for="Scheme1" class="form-control w-120p">
+        <select style="width:80px !important" type="select" required name="Scheme1" asp-for="Scheme1" class="form-control">
             <option value="">Select</option>
             <option value="Basic">Basic</option>
             <option value="All">All</option>
         </select>
     </td>
-    <td><input name="BasicRate" required asp-for="BasicRate" class="form-control" placeholder="BasicRate"></td>
+    <td><input style="width:80px !important" name="BasicRate" required asp-for="BasicRate" class="form-control" placeholder="BasicRate"></td>
     <td>
-        <select type="select" required name="AddCost" asp-for="AddCost" class="form-control w-120p">
+        <select style="width:80px !important" type="select" required name="AddCost" asp-for="AddCost" class="form-control w-120p">
             <option value="">Select</option>
             <option value="Yes">YES</option>
             <option value="No">NO</option>
@@ -34,7 +34,7 @@
     <td><input name="scheme2" asp-for="Scheme2" class="form-control" placeholder="Scheme2"></td>
     <td><input name="SchemeAmt" asp-for="SchemeAmt" class="form-control" placeholder="SchemeAmt"></td>
     <td><input name="NLC" required asp-for="NLC" class="form-control w-70p" placeholder="NLC"></td>
-    <td><input name="Remarks" asp-for="Remarks" class="form-control w-120p" placeholder="Remarks"></td>
+    <td><input style="width:200px !important" name="Remarks" asp-for="Remarks" class="form-control" placeholder="Remarks"></td>
     <td id="Action1">
         <span class="btn btn-sm btn-danger btn_row_delete  preview">Delete</span> @*btn_row_delete*@
     </td>

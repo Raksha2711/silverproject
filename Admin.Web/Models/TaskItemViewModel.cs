@@ -11,5 +11,6 @@ namespace Admin.Web.Models
         public bool CanEdit { get; set; }
         public string VendorName { get; set; }
         public string SalesPersoName { get; set; }
+        
     }
 }

@@ -39,7 +39,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Parent ItemGroup</label>
-                                <select type="select" name="ParentItemGroupId"  asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
+                                @*@Html.DropDownList("Id", new SelectList(ViewBag.ItemGroupNLevelString, "Id", "ItemGroupNLevelString"))*@
+                                <select type="select" name="ParentItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
                                     <option value="0">None</option>
                                 </select>
                                 @*@Html.TextBoxFor(m => m.ItemGroupNLevelString, new { @class = "form-control", placeholder = "Enter Name" })*@
