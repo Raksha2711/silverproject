@@ -21,8 +21,8 @@
         <div class="card card-default">
             <form asp-controller="ItemGroup" asp-action="update" method="post">
                 @*<div class="card-header">
-                    <h3 class="card-title">ItemGroup</h3>
-                </div>*@
+                        <h3 class="card-title">ItemGroup</h3>
+                    </div>*@
                 <!-- /.card-header -->
                 <div class="card-body">
                     @Html.HiddenFor(m => m.Id)
@@ -39,11 +39,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Parent ItemGroup</label>
-                                @*@Html.DropDownList("Id", new SelectList(ViewBag.ItemGroupNLevelString, "Id", "ItemGroupNLevelString"))*@
-                                <select type="select" name="ParentItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
+                                <select type="select" asp-for="ParentItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
                                     <option value="0">None</option>
                                 </select>
-                                @*@Html.TextBoxFor(m => m.ItemGroupNLevelString, new { @class = "form-control", placeholder = "Enter Name" })*@
                             </div>
 
                         </div>
