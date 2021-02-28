@@ -25,21 +25,38 @@
         <div class="row">
             <div class="col-12">
                 <!--<div class="callout callout-info">-->
-                    
-                    <!--<div class=" offset-6 col-6">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" id="fileupload" name="files" class="form-control" />
-                            </div>
-                            <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
-                            <div class="input-group-append">
-                                <a href="@Url.Action("ExportToExcel", "ItemGroup")" class="btn-primary input-group-text">Download</a>
-                            </div>
+                <!--<div class=" offset-6 col-6">
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" id="fileupload" name="files" class="form-control" />
+                </div>
+                <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
+                <div class="input-group-append">
+                    <a href="@Url.Action("ExportToExcel", "ItemGroup")" class="btn-primary input-group-text">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+                <div class=" offset-6 col-6">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" id="fileupload" name="files" class="form-control" />
+                            @*<label class="form-control" for="fileupload">Choose file</label>*@
+
+                        </div>
+                        <div class="input-group-append"><input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" /></div>
+                        <div class="input-group-append">
+                            <a href="@Url.Action("ExportToExcel", "ItemGroup")" class="btn-primary input-group-text">Download</a>
+                        </div>
+                        <div class="input-group-append">
+                            <a href="@Url.Action("Create","ItemGroup")" class="btn bg-blue float-right">
+                                <i class="fas fa-plus"></i>&nbsp; Add New
+                            </a>
+                            
                         </div>
                     </div>
-                </div>-->
-
-
+                </div>
 
             </div>
             <div class="col-12">
@@ -165,7 +182,7 @@
 
                     type: "POST",
 
-                    url: "@Url.Action("Import", "Item")",
+                    url: "@Url.Action("Import", "ItemGroup")",
 
                     beforeSend: function (xhr) {
 

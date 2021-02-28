@@ -39,6 +39,9 @@
                             <div class="input-group-append">
                                 <a href="@Url.Action("ExportToExcel", "WareHouse")" class="btn-primary input-group-text">Download</a>
                             </div>
+                            <a href="@Url.Action("create","warehouse")" class="btn bg-blue float-right">
+                                <i class="fas fa-plus"></i>&nbsp; Add New
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -48,16 +51,14 @@
             </div>
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        @*<h3 class="card-title">Fixed Header Table</h3>*@
+                    @*<div class="card-header">
+                      
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
                                
                                 <div class="input-group-append">
-                                    @*<a asp-controller="WareHouse" asp-action="Create" class="btn btn-default">
-                                            <i class="fas fa-plus"></i>&nbsp; Add
-                                        </a>*@
+                                   
                                     <a href="@Url.Action("create","warehouse")" class="btn btn-default">
                                         <i class="fas fa-plus"></i>&nbsp; Add
                                     </a>
@@ -65,7 +66,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>*@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0" style="height: 500px;">
                         <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","warehouse")">

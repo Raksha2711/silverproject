@@ -29,8 +29,8 @@ namespace Admin.Web.Controllers
             ViewBag.WareHouse = new SelectList(WarehouseList, "Id", "Name");
             List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
-            List<Item> ItemList = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
-            ViewBag.Item = new SelectList(ItemList, "Id", "Name");
+            List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.Item = new SelectList(ItemList, "Id", "ItemGroupName");
             var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
             ViewBag.LatestId = LatestId;
 
@@ -114,8 +114,8 @@ namespace Admin.Web.Controllers
         {
             try
             {
-                List<Item> ItemList = _dbContext.Item.Where(w => w.Status.Equals("1")).ToList();
-                ViewBag.Item = new SelectList(ItemList, "Id", "Name");
+                List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).ToList();
+                ViewBag.Item = new SelectList(ItemList, "Id", "ItemGroupName");
                 return PartialView("~/Views/PurchaseOrder/_billitem.cshtml", new BillItem());
             }
             catch (Exception ex)
@@ -213,11 +213,11 @@ namespace Admin.Web.Controllers
                               No = s.No,
                               BillItemsView =
                                   (from a in s.BillItems
-                                   join bi in _dbContext.Item on a.ItemId equals bi.Id
+                                   join bi in _dbContext.ItemGroup on a.ItemId equals bi.Id
                                    select new BillItemViewModel
                                    {
                                        Id = a.Id,
-                                       ItemName = bi.Name,
+                                       ItemName = bi.ItemGroupName,
                                        Qty = a.Qty,
                                        Unit = a.Unit,
                                        BasicRate = a.BasicRate,

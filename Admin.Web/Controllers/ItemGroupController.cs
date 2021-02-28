@@ -109,70 +109,7 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Route("Import")]
-        //public async Task<List<SalesPerson>> Import()
-        //{
-        //    IFormFile formFile = Request.Form.Files[0];
-        //    var list = new List<SalesPerson>();
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        await formFile.CopyToAsync(stream);
-        //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //        using (var package = new ExcelPackage(stream))
-        //        {
-        //            try
-        //            {
-        //                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-        //                var rowCount = worksheet.Dimension.Rows;
-
-        //                for (int row = 2; row <= rowCount; row++)
-        //                {
-        //                    list.Add(new SalesPerson
-        //                    {
-        //                        Name = (worksheet.Cells[row, 1].Value).ToString(),
-        //                        CreatedDate = DateTime.Now,
-        //                        Status = "1"
-        //                    });
-
-        //                }
-        //                if (list.Count > 0)
-        //                {
-        //                    var newUserIDs = list.Select(u => u.Name).Distinct().ToList();
-        //                    var usersInDb = _dbContext.SalesPerson.Where(u => newUserIDs.Contains(u.Name) && u.Status.Equals("1"))
-        //                                                   .Select(u => u.Name).ToArray();
-        //                    var usersNotInDb = list.Where(u => !usersInDb.Contains(u.Name));
-        //                    //var usersNotInDb = list.Where(w => !usersInDb.Contains(w)).ToList();//.Where(u => !usersInDb.Contains(u.Name));
-        //                    foreach (SalesPerson user in usersNotInDb)
-        //                    {
-        //                        _dbContext.Add(user);
-        //                        _dbContext.SaveChanges();
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception e)
-        //            {
-
-        //            }
-        //        }
-        //    }
-        //    return list;
-        //}
-        //[Route("ExportToExcel")]
-        //public async Task<IActionResult> ExportToExcel()
-        //{
-        //    var item = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).Select(s => s.Name).ToList();
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //    var stream = new MemoryStream();
-        //    using (var package = new ExcelPackage(stream))
-        //    {
-        //        var workSheet = package.Workbook.Worksheets.Add("test");
-        //        workSheet.Cells.LoadFromCollection(item, true);
-        //        package.Save();
-        //    }
-        //    stream.Position = 0;
-        //    string excelName = $"SalesPersonData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
-        //    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-        //}
+        
 
         [HttpPost]
         [Route("list.json")]
@@ -276,5 +213,72 @@ namespace Admin.Web.Controllers
             }
 
         }
+
+        [Route("Import")]
+        public IActionResult Import()
+        {
+            IFormFile formFile = Request.Form.Files[0];
+            var list = new List<ItemGroup>();
+            using (var stream = new MemoryStream())
+            {
+                formFile.CopyToAsync(stream);
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage(stream))
+                {
+                    try
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            list.Add(new ItemGroup
+                            {
+                                ItemGroupName = (worksheet.Cells[row, 1].Value).ToString(),
+                                CreatedDate = DateTime.Now,
+                                Status = "1"
+                            });
+
+                        }
+                        if (list.Count > 0)
+                        {
+                            var newUserIDs = list.Select(u => u.ItemGroupName).Distinct().ToArray();
+                            var usersInDb = _dbContext.ItemGroup.Where(u => newUserIDs.Contains(u.ItemGroupName) && u.Status.Equals("1"))
+                                                           .Select(u => u.ItemGroupName).ToArray();
+                            var usersNotInDb = list.Where(u => !usersInDb.Contains(u.ItemGroupName));
+                            foreach (ItemGroup user in usersNotInDb)
+                            {
+                                user.ParentItemGroupId = "0";
+                                user.ItemGroupNLevelString = user.ItemGroupName;
+                                _dbContext.Add(user);
+                                _dbContext.SaveChanges();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        [Route("ExportToExcel")]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            var item = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).Select(s => s.ItemGroupName).ToList();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("test");
+                workSheet.Cells.LoadFromCollection(item, true);
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = $"ItemData-{DateTime.Now.ToString("ddMMyyyy")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
     }
 }

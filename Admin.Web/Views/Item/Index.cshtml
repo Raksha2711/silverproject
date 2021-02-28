@@ -25,7 +25,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="callout callout-info">
+                    @*<div class="callout callout-info">*@
                         @*<h5><i class="fas fa-info"></i> Action:</h5>*@
 <div class=" offset-6 col-6">
     <div class="input-group">
@@ -38,9 +38,14 @@
         <div class="input-group-append">
             <a href="@Url.Action("ExportToExcel", "Item")" class="btn-primary input-group-text">Download</a>
         </div>
+        <div class="input-group-append">
+            <a href="@Url.Action("Create","Item")" class="btn bg-blue float-right">
+                <i class="fas fa-plus"></i>&nbsp; Add
+            </a>
+        </div>
     </div>
 </div>
-                </div>
+                @*</div>*@
 
 
 
