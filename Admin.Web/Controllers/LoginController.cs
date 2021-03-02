@@ -12,11 +12,11 @@ namespace Admin.Web.Controllers
     public class AccountController : Controller
     {
         public CommandDbContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<SilverlineUser> _userManager;
+        private readonly SignInManager<SilverlineUser> _signInManager;
         public AccountController(CommandDbContext dbContext,
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+            SignInManager<SilverlineUser> signInManager,
+            UserManager<SilverlineUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -89,7 +89,8 @@ namespace Admin.Web.Controllers
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+               // var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new SilverlineUser { UserName = Input.Email, Email = Input.Email,Name=Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

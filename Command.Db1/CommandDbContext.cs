@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Command.Entity1
 {
-    public partial class CommandDbContext : IdentityDbContext<IdentityUser>
+    public partial class CommandDbContext : IdentityDbContext<SilverlineUser,SilverlineRole,int>
     {
         public CommandDbContext(DbContextOptions<CommandDbContext> options)
             : base(options)
@@ -26,13 +26,13 @@ namespace Command.Entity1
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<IdentityUser>(i => { i.ToTable("Users", "auth"); });
-            modelBuilder.Entity<IdentityRole>(i => { i.ToTable("Roles", "auth"); });
-            modelBuilder.Entity<IdentityUserRole<string>>(i => { i.ToTable("UserRoles", "auth"); });
-            modelBuilder.Entity<IdentityUserLogin<string>>(i => { i.ToTable("UserLogins", "auth"); });
-            modelBuilder.Entity<IdentityRoleClaim<string>>(i => { i.ToTable("RoleClaims", "auth"); });
-            modelBuilder.Entity<IdentityUserClaim<string>>(i => { i.ToTable("UserClaims", "auth"); });
-            modelBuilder.Entity<IdentityUserToken<string>>(i => { i.ToTable("UserTokens", "auth"); });
+            modelBuilder.Entity<SilverlineUser>(i => { i.ToTable("Users", "auth"); });
+            modelBuilder.Entity<SilverlineRole>(i => { i.ToTable("Roles", "auth"); });
+            modelBuilder.Entity<IdentityUserRole<int>>(i => { i.ToTable("UserRoles", "auth"); });
+            modelBuilder.Entity<IdentityUserLogin<int>>(i => { i.ToTable("UserLogins", "auth"); });
+            modelBuilder.Entity<IdentityRoleClaim<int>>(i => { i.ToTable("RoleClaims", "auth"); });
+            modelBuilder.Entity<IdentityUserClaim<int>>(i => { i.ToTable("UserClaims", "auth"); });
+            modelBuilder.Entity<IdentityUserToken<int>>(i => { i.ToTable("UserTokens", "auth"); });
             base.OnModelCreating(modelBuilder);
         }
     }
