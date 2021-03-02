@@ -37,7 +37,7 @@ namespace Admin.Web
                 );
             //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             //services.AddRazorPages();
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddIdentity<SilverlineUser,SilverlineRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
