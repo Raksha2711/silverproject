@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Command.Entity1;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,17 +21,9 @@ namespace Admin.Web
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
-    public class RegisterViewModel
+    
+    public class RegisterViewModel : SilverlineUser
     {
-        [Required]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-
-
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
