@@ -123,13 +123,13 @@ namespace Admin.Web.Controllers
         {
             var result = new DtResult<ItemGroup>();
             var query = (from s in _dbContext.ItemGroup
-
+                         join t in _dbContext.ItemGroup on s.Id.ToString() equals t.ParentItemGroupId
                          where s.Status.Equals("1")
                          select new ItemGroup
                          {
                              Id = s.Id,
-                             ItemGroupName = s.ItemGroupName,
-                             ItemGroupNLevelString = s.ItemGroupNLevelString
+                             ItemGroupName = t.ItemGroupName,
+                             ItemGroupNLevelString = s.ItemGroupName
                          });
 
             result.data = new List<ItemGroup>();
@@ -235,9 +235,10 @@ namespace Admin.Web.Controllers
                             list.Add(new ItemGroup
                             {
                                 ItemGroupName = (worksheet.Cells[row, 1].Value).ToString(),
+                                ParentItemGroupId = GetId((worksheet.Cells[row, 2].Value).ToString()).ToString(),
                                 CreatedDate = DateTime.Now,
                                 Status = "1"
-                            });
+                            }); ;
 
                         }
                         if (list.Count > 0)
@@ -248,7 +249,7 @@ namespace Admin.Web.Controllers
                             var usersNotInDb = list.Where(u => !usersInDb.Contains(u.ItemGroupName));
                             foreach (ItemGroup user in usersNotInDb)
                             {
-                                user.ParentItemGroupId = "0";
+                                //user.ParentItemGroupId = "0";
                                 user.ItemGroupNLevelString = user.ItemGroupName;
                                 _dbContext.Add(user);
                                 _dbContext.SaveChanges();
@@ -262,6 +263,34 @@ namespace Admin.Web.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        internal int GetId(string name)
+        {
+            var id = 0;
+            try
+            {
+                 id = _dbContext.ItemGroup.Where(w => w.ItemGroupName.Equals(name)).Select(s => s.Id).First();
+            }
+            catch (Exception e)
+            {
+                if (id == null || id == 0)
+                {
+                    ItemGroup model = new ItemGroup();
+                    model.Status = "1";
+                    model.ItemGroupName = name;
+                    model.ParentItemGroupId = "0";
+                    model.ItemGroupNLevelString = model.ItemGroupName;
+                    model.CreatedDate = DateTime.Now;
+                    model.ModifiedBy = "1";
+                    model.CreatedBy = "1";
+                    model.ModifiedDate = DateTime.Now;
+                    _dbContext.ItemGroup.Add(model);
+                    _dbContext.SaveChanges();
+                    var idval = _dbContext.ItemGroup.Where(w => w.ItemGroupName.Equals(name)).Select(s => s.Id).First();
+                    return idval;
+                }
+            }
+            return id;
         }
         [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
