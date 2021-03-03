@@ -44,7 +44,8 @@ namespace Admin.Web.Controllers
                               Purchase=s.Purchase,
                               Accounts=s.Accounts,
                               GoodReceiveDate=s.GoodReceiveDate,
-                              PurchaseInvoiceNo=s.PurchaseInvoiceNo
+                              PurchaseInvoiceNo=s.PurchaseInvoiceNo,
+                              PurchaseDate = s.PurchaseDate
                           }).ToList();
 
             return View(result);

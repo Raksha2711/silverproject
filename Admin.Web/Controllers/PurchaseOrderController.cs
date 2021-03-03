@@ -29,7 +29,7 @@ namespace Admin.Web.Controllers
             ViewBag.WareHouse = new SelectList(WarehouseList, "Id", "Name");
             List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
-            List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).ToList();
+            List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1") && !w.ParentItemGroupId.Equals("0")).ToList();
             ViewBag.Item = new SelectList(ItemList, "Id", "ItemGroupName");
             var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
             ViewBag.LatestId = LatestId;
@@ -192,7 +192,7 @@ namespace Admin.Web.Controllers
                     Email.Send(poDetail.Email,
                         $"Silverline IT HUB - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
-                        false, $"PurchaseInvoice-{poDetail.No}.pdf",
+                        false, $"PurchaseOrder-{poDetail.No}.pdf",
                         PdfHelper.ConvertToPdf(html)).Wait();
                 }
             }

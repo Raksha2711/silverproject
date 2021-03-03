@@ -103,9 +103,9 @@ namespace Admin.Web.Controllers
         [Route("deleterow/{id:int}")]
         public IActionResult Delete(int id)
         {
-            var result = _dbContext.SalesPerson.Where(w => w.Id.Equals(id)).FirstOrDefault();
+            var result = _dbContext.ItemGroup.Where(w => w.Id.Equals(id)).FirstOrDefault();
             result.Status = "0";
-            _dbContext.SalesPerson.Update(result);
+            _dbContext.ItemGroup.Update(result);
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -123,15 +123,15 @@ namespace Admin.Web.Controllers
         {
             var result = new DtResult<ItemGroup>();
             var query = (from s in _dbContext.ItemGroup
-                         join t in _dbContext.ItemGroup on s.Id.ToString() equals t.ParentItemGroupId
+                         //join t in _dbContext.ItemGroup on s.Id.ToString() equals t.ParentItemGroupId
                          where s.Status.Equals("1")
                          select new ItemGroup
                          {
                              Id = s.Id,
-                             ItemGroupName = t.ItemGroupName,
-                             ItemGroupNLevelString = s.ItemGroupName
+                             ItemGroupName = s.ItemGroupName,
+                             ItemGroupNLevelString = s.ItemGroupNLevelString
                          });
-
+           
             result.data = new List<ItemGroup>();
             result.recordsTotal = query.Count();
 
@@ -250,7 +250,7 @@ namespace Admin.Web.Controllers
                             foreach (ItemGroup user in usersNotInDb)
                             {
                                 //user.ParentItemGroupId = "0";
-                                user.ItemGroupNLevelString = user.ItemGroupName;
+                                user.ItemGroupNLevelString = _dbContext.ItemGroup.Where(u => u.Id.ToString().Equals(user.ParentItemGroupId)).Select(s=>s.ItemGroupName).FirstOrDefault();
                                 _dbContext.Add(user);
                                 _dbContext.SaveChanges();
                             }

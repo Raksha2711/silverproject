@@ -8,6 +8,7 @@ using Command.Entity1;
 
 namespace Admin.Web.Controllers
 {
+    //[Route("users")]
     public class UsersController : Controller
     {
         private readonly UserManager<SilverlineUser> _userManager;

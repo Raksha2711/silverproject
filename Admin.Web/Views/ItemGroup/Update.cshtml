@@ -5,12 +5,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1><i class="fas fa-chart-pie mr-1">Create Item Group </i></h1>
+                <h1><i class="fas fa-chart-pie mr-1">Create Item  </i></h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Create ItemGroup</li>
+                    <li class="breadcrumb-item active">Create Item</li>
                 </ol>
             </div>
         </div>
@@ -31,14 +31,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>ItemGroup Name</label>
+                                <label>Item Name</label>
                                 @Html.TextBoxFor(m => m.ItemGroupName, new { @class = "form-control", placeholder = "Enter Name" })
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Parent ItemGroup</label>
+                                <label>Item Group Name</label>
                                 <select type="select" asp-for="ParentItemGroupId" asp-items="ViewBag.ItemGroupNLevelString" class="form-control">
                                     <option value="0">None</option>
                                 </select>
