@@ -18,7 +18,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="card card-default">
-            <form asp-controller="users" asp-action="create" method="post">
+            <form asp-controller="users" asp-action="edit" method="post">
                 <input type="hidden" asp-for="Id" />
                 <div class="card-body">
                     <div class="row">
@@ -34,20 +34,6 @@
                                 <label>Email</label>
                                 <input asp-for="Email" class="form-control" placeholder="Enter Email" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Retype Password</label>
-                                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Retype password">
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">

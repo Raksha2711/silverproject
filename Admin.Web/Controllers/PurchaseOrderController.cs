@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Admin.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("purchaseorder")]
     public class PurchaseOrderController : Controller
     {
@@ -35,12 +35,13 @@ namespace Admin.Web.Controllers
             ViewBag.LatestId = LatestId;
 
         }
+        [Authorize]
         [Route("", Name = "purchaseorder")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin,Sales")]
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -52,6 +53,7 @@ namespace Admin.Web.Controllers
             FillDropDown();
             return View("~/Views/PurchaseOrder/Create.cshtml", m);
         }
+        [Authorize(Roles = "Admin,Sales")]
         [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
@@ -60,8 +62,8 @@ namespace Admin.Web.Controllers
             return View("~/Views/PurchaseOrder/Create.cshtml", result);
         }
         #region Api
+        [Authorize(Roles = "Admin,Sales")]
         [HttpPost("create.json")]
-        [AllowAnonymous]
         public IActionResult add([FromBody] Bill model)
         {
             var No = _dbContext.Bills.Where(w => w.No.Equals(model.No)).FirstOrDefault();
@@ -77,7 +79,8 @@ namespace Admin.Web.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        
+        [Authorize]
         [HttpGet("detail/{id:int}")]
         public IActionResult Detail([FromRoute] int id)
         {
@@ -94,7 +97,7 @@ namespace Admin.Web.Controllers
             return View("~/Views/PurchaseOrder/Detail.cshtml", result);
 
         }
-
+        [Authorize(Roles = "Admin,Sales")]
         [HttpPost]
         [Route("update/{id:int}.json")]
         public IActionResult Update(int id, [FromBody] Bill model)
@@ -167,6 +170,7 @@ namespace Admin.Web.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("index", "home");
         }
+        [Authorize(Roles = "Admin,Purchase")]
         [HttpPost]
         [Route("purchase")]
         public IActionResult Purchase(PurchaseRequestModel model)
