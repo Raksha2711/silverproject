@@ -54,7 +54,8 @@ namespace Admin.Web.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(Input.Email);
-                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
+                    var role = await _userManager.GetRolesAsync(user);
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role.FirstOrDefault()));
                     //return LocalRedirect(returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
@@ -89,8 +90,8 @@ namespace Admin.Web.Controllers
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-               // var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                var user = new SilverlineUser { UserName = Input.Email, Email = Input.Email,Name=Input.Name };
+                // var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new SilverlineUser { UserName = Input.Email, Email = Input.Email, Name = Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -123,6 +124,11 @@ namespace Admin.Web.Controllers
                 }
             }
             return View("~/Views/Account/SignUp.cshtml");
+        }
+        [Route("forbidden")]
+        public IActionResult Forbidden()
+        {
+            return View();
         }
     }
 }
