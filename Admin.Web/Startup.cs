@@ -51,7 +51,7 @@ namespace Admin.Web
             {
                 options.LoginPath = $"/account/signin";
                 options.LogoutPath = $"/account/signout";
-                options.AccessDeniedPath = $"/account/accessDenied";
+                options.AccessDeniedPath = $"/account/forbidden";
             });
             //services.AddControllersWithViews();
             //services.AddMvc(o =>
