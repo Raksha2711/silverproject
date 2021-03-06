@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Command.Entity1;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.Web.Controllers
 {
@@ -25,6 +26,8 @@ namespace Admin.Web.Controllers
 
         public IActionResult Index()
         {
+           
+                        
             var result = (from s in _dbContext.Bills
                           join v in _dbContext.Vendor on s.Vendor equals v.Id
                           join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id

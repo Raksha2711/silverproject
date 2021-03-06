@@ -54,7 +54,7 @@
                                     </form>
                                 }
 
-                                <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
+                                <button type="button" class="btn btn-danger float-right cancelorder"  style="margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
                                     Cancel Order
                                 </button>
                             </div>
@@ -168,7 +168,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Reason For Cancel</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -179,8 +179,11 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <label>Cancel Reason</label>
-                            <textarea type="text" name="rejectreason" required class="form-control"></textarea>
-                            <span id="rejectreason" class="text-danger"></span>
+                            @*<textarea type="text" name="rejectreason" required class="form-control"></textarea>
+        <span id="rejectreason" class="text-danger"></span>*@
+                            <select type="select" asp-for="Rejectreason" asp-items="ViewBag.Reason" class="form-control custome-select2">
+                                <option value="">Select Reason</option>
+                            </select>
 
                         </div>
                     </div>
@@ -231,6 +234,7 @@
     </div>
 </div>
 @section scripts{
+    <script src="~/cdn/app/JS/PurchaseOrderUpdate.js" asp-append-version="true"></script>
     <script type="text/javascript">
         $(function () {
             $('.datepicker').datepicker({

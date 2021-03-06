@@ -86,6 +86,8 @@ namespace Admin.Web.Controllers
         {
             var result = GetPoDetail(id);
             ViewBag.detail = true;
+            List<Reason> ReasonList = _dbContext.Reason.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.Reason = new SelectList(ReasonList, "Id", "Name");
             return View(result);
 
         }
@@ -276,10 +278,13 @@ namespace Admin.Web.Controllers
         internal DtResult<TaskItemViewModel> GetList(DTParameters param)
         {
             var result = new DtResult<TaskItemViewModel>();
-            //var isSuperAdmin = User.IsSuperAdmin();
+            
+
             var query = (from s in _dbContext.Bills
                          join v in _dbContext.Vendor on s.Vendor equals v.Id
-                         join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                         join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id 
+                         join r in _dbContext.Reason on s.Rejectreason equals r.Id.ToString() into abc
+                         from r in abc.DefaultIfEmpty()
                          orderby s.Id descending
                          select new TaskItemViewModel
                          {
@@ -296,7 +301,7 @@ namespace Admin.Web.Controllers
                              Accounts = s.Accounts,
                              Approver = s.Approver,
                              Recstatus = s.Recstatus,
-                             Rejectreason = s.Rejectreason,
+                             Rejectreason = r.Name,
 
                          });
 
@@ -361,5 +366,13 @@ namespace Admin.Web.Controllers
             var res = _dbContext.Vendor.Where(x => x.Id == vendorId).FirstOrDefault();
             return Json(res);
         }
+        //[HttpPost]
+        //[Route("fillreason")]
+        //public IActionResult fillreason()
+        //{
+        //    List<Reason> ReasonList = _dbContext.Reason.Where(w => w.Status.Equals("1")).ToList();
+        //    ViewBag.Reason = new SelectList(ReasonList, "Id", "Name");
+        //    return View();//BadRequest(ModelState);
+        //}
     }
 }

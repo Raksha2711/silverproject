@@ -30,18 +30,30 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Reports
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+               
+                <a asp-controller="POData" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("podata","index")">
+                    PO List
+                </a>
+                
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Master Entries
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 @*<a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>*@
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>*@
                 <a asp-controller="Vendor" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("Vendor","index")">
                     Vendor
                 </a>
                 @*<a asp-controller="Item" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("Item","index")">
-                    Item
-                </a>*@
+            Item
+        </a>*@
                 <a asp-controller="ItemGroup" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("ItemGroup","index")">
                     Stock Item
                 </a>
@@ -56,6 +68,9 @@
                 </a>
                 <a asp-controller="department" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("Department","index")">
                     Department
+                </a>
+                <a asp-controller="reason" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("reason","index")">
+                    Reason
                 </a>
             </div>
         </li>
