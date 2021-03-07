@@ -9,6 +9,7 @@ namespace Admin.Web.Models
     public class TaskItemViewModel : Bill
     {
         public bool CanEdit { get; set; }
+        public bool CanReSendEmail { get; set; }
         public string VendorName { get; set; }
         public string SalesPersoName { get; set; }
         

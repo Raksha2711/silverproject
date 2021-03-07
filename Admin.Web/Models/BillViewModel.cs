@@ -15,6 +15,7 @@ namespace Admin.Web.Models
 
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }
+        public string DeliveryAddress { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
         public string SalesPersoName { get; set; }

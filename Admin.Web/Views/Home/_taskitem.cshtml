@@ -7,8 +7,14 @@
     @if (Model.CanEdit)
     {
         <div class="card-tools">
+            @if (Model.CanReSendEmail)
+            {
+            <a href="@Url.Action("resensemail", "PurchaseOrder", new { id = Model.Id })" class="btn btn-tool">
+                <i class="fas fa fa-envelope" style="font-size:25px;"></i>
+            </a>
+            }
             <a href="@Url.Action("detail","PurchaseOrder",new { id = Model.Id })" class="btn btn-tool">
-                <i class="fas fa fa-arrow-circle-right"></i>
+                <i class="fas fa fa-share-square" style="font-size:25px;"></i>
             </a>
 
         </div>

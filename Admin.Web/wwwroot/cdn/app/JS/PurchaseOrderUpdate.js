@@ -2,21 +2,14 @@
 PurchaseOrderUpdate.frm = $('form[name="frmAddBill"]')
 PurchaseOrderUpdate.btn = $('button[type="button"].btn-submit')
 PurchaseOrderUpdate.documentClick = function () {
-    //$('select[name="Vendor"]').change(function () {
-    //    alert("1");
-    //    $("#ContactPerson").value = "12";
-    //    $("#ContactNo").val("1k2");
-    //    $("#EmailId").val("1j2");
-    //});
+
     $('select[name="PaymentTerm"]').change(function () {
         if ($(this).val() == "PDC") {
-            // $('input[name="PaymentValue"]').show();
             $('#divpayment').show();
             $('input[name="PaymentValue"]').val(30);
         }
         else {
             $('#divpayment').hide();
-            //  $('input[name="PaymentValue"]').hide();
             $('input[name="PaymentValue"]').val(0);
         }
     });
@@ -28,17 +21,18 @@ PurchaseOrderUpdate.documentClick = function () {
             $("#divaddress").hide();
         }
     });
-   
+
     $('.btn-add-item').on('click', function () {
-        if (validate()) {
-            $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
-                $('.tblpo>tbody').append(res);
-                setTimeout(addSerialNumber(), 100);
-                $('.custome-select2').select2();
-            });
-
+        if ($('.tblpo>tbody>tr').length < 11) {
+            if (validate()) {
+                $.get(baseurl + 'PurchaseOrder/additem', null, function (res) {
+                    $('.tblpo>tbody').append(res);
+                    setTimeout(addSerialNumber(), 100);
+                    $('.custome-select2').select2();
+                });
+            }
         }
-
+        else {alert('Can not add more than 10 item')}
     });
     $(document).on('click', '.btn_row_delete', function (e) {
         var isCreate = PurchaseOrderUpdate.btn.attr('data-isupdate') == 'True'
@@ -93,7 +87,7 @@ PurchaseOrderUpdate.documentClick = function () {
     $(document).on('click', '.btn-submit', function () {
         var frmData = getFromData();
         debugger
-       // alert(frmData);
+        // alert(frmData);
         var b1 = moment(frmData["Date"], 'YYYY-MM-DD').toDate()
         frmData["Date"] = b1;
         frmData.billItems = [];
@@ -118,7 +112,7 @@ PurchaseOrderUpdate.documentClick = function () {
         })
         if (isValid)
             SaveOrUpdate(frmData);
-        else {alert('Fill up all data') }
+        else { alert('Fill up all data') }
     });
 
 }
@@ -175,6 +169,7 @@ function validate() {
     })
     return result;
 }
+
 function addSerialNumber() {
     $('table tr').each(function (index) {
         $(this).find('td:nth-child(1)').html(index);

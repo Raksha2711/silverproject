@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Command.Entity1;
 using Microsoft.AspNetCore.Identity;
+using Admin.Web.Customization;
+using Microsoft.AspNetCore.Http;
 
 namespace Admin.Web
 {
@@ -53,15 +55,11 @@ namespace Admin.Web
                 options.LogoutPath = $"/account/signout";
                 options.AccessDeniedPath = $"/account/forbidden";
             });
-            //services.AddControllersWithViews();
-            //services.AddMvc(o =>
-            //{
-            //    //Add Authentication to all Controllers by default.
-            //    var policy = new AuthorizationPolicyBuilder()
-            //        .RequireAuthenticatedUser()
-            //        .Build();
-            //    o.Filters.Add(new AuthorizeFilter(policy));
-            //});
+            services.AddScoped<CustomerContextModel>((ctx) =>
+            {
+                var contextAccessor = ctx.GetService<IHttpContextAccessor>();
+                return new CustomerContextModel(contextAccessor);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

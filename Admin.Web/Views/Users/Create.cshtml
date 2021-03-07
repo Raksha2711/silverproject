@@ -38,6 +38,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Phone</label>
+                                <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="Enter Phone" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Password</label>
                                 <input asp-for="Password" type="password" class="form-control" placeholder="Password">
                                 <span asp-validation-for="Password" class="text-danger"></span>

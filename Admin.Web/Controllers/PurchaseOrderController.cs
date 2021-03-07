@@ -9,15 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Admin.Web.Helper;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace Admin.Web.Controllers
 {
     //[Authorize]
     [Route("purchaseorder")]
-    public class PurchaseOrderController : Controller
+    public class PurchaseOrderController : BaseController
     {
         public CommandDbContext _dbContext;
-        public PurchaseOrderController(CommandDbContext dbContext)
+
+        public PurchaseOrderController(IServiceProvider serviceProvider, CommandDbContext dbContext) : base(serviceProvider)
         {
             _dbContext = dbContext;
         }
@@ -51,6 +53,7 @@ namespace Admin.Web.Controllers
             m.BillItems = new List<BillItem>();
             m.BillItems.Add(new BillItem());
             FillDropDown();
+            ViewBag.Personname = GetName(CustomerContext.UserId);
             return View("~/Views/PurchaseOrder/Create.cshtml", m);
         }
         [Authorize(Roles = "Admin,Sales")]
@@ -72,6 +75,9 @@ namespace Admin.Web.Controllers
                 model.Date = DateTime.Now;
                 model.CreatedDate = DateTime.Now;
                 model.Recstatus = 'A';
+                model.CreatedBy = CustomerContext.UserId.ToString();
+                model.SalesPerson = CustomerContext.UserId;
+
                 _dbContext.Bills.Add(model);
                 _dbContext.SaveChanges();
                 TempData["success"] = $"Purchase Invoice No:{model.No} created successfully";
@@ -79,7 +85,7 @@ namespace Admin.Web.Controllers
             }
             return BadRequest(ModelState);
         }
-        
+
         [Authorize]
         [HttpGet("detail/{id:int}")]
         public IActionResult Detail([FromRoute] int id)
@@ -204,7 +210,12 @@ namespace Admin.Web.Controllers
             {
             }
         }
-
+        [Route("resensemail/{poid}")]
+        public IActionResult ReSendEmail(int poid)
+        {
+            SendMail(poid);
+            return RedirectToAction("Index", "Home");
+        }
         internal BillViewModel GetPoDetail(int id)
         {
             var result = (from s in _dbContext.Bills.Include(e => e.BillItems)
@@ -235,12 +246,14 @@ namespace Admin.Web.Controllers
                                        NLC = a.NLC,
                                        Remarks = a.Remarks,
 
+
                                    }).ToList(),
                               Id = s.Id,
                               Date = s.Date,
                               SalesPersoName = sp.Name,
                               VendorName = v.Name,
-                              VendorAddress=v.Address,
+                              VendorAddress = v.Address,
+                              DeliveryAddress = wh.Address,
                               Email = v.EmailId,
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,
@@ -311,7 +324,7 @@ namespace Admin.Web.Controllers
                     if (item.Name.ToLower().Equals("start"))
                     {
                         if (!string.IsNullOrWhiteSpace(item.Search.Value))
-                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).OrderByDescending(o =>o.Id);
+                            query = query.Where(w => w.Date >= DateTime.ParseExact(item.Search.Value.Trim(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).OrderByDescending(o => o.Id);
 
                     }
                     if (item.Name.ToLower().Equals("end"))
@@ -360,6 +373,10 @@ namespace Admin.Web.Controllers
         {
             var res = _dbContext.Vendor.Where(x => x.Id == vendorId).FirstOrDefault();
             return Json(res);
+        }
+        internal string GetName(int id)
+        {
+            return _dbContext.Users.Where(w => w.Id.Equals(id)).Select(s => s.Name).FirstOrDefault();
         }
     }
 }
