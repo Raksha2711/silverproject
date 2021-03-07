@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Admin.Web.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public CommandDbContext _dbContext;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, CommandDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, CommandDbContext dbContext, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -26,12 +26,12 @@ namespace Admin.Web.Controllers
 
         public IActionResult Index()
         {
-           
-                        
+            ViewBag.userole = CustomerContext.Role;
+
             var result = (from s in _dbContext.Bills
                           join v in _dbContext.Vendor on s.Vendor equals v.Id
                           join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
-                          where s.Recstatus=='A'
+                          where s.Recstatus == 'A'
                           select new TaskItemViewModel
                           {
                               No = s.No,

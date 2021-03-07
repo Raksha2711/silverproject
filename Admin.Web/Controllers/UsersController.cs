@@ -30,14 +30,17 @@ namespace Admin.Web.Controllers
         [Route("", Name = "users")]
         public IActionResult Index()
         {
-            var user = _userManager.Users.Select(s => new SilverlineUser
-            {
-                Id = s.Id,
-                Email = s.Email,
-                Name = s.UserName
-            }).ToList();
-            //var resu = await _roleManager.CreateAsync(new SilverlineRole { Name = "Sales" });
-            return View(user);
+            var users = (from u in _dbContext.Users
+                         join rj in _dbContext.UserRoles on u.Id equals rj.UserId
+                         join r in _dbContext.Roles on rj.RoleId equals r.Id
+                         select new RegisterViewModel
+                         {
+                             Id = u.Id,
+                             Email = u.Email,
+                             Name = u.Name,
+                             Role = r.Name
+                         }).ToList();
+            return View(users);
         }
         [HttpGet("create")]
         public IActionResult Create()
@@ -59,7 +62,8 @@ namespace Admin.Web.Controllers
                             Id = u.Id,
                             Email = u.Email,
                             Name = u.Name,
-                            Role=role.Name
+                            PhoneNumber=u.PhoneNumber,
+                            Role = role.Name
                         }).FirstOrDefault();
             return View("~/Views/Users/Update.cshtml", user);
         }
@@ -70,11 +74,19 @@ namespace Admin.Web.Controllers
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             user.Name = model.Name;
+            user.PhoneNumber = model.PhoneNumber;
+            
+            await _userManager.UpdateAsync(user);
             var role = await _userManager.GetRolesAsync(user);
             if (!role.Contains(model.Role))
             {
                 await _userManager.RemoveFromRoleAsync(user, role.FirstOrDefault());
                 await _userManager.AddToRoleAsync(user, model.Role);
+            }
+            if (!string.IsNullOrWhiteSpace(model.Password))
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, model.Password);
             }
             return RedirectToAction("index");
         }
@@ -86,29 +98,20 @@ namespace Admin.Web.Controllers
             returnUrl = returnUrl ?? Url.Content("~/");
             //if (ModelState.IsValid)
             //{
-                var user = new SilverlineUser { UserName = Input.Email, Email = Input.Email, Name = Input.Name };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
-                {
-                    var usr = await _userManager.FindByNameAsync(user.UserName);
-
-                    await _userManager.AddToRoleAsync(usr, Input.Role);
-
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
-                    //    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //    return LocalRedirect(returnUrl);
-                    //}
-                }
-                //foreach (var error in result.Errors)
-                //{
-                //    ModelState.AddModelError(string.Empty, error.Description);
-                //}
-            //}
+            var user = new SilverlineUser
+            {
+                UserName = Input.Email,
+                Email = Input.Email,
+                Name = Input.Name,
+                PhoneNumber = Input.PhoneNumber
+            };
+            var result = await _userManager.CreateAsync(user, Input.Password);
+            if (result.Succeeded)
+            {
+                var usr = await _userManager.FindByNameAsync(user.UserName);
+                await _userManager.AddToRoleAsync(usr, Input.Role);
+            }
+            
             return RedirectToAction("Index");
         }
         internal List<SelectListItem> GetRoles()

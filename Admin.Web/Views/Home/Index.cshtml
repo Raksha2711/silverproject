@@ -9,22 +9,6 @@
 
 }
 
-<!-- Content Wrapper. Contains page content -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row">
-            @*<div class="col-sm-6">
-                <h1>Dash Board</h1>
-            </div>*@
-            @*<div class="col-sm-6 d-none d-sm-block">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">ControlPanel</li>
-                </ol>
-            </div>*@
-        </div>
-    </div>
-</section>
 
 <section class="content pb-3">
     <div class="container-fluid h-100">
@@ -38,7 +22,8 @@
                 <div class="card-body pl-0 pr-0">
                     @foreach (var item in Model.Where(w => w.Approver == 0))
                     {
-                        item.CanEdit = true;
+                        item.CanEdit = (ViewBag.userole == "Admin" || ViewBag.userole == "Approver"); 
+                        item.CanReSendEmail=false;
                         <div class="card card-primary card-outline">
                             <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
                         </div>
@@ -54,9 +39,10 @@
                 </div>
                 <div class="card-body pl-0 pr-0">
                     @foreach (var item in purchase.ToList())
-                    {
-                        item.CanEdit = true;
-                        <div class="card card-primary card-outline">
+                            {
+                                item.CanEdit = (ViewBag.userole == "Admin" || ViewBag.userole == "Purchase");
+                                item.CanReSendEmail = true;
+                                <div class="card card-primary card-outline">
                             <partial name="~/Views/Home/_taskitem.cshtml" for="@item" />
                         </div>
                     }
@@ -76,10 +62,15 @@
                             <div class="card-header">
                                 <h5 class="card-title">PO No :<a href="@Url.Action("view","PurchaseOrder",new { id = item.Id })">@item.No</a> (D:@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Date)))<span class="badge @(item.DeliveryType=="PickUp"?"bg-success": "bg-gradient-indigo")">@item.DeliveryType</span></h5>
                                 <div class="card-tools">
-                                    <a href="@Url.Action("detail","PurchaseOrder",new { id = item.Id })" class="btn btn-tool">
-                                        <i class="fas fa fa-arrow-circle-right"></i>
-                                    </a>
-
+                                    @if (ViewBag.userole == "Admin" || ViewBag.userole == "Account")
+                                    {
+                                        <a href="@Url.Action("resensemail","PurchaseOrder",new { id = item.Id })" class="btn btn-tool">
+                                            <i class="fas fa fa-envelope" style="font-size:25px;"></i>
+                                        </a>
+                                        <a href="@Url.Action("detail", "PurchaseOrder", new { id = item.Id })" class="btn btn-tool">
+                                            <i class="fas fa fa-share-square" style="font-size:25px;"></i>
+                                        </a>
+                                    }
                                 </div>
                             </div>
                             <div class="card-body p-0">

@@ -34,6 +34,10 @@
                 <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>@Model.VendorName</h6>
                 <br>
                 <p style='margin: 0 0 -10px;color: #000;font-size: 12px;'>@Model.VendorAddress</p>
+                <br>
+                <p style='margin: 0 0 -10px;color: #000;font-size: 12px;'>@Model.DeliveryType</p>
+                <br>
+                <p style='margin: 0 0 -10px;color: #000;font-size: 12px;'>@Model.DeliveryAddress</p>
             </th>
             <th>
                 <h6 style='margin: 0 0 -10px; color: #000; font-size: 15px; font-weight: bold;'>Sales Person: @Model.SalesPersoName</h6>
@@ -67,7 +71,7 @@
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Freight</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">CDC(%)</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Discount(Amt)</th>
-                    <th style="text-align: left; padding: 10px 5px 10px 5px;">NLC</th>
+                    @*<th style="text-align: left; padding: 10px 5px 10px 5px;">NLC</th>*@
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">Remarks</th>
                 </tr>
             </thead>
@@ -83,7 +87,7 @@
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.AddCost</th>
                     <th style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.CDC</th>
                     <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Discount1</td>
-                    <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>
+                    @*<td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.NLC</td>*@
                     <td style="text-align: left; padding: 10px 5px 10px 5px;">@item.Data.Remarks</td>
                 </tr>
                 }
