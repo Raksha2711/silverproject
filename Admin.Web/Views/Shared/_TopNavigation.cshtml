@@ -2,12 +2,14 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Command.Entity1.SilverlineUser> SignInManager
 @inject UserManager<Command.Entity1.SilverlineUser> UserManager
- <!-- Navbar -->
+
+<!-- Navbar -->
 <style>
     .bg-dark {
         background-color: #414c95 !important;
         font-size: 21px !important;
     }
+
     .nav-link {
         color: white !important;
     }
@@ -30,14 +32,14 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               Reports
+                Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-               
+
                 <a asp-controller="POData" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("podata","index")">
                     PO List
                 </a>
-                
+
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -46,14 +48,14 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 @*<a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>*@
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>*@
                 <a asp-controller="Vendor" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("Vendor","index")">
                     Vendor
                 </a>
                 @*<a asp-controller="Item" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("Item","index")">
-            Item
-        </a>*@
+                        Item
+                    </a>*@
                 <a asp-controller="ItemGroup" asp-action="Index" class="dropdown-item @Url.MakeActiveClass("ItemGroup","index")">
                     Stock Item
                 </a>
@@ -78,50 +80,19 @@
     </ul>
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-        @*<li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>*@
-        @if (User.Identity.IsAuthenticated)
-        {
         <li class="nav-item d-none d-sm-inline-block">
-            @*<form class="form-inline" asp-area="Identity" asp-page="/Account/SignOut" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">*@
-            @*<form class="form-inline" asp-area="Identity" asp-page="/Account/SignOut" asp-route-returnUrl="@Url.Action("SignOut", "Account", new { area = "" })">
-            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>*@
-           
+            <a asp-controller="Account" asp-action="SignOut" class="nav-link">LogOut </a>
         </li>
-        }
-        else
-        {
+    </ul>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <ul class="navbar-nav">
             <li class="nav-item d-none d-sm-inline-block">
-                @*<a asp-area="Identity" asp-page="/Account/SignIn" class="nav-link">Login</a>*@
-                <a asp-controller="Account" asp-action="SignIn" class="nav-link">Login</a>
+                <a href="#" class="d-block nav-link">Hi, @User.Identity.Name </a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a asp-controller="Account" asp-action="SignOut" class="nav-link">Register </a>
-                @*<a asp-area="Identity" asp-page="/Account/SignOut" class="nav-link">Register</a>*@
-            </li>
-        }
-
-    </ul>
-   
-    <ul class="navbar-nav" style=" padding-left:650px;">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <a href="#" class="d-block nav-link">Hi, @User.Identity.Name </a>
-        }
-
-
-
-
-
-    </ul>
-    <ul class="navbar-nav">
-        <a asp-controller="Account" asp-action="SignIn" class="nav-link dropdown-menu-right">LogOut </a>
-        @*<a href="~/Account/SignIn" class="brand-link nav-link">
-            <img src="~/img/logout.jpg" alt="AdminLTE Logo" class="logo-image" style="height:60px;">
-        </a>*@
-    </ul>
+        </ul>
+    }
     <!-- Right navbar links -->
     <!--<ul class="navbar-nav ml-auto">-->
     <!-- Messages Dropdown Menu -->

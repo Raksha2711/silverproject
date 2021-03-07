@@ -38,7 +38,8 @@ namespace Admin.Web.Controllers
                              Id = u.Id,
                              Email = u.Email,
                              Name = u.Name,
-                             Role = r.Name
+                             Role = r.Name,
+                             RecStatus=u.RecStatus
                          }).ToList();
             return View(users);
         }
@@ -48,49 +49,6 @@ namespace Admin.Web.Controllers
             ViewBag.rolelist = GetRoles();
             return View();
         }
-        [HttpGet("edit/{id:int}")]
-        public IActionResult Update(int id)
-        {
-            ViewBag.rolelist = GetRoles();
-
-            var user = (from u in _dbContext.Users
-                        join urole in _dbContext.UserRoles on u.Id equals urole.UserId
-                        join role in _dbContext.Roles on urole.RoleId equals role.Id
-                        where u.Id.Equals(id)
-                        select new RegisterViewModel
-                        {
-                            Id = u.Id,
-                            Email = u.Email,
-                            Name = u.Name,
-                            PhoneNumber=u.PhoneNumber,
-                            Role = role.Name
-                        }).FirstOrDefault();
-            return View("~/Views/Users/Update.cshtml", user);
-        }
-
-        [HttpPost]
-        [Route("edit")]
-        public async Task<IActionResult> Update(RegisterViewModel model)
-        {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            user.Name = model.Name;
-            user.PhoneNumber = model.PhoneNumber;
-            
-            await _userManager.UpdateAsync(user);
-            var role = await _userManager.GetRolesAsync(user);
-            if (!role.Contains(model.Role))
-            {
-                await _userManager.RemoveFromRoleAsync(user, role.FirstOrDefault());
-                await _userManager.AddToRoleAsync(user, model.Role);
-            }
-            if (!string.IsNullOrWhiteSpace(model.Password))
-            {
-                await _userManager.RemovePasswordAsync(user);
-                await _userManager.AddPasswordAsync(user, model.Password);
-            }
-            return RedirectToAction("index");
-        }
-
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create(RegisterViewModel Input, string returnUrl = null)
@@ -111,7 +69,65 @@ namespace Admin.Web.Controllers
                 var usr = await _userManager.FindByNameAsync(user.UserName);
                 await _userManager.AddToRoleAsync(usr, Input.Role);
             }
+
+            return RedirectToAction("Index");
+        }
+        
+        [HttpGet("edit/{id:int}")]
+        public IActionResult Update(int id)
+        {
+            ViewBag.rolelist = GetRoles();
+
+            var user = (from u in _dbContext.Users
+                        join urole in _dbContext.UserRoles on u.Id equals urole.UserId
+                        join role in _dbContext.Roles on urole.RoleId equals role.Id
+                        where u.Id.Equals(id)
+                        select new UpdateUserViewModel
+                        {
+                            Id = u.Id,
+                            Email = u.Email,
+                            Name = u.Name,
+                            PhoneNumber = u.PhoneNumber,
+                            Role = role.Name,
+                            RecStatus=u.RecStatus
+                        }).FirstOrDefault();
+            return View("~/Views/Users/Update.cshtml", user);
+        }
+
+        [HttpPost]
+        [Route("edit")]
+        public async Task<IActionResult> Update(UpdateUserViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            user.Name = model.Name;
+            user.PhoneNumber = model.PhoneNumber;
+
+            await _userManager.UpdateAsync(user);
+            var role = await _userManager.GetRolesAsync(user);
+            if (!role.Contains(model.Role))
+            {
+                await _userManager.RemoveFromRoleAsync(user, role.FirstOrDefault());
+                await _userManager.AddToRoleAsync(user, model.Role);
+            }
+            if (!string.IsNullOrWhiteSpace(model.Password))
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, model.Password);
+            }
+            return RedirectToAction("index");
+        }
+
+        
+
+        [Route("deleterow/{id:int}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _dbContext.Users.Where(w => w.Id.Equals(id)).FirstOrDefault();
+            result.RecStatus = (result.RecStatus == 'A' || result.RecStatus==null) ? 'D' : 'A';
             
+            _dbContext.Users.Update(result);
+            _dbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
         internal List<SelectListItem> GetRoles()
