@@ -60,7 +60,7 @@ namespace Admin.Web.Controllers
         [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
-            var result = _dbContext.Bills.Include(i => i.BillItems).Where(w => w.Id.Equals(id) && w.Recstatus.Equals("A")).FirstOrDefault();
+            var result = _dbContext.Bills.Include(i => i.BillItems).Where(w => w.Id.Equals(id) && w.Recstatus.Equals('A')).FirstOrDefault();
             FillDropDown();
             return View("~/Views/PurchaseOrder/Create.cshtml", result);
         }

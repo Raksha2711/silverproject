@@ -6,7 +6,7 @@
 @*List<Command.Entity1.Bill>*@
 @section styles{
     <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
-    
+
 }
 <section class="content-header">
     <div class="container-fluid">
@@ -27,25 +27,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-6">
-                @*<div class="callout callout-info">
-        <div class="col-12">
-            <form class="filter">
-                <div class="form-group col-8">*@
-                <div class="input-daterange input-group" id="datepicker">
-                    <label>From</label>
-
-                    <input type="text" class="input-sm form-control" name="start" />
-                    <span class="input-group-append">
-                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                    </span>
-                
-            
-                <label>To</label>
-                    <input type="text" class="input-sm form-control" name="end" />
-                    <span class="input-group-append">
-                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                    </span>
-                </div>
+                <form class="filter">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <label>From</label>
+                        <input type="text" class="input-sm form-control" name="start" />
+                        <span class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        </span>
+                        <label>To</label>
+                        <input type="text" class="input-sm form-control" name="end" />
+                        <span class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        </span>
+                    </div>
+                </form>
             </div>
             <div class="col-6">
                 <a href="@Url.Action("Create","purchaseorder")" class="btn bg-blue float-right">
