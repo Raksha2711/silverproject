@@ -25,8 +25,8 @@ namespace Admin.Web.Controllers
         }
         internal void FillDropDown()
         {
-            List<SalesPerson> SalesPersonList = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
-            ViewBag.SalesPerson = new SelectList(SalesPersonList, "Id", "Name");
+            //List<SalesPerson> SalesPersonList = _dbContext.SalesPerson.Where(w => w.Status.Equals("1")).ToList();
+            //ViewBag.SalesPerson = new SelectList(SalesPersonList, "Id", "Name");
             List<Warehouse> WarehouseList = _dbContext.Warehouse.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.WareHouse = new SelectList(WarehouseList, "Id", "Name");
             List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
@@ -222,7 +222,7 @@ namespace Admin.Web.Controllers
         {
             var result = (from s in _dbContext.Bills.Include(e => e.BillItems)
                           join v in _dbContext.Vendor on s.Vendor equals v.Id
-                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                          join sp in _dbContext.Users on s.SalesPerson equals sp.Id
                           join wh in _dbContext.Warehouse on s.DelieveryPlaceId equals wh.Id into whl
                           from wh in whl.DefaultIfEmpty()
                           select new BillViewModel
@@ -295,7 +295,7 @@ namespace Admin.Web.Controllers
 
             var query = (from s in _dbContext.Bills
                          join v in _dbContext.Vendor on s.Vendor equals v.Id
-                         join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id 
+                         join sp in _dbContext.Users on s.SalesPerson equals sp.Id 
                          join r in _dbContext.Reason on s.Rejectreason equals r.Id.ToString() into abc
                          from r in abc.DefaultIfEmpty()
                          orderby s.Id descending

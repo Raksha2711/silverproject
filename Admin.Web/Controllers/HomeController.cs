@@ -30,7 +30,7 @@ namespace Admin.Web.Controllers
 
             var result = (from s in _dbContext.Bills
                           join v in _dbContext.Vendor on s.Vendor equals v.Id
-                          join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                          join sp in _dbContext.Users on s.SalesPerson equals sp.Id
                           where s.Recstatus == 'A'
                           select new TaskItemViewModel
                           {
