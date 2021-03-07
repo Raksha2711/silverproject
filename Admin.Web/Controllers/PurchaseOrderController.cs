@@ -31,7 +31,7 @@ namespace Admin.Web.Controllers
             ViewBag.WareHouse = new SelectList(WarehouseList, "Id", "Name");
             List<Vendor> VendorList = _dbContext.Vendor.Where(w => w.Status.Equals("1")).ToList();
             ViewBag.Vendor = new SelectList(VendorList, "Id", "Name");
-            List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1")).ToList();
+            List<ItemGroup> ItemList = _dbContext.ItemGroup.Where(w => w.Status.Equals("1") && !w.ParentItemGroupId.Equals("0")).ToList();
             ViewBag.Item = new SelectList(ItemList, "Id", "ItemGroupName");
             var LatestId = _dbContext.BillMaster.OrderByDescending(n => n.Id).Take(1).Select(s => s.POId).FirstOrDefault();
             ViewBag.LatestId = LatestId;
@@ -92,6 +92,8 @@ namespace Admin.Web.Controllers
         {
             var result = GetPoDetail(id);
             ViewBag.detail = true;
+            List<Reason> ReasonList = _dbContext.Reason.Where(w => w.Status.Equals("1")).ToList();
+            ViewBag.Reason = new SelectList(ReasonList, "Id", "Name");
             return View(result);
 
         }
@@ -202,7 +204,7 @@ namespace Admin.Web.Controllers
                     Email.Send(poDetail.Email,
                         $"Silverline IT HUB - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
-                        false, $"PurchaseInvoice-{poDetail.No}.pdf",
+                        false, $"PurchaseOrder-{poDetail.No}.pdf",
                         PdfHelper.ConvertToPdf(html)).Wait();
                 }
             }
@@ -289,10 +291,13 @@ namespace Admin.Web.Controllers
         internal DtResult<TaskItemViewModel> GetList(DTParameters param)
         {
             var result = new DtResult<TaskItemViewModel>();
-            //var isSuperAdmin = User.IsSuperAdmin();
+            
+
             var query = (from s in _dbContext.Bills
                          join v in _dbContext.Vendor on s.Vendor equals v.Id
-                         join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id
+                         join sp in _dbContext.SalesPerson on s.SalesPerson equals sp.Id 
+                         join r in _dbContext.Reason on s.Rejectreason equals r.Id.ToString() into abc
+                         from r in abc.DefaultIfEmpty()
                          orderby s.Id descending
                          select new TaskItemViewModel
                          {
@@ -309,7 +314,7 @@ namespace Admin.Web.Controllers
                              Accounts = s.Accounts,
                              Approver = s.Approver,
                              Recstatus = s.Recstatus,
-                             Rejectreason = s.Rejectreason,
+                             Rejectreason = r.Name,
 
                          });
 
@@ -374,6 +379,14 @@ namespace Admin.Web.Controllers
             var res = _dbContext.Vendor.Where(x => x.Id == vendorId).FirstOrDefault();
             return Json(res);
         }
+        //[HttpPost]
+        //[Route("fillreason")]
+        //public IActionResult fillreason()
+        //{
+        //    List<Reason> ReasonList = _dbContext.Reason.Where(w => w.Status.Equals("1")).ToList();
+        //    ViewBag.Reason = new SelectList(ReasonList, "Id", "Name");
+        //    return View();//BadRequest(ModelState);
+        //}
         internal string GetName(int id)
         {
             return _dbContext.Users.Where(w => w.Id.Equals(id)).Select(s => s.Name).FirstOrDefault();

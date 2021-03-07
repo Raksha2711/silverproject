@@ -2,7 +2,6 @@
 PurchaseOrderUpdate.frm = $('form[name="frmAddBill"]')
 PurchaseOrderUpdate.btn = $('button[type="button"].btn-submit')
 PurchaseOrderUpdate.documentClick = function () {
-
     $('select[name="PaymentTerm"]').change(function () {
         if ($(this).val() == "PDC") {
             $('#divpayment').show();
@@ -82,6 +81,18 @@ PurchaseOrderUpdate.documentClick = function () {
                 }
             });
         addSerialNumber();
+    });
+    $(document).on('click', '.cancelorder', function () {
+        alert("!");
+        $.ajax({
+            type: 'POST',
+            url: baseurl + ('PurchaseOrder/fillreason/'),
+           // data: JSON.stringify(frmData),
+            success: function () { },
+            error: function (jqXHR) { debugger },
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+        });
     });
     // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
     $(document).on('click', '.btn-submit', function () {

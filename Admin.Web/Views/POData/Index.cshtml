@@ -1,0 +1,123 @@
+﻿@*@model List<TaskItemViewModel>*@
+@{
+    ViewData["Title"] = "PO List";
+}
+
+@*List<Command.Entity1.Bill>*@
+@section styles{
+    <link href="~/cdn/vendors/DataTables/datatables.min.css" rel="stylesheet" />
+
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>PO List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Purchase Order List</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                @*<div class="callout callout-info">
+                    <div class="col-12">
+                        <form class="filter">
+                            <div class="form-group col-8">*@
+                <div class="input-daterange input-group" id="datepicker">
+                    <label>From</label>
+
+                    <input type="text" class="input-sm form-control" name="start" />
+                    <span class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </span>
+
+
+                    <label>To</label>
+                    <input type="text" class="input-sm form-control" name="end" />
+                    <span class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </span>
+                </div>
+            </div>
+            @*<div class="col-6">
+                <a href="@Url.Action("Create","POList")" class="btn bg-blue float-right">
+                    <i class="fas fa-plus"></i>&nbsp; Add New
+                </a>
+            </div>*@
+            @*</form>
+                    </div>
+
+                </div>*@
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 500px;">
+                        <table class="table table-head-fixed" id="table" cellspacing="0" width="100%" data-url="@Url.Action("list.json","podata")">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Po Date</th>
+                                    <th>Total Approver PO</th>
+                                    <th>Total Purchase PO</th>
+                                    <th>Total Account PO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/cdn/vendors/DataTables/datatables.min.js"></script>
+    <script src="~/cdn/app/JS/common.js"></script>
+    <script type="text/javascript">
+        var table;
+        $(function () {
+            var columns = [
+                {
+                    name: "date", data: "date", "orderable": false,
+                    "render": function (data, type, full, meta) {
+                        return moment(full.date).format("dd-MM-yyyy");
+                    }
+                },
+                //{ name: "date", "data": "date", "orderable": true },
+                { name: "approver", "data": "approver", "orderable": true },
+                { name: "purchase", "data": "purchase", "orderable": true },
+                { name: "accounts", "data": "accounts", "orderable": true },
+            ];
+            table = $$.dataTable('#table', {
+                columns: columns, columnDefs: [
+                    {"targets": [0], "visible": true},
+                ]
+            });
+
+            $('#datepicker').datepicker({
+                format: "dd-mm-yyyy",
+                orientation: "bottom auto",
+                autoclose: true,
+                todayHighlight: true,
+            });
+            $(document.body).on('change', '#datepicker', function () {
+                var tbl = $('#table').DataTable()
+                tbl.draw();
+            });
+        });
+    </script>
+}

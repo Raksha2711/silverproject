@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Command.Entity1;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.Web.Controllers
 {
@@ -42,11 +43,12 @@ namespace Admin.Web.Controllers
                               DelieveryPlaceId = s.DelieveryPlaceId,
                               PaymentTerm = s.PaymentTerm,
                               PaymentValue = s.PaymentValue,
-                              Approver = s.Approver,
-                              Purchase = s.Purchase,
-                              Accounts = s.Accounts,
-                              GoodReceiveDate = s.GoodReceiveDate,
-                              PurchaseInvoiceNo = s.PurchaseInvoiceNo
+                              Approver=s.Approver,
+                              Purchase=s.Purchase,
+                              Accounts=s.Accounts,
+                              GoodReceiveDate=s.GoodReceiveDate,
+                              PurchaseInvoiceNo=s.PurchaseInvoiceNo,
+                              PurchaseDate = s.PurchaseDate
                           }).ToList();
 
             return View(result);
