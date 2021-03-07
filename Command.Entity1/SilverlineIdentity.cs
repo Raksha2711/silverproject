@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,7 +9,8 @@ namespace Command.Entity1
     public class SilverlineUser : IdentityUser<int>
     {
         public string Name { get; set; }
-        public int DepartmentId { get; set; }
+        [MaxLength(1)]
+        public char? RecStatus { get; set; }
     }
     public class SilverlineRole : IdentityRole<int>
     {
