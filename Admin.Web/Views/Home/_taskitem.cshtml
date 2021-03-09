@@ -9,10 +9,14 @@
         <div class="card-tools">
             @if (Model.CanReSendEmail)
             {
-            <a href="@Url.Action("resensemail", "PurchaseOrder", new { id = Model.Id })" class="btn btn-tool">
-                <i class="fas fa fa-envelope" style="font-size:25px;"></i>
-            </a>
+                <a href="@Url.Action("resensemail", "PurchaseOrder", new { id = Model.Id })" class="btn btn-tool">
+                    <i class="fas fa fa-envelope" style="font-size:25px;"></i>
+                </a>
+                <a href="https://wa.me/@Model.VendorContactNo/?text=Hello @Model.VendorName we sent you po with no:@Model.No on your email please review it" target="_blank" class="btn btn-tool">
+                    <img src="https://web.whatsapp.com/apple-touch-icon.png" style="width:25px;">
+                </a>
             }
+
             <a href="@Url.Action("detail","PurchaseOrder",new { id = Model.Id })" class="btn btn-tool">
                 <i class="fas fa fa-share-square" style="font-size:25px;"></i>
             </a>
