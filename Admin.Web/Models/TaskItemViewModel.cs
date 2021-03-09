@@ -11,6 +11,7 @@ namespace Admin.Web.Models
         public bool CanEdit { get; set; }
         public bool CanReSendEmail { get; set; }
         public string VendorName { get; set; }
+        public string VendorContactNo { get; set; }
         public string SalesPersoName { get; set; }
         
     }
