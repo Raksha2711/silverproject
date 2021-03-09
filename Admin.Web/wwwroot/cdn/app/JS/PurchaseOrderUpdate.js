@@ -52,7 +52,7 @@ PurchaseOrderUpdate.documentClick = function () {
                         $(this).parent().parent().remove();
                     }
                     else {
-                        alert("else");
+                       // alert("else");
                         var frmData = getFromData();
 
                         frmData.billItems = [];
@@ -63,7 +63,7 @@ PurchaseOrderUpdate.documentClick = function () {
                             $.each(td, function (tdk, tdv) { trobj[$(tdv).attr('name')] = $(tdv).val(); });
                             frmData.billItems.push(trobj);
                         })
-                        alert(frmData.Id);
+                       // alert(frmData.Id);
                         var Id = $("#item_Id").val()
                         $.ajax({
                             type: 'POST',
@@ -83,22 +83,18 @@ PurchaseOrderUpdate.documentClick = function () {
         addSerialNumber();
     });
     $(document).on('click', '.cancelorder', function () {
-        alert("!");
         $.ajax({
             type: 'POST',
             url: baseurl + ('PurchaseOrder/fillreason/'),
-           // data: JSON.stringify(frmData),
             success: function () { },
             error: function (jqXHR) { debugger },
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         });
     });
-    // $(document).on('click', '.btn_row_delete', function (e) { $(this).parent().parent().remove() });
     $(document).on('click', '.btn-submit', function () {
         var frmData = getFromData();
         debugger
-        // alert(frmData);
         var b1 = moment(frmData["Date"], 'YYYY-MM-DD').toDate()
         frmData["Date"] = b1;
         frmData.billItems = [];

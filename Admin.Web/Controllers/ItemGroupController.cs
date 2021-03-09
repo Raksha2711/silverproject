@@ -152,7 +152,7 @@ namespace Admin.Web.Controllers
             if (param.Search != null && !string.IsNullOrEmpty(param.Search.Value))
             {
                 var keyword = param.Search.Value;
-                query = query.Where(w => w.ItemGroupName.Contains(keyword));// ||
+                query = query.Where(w => w.ItemGroupName.Contains(keyword) || w.ItemGroupNLevelString.Contains(keyword));// ||
                                                                             //w.Entity.Value.Contains(keyword) || w.PromoterName.Contains(keyword));
             }
             if (param.Order != null && param.Order.Length > 0)
@@ -161,6 +161,8 @@ namespace Admin.Web.Controllers
                 {
                     if (param.Columns[item.Column].Data.Equals("itemgroupname"))
                         query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.ItemGroupName) : query.OrderBy(o => o.ItemGroupName);
+                    if (param.Columns[item.Column].Data.Equals("itemgroupnlevelstring"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.ItemGroupNLevelString) : query.OrderBy(o => o.ItemGroupNLevelString);
                 }
             }
             result.recordsFiltered = query.Count();
@@ -232,13 +234,16 @@ namespace Admin.Web.Controllers
 
                         for (int row = 2; row <= rowCount; row++)
                         {
-                            list.Add(new ItemGroup
+                            if (worksheet.Cells[row, 1].Value != null)
                             {
-                                ItemGroupName = (worksheet.Cells[row, 1].Value).ToString(),
-                                ParentItemGroupId = GetId((worksheet.Cells[row, 2].Value).ToString()).ToString(),
-                                CreatedDate = DateTime.Now,
-                                Status = "1"
-                            }); ;
+                                list.Add(new ItemGroup
+                                {
+                                    ItemGroupName = (worksheet.Cells[row, 1].Value).ToString(),
+                                    ParentItemGroupId = GetId((worksheet.Cells[row, 2].Value).ToString()).ToString(),
+                                    CreatedDate = DateTime.Now,
+                                    Status = "1"
+                                });
+                            }
 
                         }
                         if (list.Count > 0)
