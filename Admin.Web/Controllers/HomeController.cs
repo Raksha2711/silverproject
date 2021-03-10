@@ -39,6 +39,7 @@ namespace Admin.Web.Controllers
                               Date = s.Date,
                               SalesPersoName = sp.Name,
                               VendorName = v.Name,
+                              VendorContactNo = v.ContactNo,
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,
                               PaymentTerm = s.PaymentTerm,
