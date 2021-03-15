@@ -67,6 +67,7 @@ namespace Admin.Web.Controllers
             if (result.Succeeded)
             {
                 var usr = await _userManager.FindByNameAsync(user.UserName);
+                usr.RecStatus = 'A';
                 await _userManager.AddToRoleAsync(usr, Input.Role);
             }
 

@@ -56,13 +56,20 @@ namespace Admin.Web.Controllers
                     var user = await _userManager.FindByEmailAsync(Input.Email);
                     //var role = await _userManager.GetRolesAsync(user);
                     //remove old claim
-                    var claims = await _userManager.GetClaimsAsync(user);
-                    await _userManager.RemoveClaimsAsync(user, claims);
-                    //add new claim
-                    
-                    //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role.FirstOrDefault()));
-                    //return LocalRedirect(returnUrl);
-                    return RedirectToAction("Index", "Home");
+                    if (user.RecStatus == 'A')
+                    {
+                        var claims = await _userManager.GetClaimsAsync(user);
+                        await _userManager.RemoveClaimsAsync(user, claims);
+                        //add new claim
+
+                        //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role.FirstOrDefault()));
+                        //return LocalRedirect(returnUrl);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {

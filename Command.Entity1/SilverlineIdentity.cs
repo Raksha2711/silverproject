@@ -9,8 +9,8 @@ namespace Command.Entity1
     public class SilverlineUser : IdentityUser<int>
     {
         public string Name { get; set; }
-        [MaxLength(1)]
-        public char? RecStatus { get; set; }
+        
+        public char RecStatus { get; set; }
     }
     public class SilverlineRole : IdentityRole<int>
     {
