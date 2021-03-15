@@ -54,11 +54,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>EmailId(Optional)</label>
+                                @Html.TextBoxFor(m => m.EmailId2, new { @class = "form-control", placeholder = "Enter EmailId" })
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>ContactNo</label>
                                 @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", placeholder = "Enter ContactNo" })
                             </div>
 
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Contact Person</label>

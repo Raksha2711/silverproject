@@ -18,6 +18,7 @@ namespace Admin.Web.Models
         public string DeliveryAddress { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
+        public string Email2 { get; set; }
         public string SalesPersoName { get; set; }
         public Warehouse WarehouseDetail { get; set; }
         public List<BillItemViewModel> BillItemsView { get; set; }

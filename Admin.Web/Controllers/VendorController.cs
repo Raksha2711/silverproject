@@ -64,6 +64,7 @@ namespace Admin.Web.Controllers
                         res.Name = model.Name;
                         res.Address = model.Address;
                         res.EmailId = model.EmailId;
+                        res.EmailId2 = model.EmailId2;
                         res.ContactNo = model.ContactNo;
                         res.ContactPerson = model.ContactPerson;
                         res.ModifiedDate = model.ModifiedDate;
@@ -106,6 +107,7 @@ namespace Admin.Web.Controllers
                              Name = v.Name,
                              Address = v.Address,
                              EmailId = v.EmailId,
+                             EmailId2 = v.EmailId2,
                              ContactNo = v.ContactNo,
                              ContactPerson = v.ContactPerson
                          });
@@ -142,6 +144,8 @@ namespace Admin.Web.Controllers
                         query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.Address) : query.OrderBy(o => o.Address);
                     else if (param.Columns[item.Column].Data.Equals("emailId"))
                         query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.EmailId) : query.OrderBy(o => o.EmailId);
+                    else if (param.Columns[item.Column].Data.Equals("emailId2"))
+                        query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.EmailId2) : query.OrderBy(o => o.EmailId2);
                     else if (param.Columns[item.Column].Data.Equals("contactNo"))
                         query = item.Dir == DTOrderDir.DESC ? query.OrderByDescending(o => o.ContactNo) : query.OrderBy(o => o.ContactNo);
                     else if (param.Columns[item.Column].Data.Equals("contactPerson"))
@@ -181,8 +185,9 @@ namespace Admin.Web.Controllers
                                 Name = (worksheet.Cells[row, 1].Value).ToString(),
                                 Address = (worksheet.Cells[row, 2].Value).ToString(),
                                 EmailId= (worksheet.Cells[row, 3].Value).ToString(),
-                                ContactNo = (worksheet.Cells[row, 4].Value).ToString(),
-                                ContactPerson = (worksheet.Cells[row, 5].Value).ToString(),
+                                EmailId2 = (worksheet.Cells[row, 4].Value).ToString(),
+                                ContactNo = (worksheet.Cells[row, 5].Value).ToString(),
+                                ContactPerson = (worksheet.Cells[row, 6].Value).ToString(),
                                 CreatedDate = DateTime.Now,
                                 Status = "1"
                             });
@@ -212,7 +217,7 @@ namespace Admin.Web.Controllers
         [Route("ExportToExcel")]
         public async Task<IActionResult> ExportToExcel()
         {
-            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.ContactNo,s.ContactPerson }).ToList();
+            var item = _dbContext.Vendor.Where(w => w.Status.Equals("1")).Select(s => new { s.Name, s.Address,s.EmailId,s.EmailId2,s.ContactNo,s.ContactPerson }).ToList();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
             using (var package = new ExcelPackage(stream))

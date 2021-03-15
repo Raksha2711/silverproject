@@ -60,6 +60,7 @@
                 <form name="frmAddBill" asp-antiforgery="false" method="post">
                     <input type="hidden" asp-for="Id" />
                     <div class="row">
+                        
                         <div class="form-group col-3">
                             <label asp-for="No">Sr No</label>
                             <input type="text" class="form-control" asp-for="No" readonly>
@@ -71,16 +72,16 @@
 
                                 <input asp-for="Date" type="text" class="form-control datefor" readonly value="@DateTime.Now.ToString("dd-MM-yyyy")" />
                                 @*<span class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                    </span>*@
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </span>*@
                             </div>
                         </div>
                         <div class="form-group col-3">
                             <label asp-for="SalesPerson">SalesPerson Name</label>
                             <label class="form-control">@ViewBag.Personname</label>
                             @*<select type="select" asp-for="SalesPerson" asp-items="ViewBag.SalesPerson" class="form-control">
-                                    <option value="0">Select SalesPerson</option>
-                                </select>*@
+                <option value="0">Select SalesPerson</option>
+            </select>*@
                         </div>
                         <div class="form-group col-3">
                             <label asp-for="Vendor">Vendor Name</label>
@@ -90,15 +91,15 @@
                         </div>
                         <div class="form-group col-3">
                             <label asp-for="ContactPerson">Contact Person</label>
-                            <input type="text" asp-for="ContactPerson" name="ContactPerson" class="form-control" placeholder="Enter" value="">
+                            <input type="text" asp-for="ContactPerson" name="ContactPerson" class="form-control" placeholder="Enter" >
                         </div>
                         <div class="form-group col-3">
                             <label asp-for="ContactNo">Contact No</label>
-                            <input type="text" asp-for="ContactNo" name="ContactNo" class="form-control" placeholder="Enter" value="">
+                            <input type="text" asp-for="ContactNo" name="ContactNo" class="form-control" placeholder="Enter" >
                         </div>
                         <div class="form-group col-3">
                             <label asp-for="EmailId">EmailId</label>
-                            <input type="text" asp-for="EmailId" name="EmailId" class="form-control" placeholder="Enter" value="">
+                            <input type="text" asp-for="EmailId" name="EmailId" class="form-control" placeholder="Enter" >
                         </div>
 
                         <div class="form-group col-3">

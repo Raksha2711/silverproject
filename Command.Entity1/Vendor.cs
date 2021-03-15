@@ -17,6 +17,8 @@ namespace Command.Entity1
         public string Address { get; set; }
         [StringLength(100)]
         public string EmailId { get; set; }
+        [StringLength(100)]
+        public string EmailId2 { get; set; }
         [StringLength(15)]
         public string ContactNo { get; set; }
         [StringLength(20)]

@@ -4,14 +4,16 @@ using Command.Entity1;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Command.Db1.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    partial class CommandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210311172632_FirstCreateTables")]
+    partial class FirstCreateTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -585,10 +587,6 @@ namespace Command.Db1.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("EmailId")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("EmailId2")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 

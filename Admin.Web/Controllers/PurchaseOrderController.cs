@@ -77,7 +77,6 @@ namespace Admin.Web.Controllers
                 model.Recstatus = 'A';
                 model.CreatedBy = CustomerContext.UserId.ToString();
                 model.SalesPerson = CustomerContext.UserId;
-
                 _dbContext.Bills.Add(model);
                 _dbContext.SaveChanges();
                 TempData["success"] = $"Purchase Invoice No:{model.No} created successfully";
@@ -201,7 +200,7 @@ namespace Admin.Web.Controllers
                 var html = this.RenderViewAsync("_popdf", poDetail).Result;
                 if (!string.IsNullOrWhiteSpace(poDetail.Email))
                 {
-                    Email.Send(poDetail.Email,
+                    Email.Send(poDetail.Email,poDetail.Email2,
                         $"Silverline IT HUB - Purchase Order (PO NO : {poDetail.No})",
                         $"Hello Team,{System.Environment.NewLine}",
                         false, $"PurchaseOrder-{poDetail.No}.pdf",
@@ -257,6 +256,7 @@ namespace Admin.Web.Controllers
                               VendorAddress = v.Address,
                               DeliveryAddress = wh.Address,
                               Email = v.EmailId,
+                              Email2 = v.EmailId2,
                               DeliveryType = s.DeliveryType,
                               DelieveryPlaceId = s.DelieveryPlaceId,
                               PaymentTerm = s.PaymentTerm,

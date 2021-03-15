@@ -74,7 +74,7 @@ namespace Admin.Web.Helper
     }
     public static class Email
     {
-        public static async Task Send(string to, string subject, string body, bool isHtml = false, string fileName = null, byte[] attachment = null)
+        public static async Task Send(string to,string to1, string subject, string body, bool isHtml = false, string fileName = null, byte[] attachment = null)
         {
             try
             {
@@ -94,6 +94,9 @@ namespace Admin.Web.Helper
                     MailMessage msg = new MailMessage();
                     msg.From = new MailAddress("purchase@slprice.com");
                     msg.To.Add(new MailAddress(to));
+                    if(to1 != null)
+                    { msg.To.Add(new MailAddress(to1)); }
+                   
                     msg.CC.Add(new MailAddress("accounts@slprice.com"));
                     msg.Subject = subject;
                     msg.IsBodyHtml = isHtml;

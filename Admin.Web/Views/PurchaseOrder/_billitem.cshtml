@@ -7,7 +7,8 @@
     </td>
     <td>
         <input type="hidden" name="id" asp-for="Id" />
-        <select style="width:250px !important"  type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control  custome-select2">
+        <input type="hidden" name="Recstatus"  value="A" />
+        <select style="width:250px !important" type="select" required name="ItemId" asp-for="ItemId" asp-items="ViewBag.Item" class="form-control  custome-select2">
             <option value="">Select Item</option>
         </select>
     </td>

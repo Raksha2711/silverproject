@@ -23,7 +23,8 @@ namespace Admin.Web.Controllers
         public PODataController(CommandDbContext dbContext)
         {
             _dbContext = dbContext;
-            DbConnection = "Data Source=sql5050.site4now.net;User ID=DB_A6EA60_Raksha2710_admin;Password=Mazda@123;";
+            //DbConnection = "Data Source=sql5050.site4now.net;User ID=DB_A6EA60_Raksha2710_admin;Password=Mazda@123;";
+           DbConnection = "Data Source=b2bpotential.cnb1fgovpd8k.ap-south-1.rds.amazonaws.com; Database=SLPurchaseOrderDB; User ID=admin; Password=STELLANS$sd*1;";
         }
         [Route("", Name = "podata")]
         public IActionResult Index()
